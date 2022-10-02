@@ -29,9 +29,16 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.chat:
                     replaceFragment(new ChatFragment());
                     break;
+                case R.id.add:
+                    replaceFragment(new AddFragment());
+                    break;
+                case R.id.community:
+                    replaceFragment(new CommunityFragment());
+                    break;
                 case R.id.profile:
                     replaceFragment(new MeFragment());
                     break;
+
             }
 
             return true;
