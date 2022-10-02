@@ -6,4 +6,112 @@
     android:layout_height="match_parent"
     tools:context=".Register">
 
+
+    <ImageView
+        android:id="@+id/registerHeadingBG"
+        android:layout_width="470dp"
+        android:layout_height="90dp"
+        app:srcCompat="@drawable/login_bg"
+        tools:layout_editor_absoluteX="-30dp"
+        tools:layout_editor_absoluteY="-1dp" />
+
+    <TextView
+        android:id="@+id/registerHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bree_serif"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:textSize="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/registerUsername"
+        android:layout_width="307dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/bree_serif"
+        android:hint="Username"
+        android:minHeight="100dp"
+        android:textColorHint="@color/orange"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.233"
+        app:layout_constraintWidth_percent=".7" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="308dp"
+        android:layout_height="51dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:minHeight="100dp"
+        android:textColorHint="@color/orange"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="278dp" />
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="306dp"
+        android:layout_height="48dp"
+        android:hint="Passoword"
+        android:inputType="textPassword"
+        android:minHeight="100dp"
+        android:textColorHint="@color/orange"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <EditText
+        android:id="@+id/registerPassword2"
+        android:layout_width="305dp"
+        android:layout_height="49dp"
+        android:hint="Passoword"
+        android:inputType="textPassword"
+        android:minHeight="100dp"
+        android:textColorHint="@color/orange"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="452dp" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="305dp"
+        android:layout_height="67dp"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="@font/aclonica"
+        android:text="Register"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/registerHeadingBG"
+        app:layout_constraintVertical_bias="0.735" />
+
+    <TextView
+        android:id="@+id/loginInRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bree_serif"
+        android:text="Login"
+        android:textColor="@color/orange"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="649dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
