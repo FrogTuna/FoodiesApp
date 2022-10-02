@@ -11,9 +11,12 @@
         android:id="@+id/registerHeadingBG"
         android:layout_width="470dp"
         android:layout_height="100dp"
-        app:srcCompat="@drawable/login_bg"
-        tools:layout_editor_absoluteX="-30dp"
-        tools:layout_editor_absoluteY="-1dp" />
+        android:layout_marginBottom="85dp"
+        app:layout_constraintBottom_toTopOf="@+id/registerUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_bg" />
 
     <TextView
         android:id="@+id/registerHeading"
@@ -56,8 +59,12 @@
         android:textColorHint="@color/orange"
         android:textSize="16dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="278dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.348" />
 
     <EditText
         android:id="@+id/registerPassword"
@@ -69,8 +76,12 @@
         android:textColorHint="@color/orange"
         android:textSize="16dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="364dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/registerHeadingBG"
+        app:layout_constraintVertical_bias="0.464" />
 
     <EditText
         android:id="@+id/registerPassword2"
@@ -82,8 +93,12 @@
         android:textColorHint="@color/orange"
         android:textSize="16dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="452dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/registerHeadingBG"
+        app:layout_constraintVertical_bias="0.577" />
 
     <Button
         android:id="@+id/registerButton"
@@ -96,10 +111,10 @@
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/registerHeadingBG"
-        app:layout_constraintVertical_bias="0.735" />
+        app:layout_constraintVertical_bias="0.73" />
 
     <TextView
         android:id="@+id/loginInRegister"
@@ -110,8 +125,11 @@
         android:textColor="@color/orange"
         android:textSize="18dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="183dp"
-        tools:layout_editor_absoluteY="649dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/registerHeadingBG"
+        app:layout_constraintVertical_bias="0.787" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
