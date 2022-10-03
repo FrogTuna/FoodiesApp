@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 public class login extends AppCompatActivity implements View.OnClickListener {
 
     TextView username;
@@ -15,10 +17,13 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     Button loginBtn;
     TextView registerInLogin;
 
+    private DatabaseReference myReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         loginBtn = findViewById(R.id.loginButton);
         registerInLogin = findViewById(R.id.registerInLogin);
@@ -38,26 +43,28 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         startActivity(intent);
     }
 
-//    private void login(){
-//
-//        username =(TextView) findViewById(R.id.loginUsername);
-//        password =(TextView) findViewById(R.id.loginPassword);
-//        loginBtn =(Button) findViewById(R.id.loginButton);
-//
-//        loginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            };
-//        });
-//    }
+    private void login(){
+
+        username =(TextView) findViewById(R.id.loginUsername);
+        password =(TextView) findViewById(R.id.loginPassword);
+        loginBtn =(Button) findViewById(R.id.loginButton);
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String output = username.getText().toString();
+                myReference.setValue(output);
+            };
+        });
+    }
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()){
             case R.id.loginButton:
-                mainIntent();
+                login();
+                //mainIntent();
                 break;
             case R.id.registerInLogin:
                 loginIntent();
