@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,80 +19,18 @@ public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
 
     Button loginBtn;
-    Button registerBtn;
     TextView registerInLogin;
-    TextView loginInRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //default page
-        setContentView(R.layout.activity_login);
-        buttonListener();
+        navigation();
 
     }
-
-
-    public void buttonListener(){
-
-        loginBtn = findViewById(R.id.loginButton);
-        registerInLogin = findViewById(R.id.registerInLogin);
-        registerBtn = findViewById(R.id.registerButton);
-        loginInRegister = findViewById(R.id.loginInRegister);
-
-        //login button
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigation();
-            }
-        });
-
-//        //don't have an account
-//        registerInLogin.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                loginIntent();
-//            }
-//        });
-//
-//        //register
-//        registerBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                registerIntent();
-//            }
-//        });
-//
-//
-//        //go back login interface from register
-//        registerInLogin.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View view) {
-//                registerIntent();
-//            }
-//        });
-
-    }
-
-    //link to register page
-    public void loginIntent(){
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
-    }
-
-    //link to login page
-    public void registerIntent(){
-        Intent intent = new Intent(this, login.class);
-        startActivity(intent);
-    }
-
 
 
     //navigation bar - replace navigation items by id
-    private void navigation(){
+    public void navigation(){
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -134,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
-
-
-
-
-
 
 
 }
