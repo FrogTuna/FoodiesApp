@@ -12,8 +12,8 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="127dp"
+            android:layout_height="52dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
             android:text="Foodies"
@@ -24,10 +24,10 @@
 
         <SearchView
             android:id="@+id/searchView"
-            android:layout_width="44dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="57dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,12 +77,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="50dp"
             android:clickable="true"
             android:src="@drawable/add_user"
             app:backgroundTint="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/searchView"
             app:layout_constraintTop_toTopOf="parent" />
 

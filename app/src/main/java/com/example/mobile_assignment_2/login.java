@@ -63,8 +63,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
         switch (view.getId()){
             case R.id.loginButton:
-                login();
-                //mainIntent();
+                //login();
+                mainIntent();
                 break;
             case R.id.registerInLogin:
                 loginIntent();
