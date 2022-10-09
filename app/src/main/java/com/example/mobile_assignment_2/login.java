@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,17 +90,16 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                         if(task.isSuccessful()){
                             FirebaseUser user = myAuth.getCurrentUser();
                             if(user.isEmailVerified()){
-                                Toast.makeText(login.this,"User login successfully", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
                                 mainIntent();
                             }
                             else{
-                                Toast.makeText(login.this,"Email address has not been verified", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                         else{
-                            Toast.makeText(login.this, "Login error occurs: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(loginBtn,"Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                         }
-
                     }
                 });
         }

@@ -26,7 +26,7 @@
         android:background="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/line2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158"
+        app:layout_constraintVertical_bias="0.136"
         tools:layout_editor_absoluteX="0dp" />
 
     <View

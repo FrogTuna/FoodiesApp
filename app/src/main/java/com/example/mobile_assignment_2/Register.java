@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -113,17 +114,19 @@ public class Register extends AppCompatActivity {
                         user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(Register.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
+                               // Toast.makeText(Register.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
                                 registerIntent();
                             }
                         }). addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("OnFailure:Email not sent" + e.getMessage());
+                                System.out.println("OnFailure: Email not sent" + e.getMessage());
                             }
                         });
                     }else{
-                        Toast.makeText(Register.this, "failed to create an account: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(registerBtn,"failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(Register.this, "failed to create an account: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
