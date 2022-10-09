@@ -13,19 +13,32 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     public ActivityMainBinding binding;
-
-    Button loginBtn;
-    TextView registerInLogin;
+    FirebaseAuth myAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        myAuth = FirebaseAuth.getInstance();
         navigation();
 
+    }
+
+    protected void onStart() {
+
+        super.onStart();
+
+        FirebaseUser user = myAuth.getCurrentUser();
+        if(user == null){
+            startActivity(new Intent(MainActivity.this, login.class));
+        }
     }
 
 
