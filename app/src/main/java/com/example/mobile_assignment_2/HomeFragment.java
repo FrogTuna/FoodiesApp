@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i("test", "hi");
+
         View v = inflater.inflate(R.layout.fragment_home,container,false);
         tabLayout = (TabLayout) v.findViewById(R.id.main_tab_layout);
         t = v.findViewById(R.id.home_text);
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Log.i("test", "hi");
+
                 if (position == 0) {
                     t.setText("explore");
                     Log.i("test", "explore");
