@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class Register extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class Register extends AppCompatActivity {
     TextView back;
     Button registerBtn;
     FirebaseAuth myAuth;
-    String userID;
+    DatabaseReference myReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,12 +111,13 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        FirebaseUser user = myAuth.getCurrentUser();
-                        user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        FirebaseUser fuser = myAuth.getCurrentUser();
+                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
-                               // Toast.makeText(Register.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
+                                User user = new User(usernameString, emailString);
+                                myReference.child("users").child(fuser.getUid()).setValue(user);
                                 registerIntent();
                             }
                         }). addOnFailureListener(new OnFailureListener() {
@@ -126,7 +128,6 @@ public class Register extends AppCompatActivity {
                         });
                     }else{
                         Snackbar.make(registerBtn,"failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
-                        //Toast.makeText(Register.this, "failed to create an account: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
