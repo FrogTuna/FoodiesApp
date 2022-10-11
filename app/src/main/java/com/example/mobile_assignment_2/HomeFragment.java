@@ -2,7 +2,15 @@ package com.example.mobile_assignment_2;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +40,8 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private TabLayout tabLayout;
+    ViewPager2 viewPager;
+    ViewPagerAdapter viewPagerAdapter;
     private TextView t;
     public HomeFragment() {
         // Required empty public constructor
@@ -65,38 +79,71 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_home,container,false);
-        tabLayout = (TabLayout) v.findViewById(R.id.main_tab_layout);
-        t = v.findViewById(R.id.home_text);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-
-                if (position == 0) {
-                    t.setText("explore");
-                    Log.i("test", "explore");
-
-                } else {
-                    t.setText("for you");
-                    Log.i("test", "for you");
-
+        View view = inflater.inflate(R.layout.fragment_home,container,false);
+        tabLayout = (TabLayout) view.findViewById(R.id.main_tab_layout);
+        TabItem tabExplore = view.findViewById(R.id.explore_tab);
+        TabItem tabForYou = view.findViewById(R.id.for_you_tab);
+        viewPager = view.findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) ->  {
+                    if (position == 0) {
+                        tab.setText("Explore");
+                    } else {
+                        tab.setText("For you");
+                    }
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        ).attach();
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                viewPager.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_home, container, false);
-        return v;
+        return view;
     }
+
+    public class ViewPagerAdapter extends FragmentStateAdapter {
+
+
+        public ViewPagerAdapter(Fragment fm) {
+            super(fm);
+
+        }
+
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case 0:
+                    return new ExploreFragment();
+                case 1:
+                    return new ForYouFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return 2;
+        }
+    }
+
 }
