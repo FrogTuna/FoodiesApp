@@ -1,14 +1,14 @@
 package com.example.mobile_assignment_2.chat;
 
-public class ChatListData {
+public class RequestListData {
     private String username;
-    private String content;
+    private String comment;
     private int avatarID;
 
 
-    public ChatListData(String _username, String _content, int _avatarID) {
+    public RequestListData(String _username, String _comment, int _avatarID) {
         this.username = _username;
-        this.content = _content;
+        this.comment = _comment;
         this.avatarID = _avatarID;
     }
     // Following is Get/Set function
@@ -19,11 +19,11 @@ public class ChatListData {
         this.username = _username;
     }
 
-    public String getContent() {
-        return this.content;
+    public String getComment() {
+        return this.comment;
     }
-    public void setRemark(String _content) {
-        this.content = _content;
+    public void setComment(String _comment) {
+        this.comment = _comment;
     }
 
     public int getAvatar() {
@@ -32,7 +32,6 @@ public class ChatListData {
     public void setAvatar(int _avatarID) {
         this.avatarID = avatarID;
     }
-
 
 
 }

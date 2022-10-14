@@ -3,6 +3,8 @@ package com.example.mobile_assignment_2.chat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +62,30 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        View view  = inflater.inflate(R.layout.fragment_chat, container, false);
+        // Implement following
+        ChatListData[] chatListData = new ChatListData[] { // Test Data
+                new ChatListData("user_1", "I am user 1", android.R.drawable.ic_dialog_email),
+                new ChatListData("user_2", "I am user 2", android.R.drawable.ic_dialog_info),
+                new ChatListData("user_3", "I am user 3", android.R.drawable.ic_delete),
+                new ChatListData("user_4", "I am user 4", android.R.drawable.ic_dialog_dialer),
+                new ChatListData("user_5", "I am user 5", android.R.drawable.ic_dialog_alert),
+                new ChatListData("user_6", "I am user 6", android.R.drawable.ic_dialog_map),
+                new ChatListData("user_7", "I am user 7", android.R.drawable.ic_dialog_email),
+                new ChatListData("user_8", "I am user 8", android.R.drawable.ic_dialog_info),
+                new ChatListData("user_9", "I am user 9", android.R.drawable.ic_delete),
+                new ChatListData("user_10", "I am user 10", android.R.drawable.ic_dialog_dialer),
+                new ChatListData("user_11", "I am user 11", android.R.drawable.ic_dialog_alert),
+                new ChatListData("user_12", "I am user 12", android.R.drawable.ic_dialog_map),
+        };
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.chatRecyclerView);
+        ChatListAdapter chatListAdapter = new ChatListAdapter(chatListData);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(chatListAdapter);
+        return view;
+
     }
 }

@@ -3,6 +3,8 @@ package com.example.mobile_assignment_2.chat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +62,31 @@ public class RequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_request, container, false);
+        View view  = inflater.inflate(R.layout.fragment_request, container, false);
+        // Implement following
+        RequestListData[] requestListData = new RequestListData[] { // Test Data
+                new RequestListData("user_1", "I am user 1", android.R.drawable.ic_dialog_email),
+                new RequestListData("user_2", "I am user 2", android.R.drawable.ic_dialog_info),
+                new RequestListData("user_3", "I am user 3", android.R.drawable.ic_delete),
+                new RequestListData("user_4", "I am user 4", android.R.drawable.ic_dialog_dialer),
+                new RequestListData("user_5", "I am user 5", android.R.drawable.ic_dialog_alert),
+                new RequestListData("user_6", "I am user 6", android.R.drawable.ic_dialog_map),
+                new RequestListData("user_7", "I am user 7", android.R.drawable.ic_dialog_email),
+                new RequestListData("user_8", "I am user 8", android.R.drawable.ic_dialog_info),
+                new RequestListData("user_9", "I am user 9", android.R.drawable.ic_delete),
+                new RequestListData("user_10", "I am user 10", android.R.drawable.ic_dialog_dialer),
+                new RequestListData("user_11", "I am user 11", android.R.drawable.ic_dialog_alert),
+                new RequestListData("user_12", "I am user 12", android.R.drawable.ic_dialog_map),
+        };
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.requestRecyclerView);
+        RequestListAdapter requestListAdapter = new RequestListAdapter(requestListData);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(requestListAdapter);
+        return view;
+
+
     }
 }

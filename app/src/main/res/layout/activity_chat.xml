@@ -28,7 +28,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <com.google.android.material.tabs.TabLayout
