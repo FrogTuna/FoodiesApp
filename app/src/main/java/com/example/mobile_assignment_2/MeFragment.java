@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -33,6 +35,7 @@ public class MeFragment extends Fragment {
     private String mParam2;
     FirebaseAuth myAuth;
     Button signOutBtn;
+    ImageView editProfileBtn;
 
 
     public MeFragment() {
@@ -57,15 +60,11 @@ public class MeFragment extends Fragment {
         return fragment;
     }
 
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myAuth = FirebaseAuth.getInstance();
 
+        myAuth = FirebaseAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -75,8 +74,13 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
+        editProfileBtn = (ImageView) view.findViewById(R.id.editProfileBtnInMeNavBar);
+
+
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,12 +88,29 @@ public class MeFragment extends Fragment {
                 signOut(view);
             }
         });
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                fromMePageToEditProfilePageIntent(view);
+            }
+        });
+
         return view;
     }
 
-    public void signOut(View v)
-    {
+    public void signOut(View v) {
+
         Intent intent = new Intent(getActivity(), login.class);
         startActivity(intent);
+
+    }
+
+    public void fromMePageToEditProfilePageIntent(View v){
+
+        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+        startActivity(intent);
+
     }
 }

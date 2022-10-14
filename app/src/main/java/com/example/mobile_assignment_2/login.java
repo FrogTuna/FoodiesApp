@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +30,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference myReference;
 
-
+    String defaultUsername = "leo727268082@gmail.com";
+    String defaultPassword = "123456789";
 
 
     @Override
@@ -82,27 +84,48 @@ public class login extends AppCompatActivity implements View.OnClickListener {
             password.requestFocus();
         }
         else{
-                myAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+            myAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(task.isSuccessful()){
-                            FirebaseUser user = myAuth.getCurrentUser();
-                            if(user.isEmailVerified()){
-                                Toast.makeText(login.this,"User login successfully", Toast.LENGTH_SHORT).show();
-                                mainIntent();
-                            }
-                            else{
-                                Toast.makeText(login.this,"Email address has not been verified", Toast.LENGTH_SHORT).show();
-                            }
+                    if(task.isSuccessful()){
+                        FirebaseUser user = myAuth.getCurrentUser();
+                        if(user.isEmailVerified()){
+                            Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
+                            mainIntent();
                         }
                         else{
-                            Toast.makeText(login.this, "Login error occurs: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
                         }
-
                     }
-                });
+                    else{
+                        Snackbar.make(loginBtn,"Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
+    }
+
+    private void loginUser2(){
+        myAuth.signInWithEmailAndPassword(defaultUsername, defaultPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful()){
+                    FirebaseUser user = myAuth.getCurrentUser();
+                    if(user.isEmailVerified()){
+                        Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
+                        mainIntent();
+                    }
+                    else{
+                        Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Snackbar.make(loginBtn,"Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 
@@ -114,7 +137,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
         switch (view.getId()){
             case R.id.loginButton:
-                loginUser();
+                loginUser2();
                 //mainIntent();
                 break;
             case R.id.registerInLogin:

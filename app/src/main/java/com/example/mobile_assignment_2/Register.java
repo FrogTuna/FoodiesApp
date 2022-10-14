@@ -18,9 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class Register extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class Register extends AppCompatActivity {
     TextView back;
     Button registerBtn;
     FirebaseAuth myAuth;
-    String userID;
+    DatabaseReference myReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,21 +111,23 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        FirebaseUser user = myAuth.getCurrentUser();
-                        user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        FirebaseUser fuser = myAuth.getCurrentUser();
+                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(Register.this, "Verification Email has been sent", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
+                                User user = new User(usernameString, emailString);
+                                myReference.child("users").child(fuser.getUid()).setValue(user);
                                 registerIntent();
                             }
                         }). addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("OnFailure:Email not sent" + e.getMessage());
+                                System.out.println("OnFailure: Email not sent" + e.getMessage());
                             }
                         });
                     }else{
-                        Toast.makeText(Register.this, "failed to create an account: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(registerBtn,"failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
