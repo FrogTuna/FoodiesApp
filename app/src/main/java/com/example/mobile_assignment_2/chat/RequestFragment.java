@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.mobile_assignment_2.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RequestFragment#newInstance} factory method to
@@ -27,28 +30,29 @@ public class RequestFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public RequestFragment() {
+    private ArrayList reqArrayList;
+    public RequestFragment(ArrayList _reqArrayList) {
         // Required empty public constructor
+        reqArrayList = _reqArrayList;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RequestFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RequestFragment newInstance(String param1, String param2) {
-        RequestFragment fragment = new RequestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+//     * @return A new instance of fragment RequestFragment.
+//     */
+//    // TODO: Rename and change types and number of parameters
+//    public static RequestFragment newInstance(String param1, String param2) {
+//        RequestFragment fragment = new RequestFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,20 +68,15 @@ public class RequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_request, container, false);
         // Implement following
-        RequestListData[] requestListData = new RequestListData[] { // Test Data
-                new RequestListData("user_1", "I am user 1", android.R.drawable.ic_dialog_email),
-                new RequestListData("user_2", "I am user 2", android.R.drawable.ic_dialog_info),
-                new RequestListData("user_3", "I am user 3", android.R.drawable.ic_delete),
-                new RequestListData("user_4", "I am user 4", android.R.drawable.ic_dialog_dialer),
-                new RequestListData("user_5", "I am user 5", android.R.drawable.ic_dialog_alert),
-                new RequestListData("user_6", "I am user 6", android.R.drawable.ic_dialog_map),
-                new RequestListData("user_7", "I am user 7", android.R.drawable.ic_dialog_email),
-                new RequestListData("user_8", "I am user 8", android.R.drawable.ic_dialog_info),
-                new RequestListData("user_9", "I am user 9", android.R.drawable.ic_delete),
-                new RequestListData("user_10", "I am user 10", android.R.drawable.ic_dialog_dialer),
-                new RequestListData("user_11", "I am user 11", android.R.drawable.ic_dialog_alert),
-                new RequestListData("user_12", "I am user 12", android.R.drawable.ic_dialog_map),
-        };
+        RequestListData[] requestListData = new RequestListData[reqArrayList.size()];
+        for (int i = 0; i < reqArrayList.size(); i++) {
+            requestListData[i] = new RequestListData(
+                    ((HashMap<String, String>)reqArrayList.get(i)).get("name"),
+                    ((HashMap<String, String>)reqArrayList.get(i)).get("content"),
+                    android.R.drawable.ic_dialog_email
+            );
+        }
+
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.requestRecyclerView);
         RequestListAdapter requestListAdapter = new RequestListAdapter(requestListData);

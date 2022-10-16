@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.mobile_assignment_2.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 ///**
 // * A simple {@link Fragment} subclass.
 // * Use the {@link FriendFragment#newInstance} factory method to
@@ -27,9 +30,11 @@ public class FriendFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public FriendFragment() {
+    private ArrayList friendArrayList, userArrayList;
+    public FriendFragment(ArrayList _friendArrayList, ArrayList _userArrayList) {
         // Required empty public constructor
+        friendArrayList = _friendArrayList;
+        userArrayList = _userArrayList;
     }
 
 //    /**
@@ -68,21 +73,18 @@ public class FriendFragment extends Fragment {
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_friend, container, false);
         // Implement following
-        FriendListData[] friendListData = new FriendListData[] { // Test Data
-                new FriendListData("user_1", "I am user 1", android.R.drawable.ic_dialog_email),
-                new FriendListData("user_2", "I am user 2", android.R.drawable.ic_dialog_info),
-                new FriendListData("user_3", "I am user 3", android.R.drawable.ic_delete),
-                new FriendListData("user_4", "I am user 4", android.R.drawable.ic_dialog_dialer),
-                new FriendListData("user_5", "I am user 5", android.R.drawable.ic_dialog_alert),
-                new FriendListData("user_6", "I am user 6", android.R.drawable.ic_dialog_map),
-                new FriendListData("user_7", "I am user 7", android.R.drawable.ic_dialog_email),
-                new FriendListData("user_8", "I am user 8", android.R.drawable.ic_dialog_info),
-                new FriendListData("user_9", "I am user 9", android.R.drawable.ic_delete),
-                new FriendListData("user_10", "I am user 10", android.R.drawable.ic_dialog_dialer),
-                new FriendListData("user_11", "I am user 11", android.R.drawable.ic_dialog_alert),
-                new FriendListData("user_12", "I am user 12", android.R.drawable.ic_dialog_map),
-        };
+//        System.out.println("[+] Friend check: " + friendArrayList);
+        FriendListData[] friendListData = new FriendListData[friendArrayList.size()];
 
+
+        for (int i = 0; i < friendArrayList.size(); i++) {
+            for (int j = 0; j < userArrayList.size(); j++) {
+                if(friendArrayList.get(i).equals(((HashMap<String, String>)userArrayList.get(j)).get("name"))) {
+                    friendListData[i] = new FriendListData((String)friendArrayList.get(i), ((HashMap<String, String>)userArrayList.get(j)).get("remark"), android.R.drawable.ic_dialog_email);
+                }
+            }
+//            friendListData[i] = new FriendListData((String)friendArrayList.get(i), "I am user 1", android.R.drawable.ic_dialog_email);
+        }
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.friendRecyclerView);
         FriendListAdapter friendListAdapter = new FriendListAdapter(friendListData);
 

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                    replaceFragment(new SocialFragment());
                     break;
                 case R.id.add:
                     replaceFragment(new AddFragment());
