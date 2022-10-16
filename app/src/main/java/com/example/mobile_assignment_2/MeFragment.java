@@ -78,7 +78,7 @@ public class MeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
-        editProfileBtn = (ImageView) view.findViewById(R.id.editProfileBtnInMeNavBar);
+        editProfileBtn = (ImageView) view.findViewById(R.id.headPortrait);
 
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
