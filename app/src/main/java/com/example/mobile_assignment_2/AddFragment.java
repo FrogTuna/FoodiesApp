@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,18 @@ public class AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_createpost, container, false);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.imageLinearLayout);
+        for(int i=0; i<5; i++) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageResource(R.drawable.add_user);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    300,
+                    RelativeLayout.LayoutParams.MATCH_PARENT
+            );
+            imageView.setLayoutParams(params);
+            linearLayout.addView(imageView);
+        }
+        return view;
     }
 }
