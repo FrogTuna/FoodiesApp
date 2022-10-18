@@ -11,18 +11,4 @@ public class EditProfileActivity extends AppCompatActivity {
 
     Button saveProfileBtn;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        saveProfileBtn = findViewById(R.id.saveProfileBtn);
-
-        saveProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EditProfileActivity.this, MeFragment.class);
-                startActivity(intent);
-            }
-        });
-    }
 }
