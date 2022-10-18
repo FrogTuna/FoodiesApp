@@ -7,6 +7,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+
 
 public class ChatPagerAdapter extends FragmentStateAdapter {
 //    getItem method gives the fragment with respect to the position,
@@ -14,9 +16,20 @@ public class ChatPagerAdapter extends FragmentStateAdapter {
 //    getPageTitle method gives the title of the fragment.
     private DatabaseReference databaseReference;
     private int NUM_PAGES;
-    public ChatPagerAdapter(FragmentActivity fa, int _NUM_PAGES) {
+    ArrayList friendArrayList, userArrayList, reqArrayList, chatArrayList;
+    public ChatPagerAdapter(FragmentActivity fa,
+                            int _NUM_PAGES,
+                            ArrayList _friendArrayList,
+                            ArrayList _userArrayList,
+                            ArrayList _reqArrayList,
+                            ArrayList _chatArrayList
+    ) {
         super(fa);
         NUM_PAGES = _NUM_PAGES;
+        friendArrayList = _friendArrayList;
+        userArrayList = _userArrayList;
+        reqArrayList = _reqArrayList;
+        chatArrayList = _chatArrayList;
     }
 
     @Override
@@ -25,13 +38,13 @@ public class ChatPagerAdapter extends FragmentStateAdapter {
 
         switch(position) {
             case 0:
-                fragment = new ChatFragment();
+                fragment = new ChatFragment(this.chatArrayList);
                 break;
             case 1:
-                fragment = new FriendFragment();
+                fragment = new FriendFragment(this.friendArrayList, this.userArrayList);
                 break;
             case 2:
-                fragment = new RequestFragment();
+                fragment = new RequestFragment(this.reqArrayList);
                 break;
 
         }
