@@ -1,18 +1,18 @@
-package com.example.mobile_assignment_2;
+package com.example.mobile_assignment_2.me;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.authentication.login;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**

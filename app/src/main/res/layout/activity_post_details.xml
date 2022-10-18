@@ -20,7 +20,7 @@
             android:id="@+id/post_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".PostDetails"
+            tools:context=".home.PostDetails"
             android:orientation="vertical">
 
             <LinearLayout

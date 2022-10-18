@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.example.mobile_assignment_2.chat.ChatFragment;
 import com.example.mobile_assignment_2.databinding.ActivityMainBinding;
+import com.example.mobile_assignment_2.home.HomeFragment;
+import com.example.mobile_assignment_2.me.MeFragment;
+import com.example.mobile_assignment_2.post.AddFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

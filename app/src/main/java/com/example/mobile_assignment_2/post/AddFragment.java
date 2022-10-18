@@ -1,4 +1,4 @@
-package com.example.mobile_assignment_2;
+package com.example.mobile_assignment_2.post;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.example.mobile_assignment_2.R;
 
 /**
  * A simple {@link Fragment} subclass.

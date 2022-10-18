@@ -1,8 +1,10 @@
-package com.example.mobile_assignment_2;
+package com.example.mobile_assignment_2.message;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.mobile_assignment_2.R;
 
 public class ChatWindowActivity extends AppCompatActivity {
 
