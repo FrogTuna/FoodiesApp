@@ -17,7 +17,7 @@
             android:name=".PostDetails"
             android:exported="false"
             android:label="@string/title_activity_post_details"
-            android:theme="@style/Theme.Mobileassignment2.NoActionBar">
+            android:theme="@style/Theme.Mobileassignment2">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

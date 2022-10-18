@@ -1,13 +1,10 @@
 package com.example.mobile_assignment_2;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -24,8 +21,9 @@ import java.util.ArrayList;
  * Use the {@link ExploreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploreFragment extends Fragment {
-
+public class ExploreFragment extends Fragment implements PostItemClickListener {
+    private ArrayList<Post> posts = new ArrayList<>();
+    private RecyclerView recyclerView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +32,7 @@ public class ExploreFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    RecyclerView recyclerView;
+
     public ExploreFragment() {
         // Required empty public constructor
     }
@@ -70,7 +68,7 @@ public class ExploreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
-        ArrayList<Post> posts = new ArrayList<>();
+
         posts.add(new Post("title 1", "description 1", "author 1"));
         posts.add(new Post("title 2", "description 2", "author 2"));
         posts.add(new Post("title 3", "description 3", "author 3"));
@@ -84,26 +82,35 @@ public class ExploreFragment extends Fragment {
         //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-
-
         CustomAdapter customAdapter = new CustomAdapter(posts);
+        customAdapter.setClickListener(this);
         recyclerView.setAdapter(customAdapter);
 
         return view;
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        Post post = posts.get(position);
+        Intent i = new Intent(getActivity(), PostDetails.class);
+        i.putExtra("title", post.getTitle());
+        i.putExtra("description", post.getDescription());
+        i.putExtra("author", post.getAuthor());
+        Log.i("hello", post.getTitle());
+        Log.i("hello", post.getDescription());
+        startActivity(i);
+    }
 
 
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
-
+        private PostItemClickListener postItemClickListener;
         /**
          * Provide a reference to the type of views that you are using
          * (custom ViewHolder).
          */
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
 
             TextView authorView;
@@ -111,13 +118,18 @@ public class ExploreFragment extends Fragment {
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
-
+                view.setOnClickListener(this);
                 titleView =  (TextView) view.findViewById(R.id.post_title);
-
                 authorView = (TextView)  view.findViewById(R.id.author_name);
             }
 
 
+            @Override
+            public void onClick(View view) {
+                if(postItemClickListener != null) {
+                    postItemClickListener.onClick(view, getAbsoluteAdapterPosition());
+                }
+            }
         }
 
         /**
@@ -130,7 +142,9 @@ public class ExploreFragment extends Fragment {
             this.posts = posts;
 
         }
-
+        public void setClickListener(PostItemClickListener postItemClickListener) {
+            this.postItemClickListener = postItemClickListener;
+        }
         // Create new views (invoked by the layout manager)
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
