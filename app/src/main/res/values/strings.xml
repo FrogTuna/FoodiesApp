@@ -9,4 +9,6 @@
     <string name="title_activity_post_details">PostDetails</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="comment">Enter a cmment...</string>
+    <string name="create_post_title">Enter title</string>
+    <string name="create_post_description">Enter description</string>
 </resources>
