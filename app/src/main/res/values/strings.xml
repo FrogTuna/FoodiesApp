@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">foodies</string>
+    <string name="app_name">Foodies</string>
     <string name="hello_first_fragment">hello_first_fragment</string>
     <string name="next">next</string>
     <string name="previous">previous</string>
     <string name="first_fragment_label">first_fragment_label</string>
     <string name="second_fragment_label">second_fragment_label</string>
+    <string name="title_activity_post_details">PostDetails</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="comment">Enter a cmment...</string>
 </resources>
