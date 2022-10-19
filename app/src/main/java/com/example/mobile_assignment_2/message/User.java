@@ -1,4 +1,4 @@
-package com.example.mobile_assignment_2;
+package com.example.mobile_assignment_2.message;
 
 public class User {
 

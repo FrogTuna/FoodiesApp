@@ -1,4 +1,4 @@
-package com.example.mobile_assignment_2;
+package com.example.mobile_assignment_2.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.mobile_assignment_2.R;
 
 
 public class PostDetails extends AppCompatActivity {

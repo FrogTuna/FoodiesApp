@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/postButton"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".AddFragment"
+        tools:context=".post.AddFragment"
         android:orientation="vertical"
         android:fillViewport="true">
         <HorizontalScrollView
