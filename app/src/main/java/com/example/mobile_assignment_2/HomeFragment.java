@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        getActivity().setTitle("Foodies");
     }
 
     @Override
