@@ -15,7 +15,8 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_left);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_left);
+        return null;
     }
 
     @Override
@@ -27,8 +28,6 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.MyViewHold
     public int getItemCount() {
         return 0;
     }
-
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
