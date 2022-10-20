@@ -105,6 +105,7 @@ public class MeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), login.class);
         startActivity(intent);
 
+
     }
 
     public void fromMePageToEditProfilePageIntent(View v){

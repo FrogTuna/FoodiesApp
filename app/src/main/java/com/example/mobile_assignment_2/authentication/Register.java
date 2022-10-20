@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 
 public class Register extends AppCompatActivity {
@@ -116,9 +117,13 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(username.toString()).build();
+                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                firebaseUser.updateProfile(userProfileChangeRequest);
                                 User user = new User(usernameString, emailString);
                                 myReference.child("users").child(fuser.getUid()).setValue(user);
                                 registerIntent();
+                                finish();
                             }
                         }). addOnFailureListener(new OnFailureListener() {
                             @Override
