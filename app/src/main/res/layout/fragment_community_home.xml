@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
         android:layout_marginTop="20dp"
-        app:tabMode="fixed"
+        android:layout_marginEnd="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabIconTint="@color/orange"
         app:tabIndicatorColor="@color/orange"
+        app:tabMode="fixed"
         app:tabTextColor="@color/orange"
         tools:ignore="MissingConstraints">
 
@@ -27,8 +27,7 @@
             android:id="@+id/comm_Discover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discover"
-            />
+            android:text="Discover" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/my_community"

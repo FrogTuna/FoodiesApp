@@ -81,8 +81,8 @@ public class CommunityFragment extends Fragment {
             switch (position) {
                 case 0:
                     return new DiscoverCommunityFragment();
-//                case 1:
-//                    return new ForYouFragment();
+                case 1:
+                    return new MyCommunityFragment();
                 default:
                     return null;
             }
