@@ -41,6 +41,7 @@
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:backgroundTint="#00FFFFFF"
+            android:contentDescription="food_img"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/white_join" />
 
