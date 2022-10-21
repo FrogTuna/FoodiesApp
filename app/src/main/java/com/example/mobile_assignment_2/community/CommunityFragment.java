@@ -77,9 +77,9 @@ public class CommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         posts.add(new Communitypost(R.drawable.food, "commName1"));
-        posts.add(new Communitypost(R.drawable.food, "commName1"));
-        posts.add(new Communitypost(R.drawable.food, "commName1"));
-        posts.add(new Communitypost(R.drawable.food, "commName1"));
+        posts.add(new Communitypost(R.drawable.food2, "commName2"));
+        posts.add(new Communitypost(R.drawable.food, "commName3"));
+        posts.add(new Communitypost(R.drawable.food2, "commName4"));
 
         // Inflate the layout for this fragment
 
@@ -149,7 +149,7 @@ public class CommunityFragment extends Fragment {
             //Post post = (Post) posts.get(position);
             viewHolder.titleView.setText(posts.get(position).getCommName());
 
-            viewHolder.imgView.setImageResource(posts.get(position).getCommImage());
+            viewHolder.imgView.setBackgroundResource(posts.get(position).getCommImage());
 
         }
 
