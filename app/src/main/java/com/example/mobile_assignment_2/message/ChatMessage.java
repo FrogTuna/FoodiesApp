@@ -1,46 +1,59 @@
 package com.example.mobile_assignment_2.message;
 
-import java.util.Date;
+import com.makeramen.roundedimageview.RoundedImageView;
 
-public class ChatMessage {
+import java.util.Comparator;
 
-    private String messageText;
-    private String messageUser;
-    private long messageTime;
+public class ChatMessage implements Comparable<ChatMessage>{
 
-    public ChatMessage(String messageText, String messageUser) {
-        this.messageText = messageText;
-        this.messageUser = messageUser;
+    private String senderText;
+    private String senderTime;
+    private int senderImage;
+    private String role;
+    private int index;
 
-        // Initialize to current time
-        messageTime = new Date().getTime();
+
+    public ChatMessage(String senderText, String senderTime, int senderImage, String role, int index) {
+        this.senderText = senderText;
+        this.senderTime = senderTime;
+        this.senderImage = senderImage;
+        this.role = role;
+        this.index = index;
     }
 
-    public ChatMessage(){
 
+    public String getSenderText() {
+        return senderText;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public String getSenderTime() {
+        return senderTime;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public int getSenderImage() {
+        return senderImage;
     }
 
-    public String getMessageUser() {
-        return messageUser;
+    public String getRole(){ return role; }
+
+    public int getIndex(){ return index; }
+
+
+    @Override
+    public int compareTo(ChatMessage chatMessage) {
+        return this.index - chatMessage.index;
+    }
+}
+
+class IndexComparator implements Comparator<ChatMessage>{
+
+    @Override
+    public int compare(ChatMessage chatMessage1, ChatMessage chatMessage2) {
+        return chatMessage1.getIndex() - chatMessage2.getIndex();
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
-    }
-
-    public long getMessageTime() {
-        return messageTime;
-    }
-
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
+    @Override
+    public Comparator<ChatMessage> reversed() {
+        return Comparator.super.reversed();
     }
 }
