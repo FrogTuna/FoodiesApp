@@ -11,4 +11,42 @@
     <string name="comment">Enter a cmment...</string>
     <string name="create_post_title">Enter title</string>
     <string name="create_post_description">Enter description</string>
+
+
+
+    <string-array name="messageLeftText">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
+
+    <string-array name="messageTimeLeft">
+        <item>12:06pm</item>
+        <item>12:07pm</item>
+        <item>12:08pm</item>
+        <item>12:09pm</item>
+        <item>12:010pm</item>
+    </string-array>
+
+    
+    <string-array name="messageRightText">
+        <item>Hello Peter</item>
+        <item>Nice to meet you</item>
+        <item>My name is leo</item>
+        <item>Would you buy me a house in Beijing i will appreciate it</item>
+        <item>i will assume you agree you</item>
+    </string-array>
+
+    <string-array name="messageTimeRight">
+        <item>12:01pm</item>
+        <item>12:02pm</item>
+        <item>12:03pm</item>
+        <item>12:04pm</item>
+        <item>12:05pm</item>
+    </string-array>
+
+
+    
 </resources>

@@ -18,7 +18,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contentDescription="search new friends"
-    tools:context=".SocialFragment">
+    tools:context=".chat.SocialFragment">
 
     <TextView
         android:id="@+id/textView"
