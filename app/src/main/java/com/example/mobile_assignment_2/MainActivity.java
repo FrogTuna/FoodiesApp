@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.example.mobile_assignment_2.authentication.login;
 import com.example.mobile_assignment_2.SocialFragment;
+import com.example.mobile_assignment_2.community.CommunityFragment;
 import com.example.mobile_assignment_2.databinding.ActivityMainBinding;
 import com.example.mobile_assignment_2.home.HomeFragment;
 import com.example.mobile_assignment_2.me.MeFragment;
