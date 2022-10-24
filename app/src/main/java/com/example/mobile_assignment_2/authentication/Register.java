@@ -24,6 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Register extends AppCompatActivity {
 
@@ -35,6 +40,8 @@ public class Register extends AppCompatActivity {
     Button registerBtn;
     FirebaseAuth myAuth;
     DatabaseReference myReference;
+    String imageUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,7 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.registerPassword);
         registerBtn = findViewById(R.id.registerButton);
         back = findViewById(R.id.registerBack);
-
+        myReference = FirebaseDatabase.getInstance().getReference();
         myAuth = FirebaseAuth.getInstance();
 
 
@@ -117,11 +124,13 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
-                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(username.toString()).build();
-                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                firebaseUser.updateProfile(userProfileChangeRequest);
-                                User user = new User(usernameString, emailString);
-                                myReference.child("users").child(fuser.getUid()).setValue(user);
+//                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(username.toString()).build();
+//                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//                                firebaseUser.updateProfile(userProfileChangeRequest);
+
+                                User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "");
+                                myReference.child("Users").child(fuser.getUid()).setValue(user);
+//                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
                                 registerIntent();
                                 finish();
                             }

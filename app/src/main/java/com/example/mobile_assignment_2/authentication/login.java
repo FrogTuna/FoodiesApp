@@ -123,6 +123,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                     if(user.isEmailVerified()){
                         Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
                         mainIntent();
+                        finish();
                     }
                     else{
                         Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
