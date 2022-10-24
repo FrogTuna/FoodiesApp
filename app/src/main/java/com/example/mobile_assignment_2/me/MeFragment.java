@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.mobile_assignment_2.R;
@@ -35,6 +36,7 @@ public class MeFragment extends Fragment {
     private String mParam2;
     FirebaseAuth myAuth;
     Button signOutBtn;
+    ImageButton postsBtn;
     ImageView editProfileBtn;
 
 
@@ -79,6 +81,7 @@ public class MeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
         editProfileBtn = (ImageView) view.findViewById(R.id.headPortrait);
+        postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
 
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +89,12 @@ public class MeFragment extends Fragment {
             public void onClick(View view) {
                 myAuth.signOut();
                 signOut(view);
+            }
+        });
+        postsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromMePageToMyPostsPageIntent(view);
             }
         });
 
@@ -98,6 +107,11 @@ public class MeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void fromMePageToMyPostsPageIntent(View view){
+        Intent intent = new Intent(getActivity(), MyPostsActivity.class);
+        startActivity(intent);
     }
 
     public void signOut(View v) {
