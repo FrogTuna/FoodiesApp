@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mobile_assignment_2.chat.ChatActivity;
 import com.example.mobile_assignment_2.chat.ChatListAdapter;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SocialFragment#newInstance} factory method to
+ * Use the {@link SocialFragment} factory method to
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
@@ -87,10 +88,35 @@ public class SocialFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        searchView = (SearchView) findViewById(R.id.searchView);
+
         friendshipArrayList = new ArrayList();
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
         chatArrayList = new ArrayList();
+
+        /* Search view */
+//        1. determine page
+//        2. search based on different array
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//
+//                if(list.contains(query)){
+//                    adapter.getFilter().filter(query);
+//                }else{
+//                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                //    adapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+
         initialFireBase();
 
 
@@ -123,8 +149,38 @@ public class SocialFragment extends Fragment {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.setAdapter(chatListAdapter);
 //        return view;
+
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
+        searchView = view.findViewById(R.id.searchView);
+        chatPagerAdapter = new ChatPagerAdapter(
+                getActivity(),
+                NUM_PAGES,
+                friendshipArrayList,
+                userArrayList,
+                reqArrayList,
+                chatArrayList
+        );
+        viewPager2.setAdapter(chatPagerAdapter);
+        new TabLayoutMediator(tabLayout, viewPager2,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(TabLayout.Tab tab, int position) {
+                        switch (position) {
+                            case 0:
+                                tab.setText("Chat");
+                                break;
+                            case 1:
+                                tab.setText("Friend");
+                                break;
+                            case 2:
+                                tab.setText("Request");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }).attach();
 
         return view;
     }
