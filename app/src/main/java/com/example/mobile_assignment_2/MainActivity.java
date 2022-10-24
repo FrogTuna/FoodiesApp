@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mobile_assignment_2.authentication.login;
+import com.example.mobile_assignment_2.SocialFragment;
 import com.example.mobile_assignment_2.community.CommunityFragment;
 import com.example.mobile_assignment_2.databinding.ActivityMainBinding;
 import com.example.mobile_assignment_2.home.HomeFragment;
@@ -29,14 +32,17 @@ public class MainActivity extends AppCompatActivity {
         navigation();
 
     }
-
+    @Override
+    public void onBackPressed() {
+        return;
+    }
     protected void onStart() {
 
         super.onStart();
 
         FirebaseUser user = myAuth.getCurrentUser();
         if(user == null){
-//            startActivity(new Intent(MainActivity.this, login.class));
+            startActivity(new Intent(MainActivity.this, login.class));
         }
     }
 

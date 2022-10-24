@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
     private TabLayout tabLayout;
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
+
     private TextView t;
     public HomeFragment() {
         // Required empty public constructor
@@ -74,8 +75,6 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         tabLayout = (TabLayout) view.findViewById(R.id.main_tab_layout);
-        TabItem tabExplore = view.findViewById(R.id.explore_tab);
-        TabItem tabForYou = view.findViewById(R.id.for_you_tab);
         viewPager = view.findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
@@ -88,26 +87,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
         ).attach();
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_home, container, false);
         return view;
     }
 

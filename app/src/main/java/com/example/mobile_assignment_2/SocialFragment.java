@@ -12,12 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mobile_assignment_2.chat.ChatActivity;
 import com.example.mobile_assignment_2.chat.ChatListAdapter;
 import com.example.mobile_assignment_2.chat.ChatListData;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +33,7 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SocialFragment#newInstance} factory method to
+ * Use the {@link SocialFragment#} factory method to
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
@@ -353,6 +355,7 @@ public class SocialFragment extends Fragment {
                         }).attach();
 
             }
+
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {

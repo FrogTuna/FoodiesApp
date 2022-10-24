@@ -11,13 +11,50 @@
     <string name="comment">Enter a cmment...</string>
     <string name="create_post_title">Enter title</string>
     <string name="create_post_description">Enter description</string>
-    <string name="name">Enter Event Name</string>
-    <string name="time">When to Start</string>
-    <string name="location">Enter the Location</string>
-    <string name="people_num">Enter People Number</string>
-    <string name="com_name">Enter Community Name</string>
-    <string name="com_category">Select Category</string>
-    <string name="com_description">Enter Description</string>
-    <string name="com_filter">Filter</string>
-    <string name="com_search">Search</string>
+
+
+
+    <string-array name="messageLeftText">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
+
+    <string-array name="messageTimeLeft">
+        <item>12:06pm</item>
+        <item>12:07pm</item>
+        <item>12:08pm</item>
+        <item>12:09pm</item>
+        <item>12:010pm</item>
+    </string-array>
+
+    
+    <string-array name="messageRightText">
+        <item>Hello Peter</item>
+        <item>Nice to meet you</item>
+        <item>My name is leo</item>
+        <item>Would you buy me a house in Beijing i will appreciate it</item>
+        <item>i will assume you agree you</item>
+    </string-array>
+
+    <string-array name="messageTimeRight">
+        <item>12:01pm</item>
+        <item>12:02pm</item>
+        <item>12:03pm</item>
+        <item>12:04pm</item>
+        <item>12:05pm</item>
+    </string-array>
+
+
+    
+=======
+    <string name="post_name">Enter poster name:</string>
+    <string name="head_protrait">head protrait</string>
+    <string name="post_button_in_profile">post button in profile</string>
+    <string name="star_button_in_profile">star button in profile</string>
+    <string name="message_button_in_profile">message button in profile</string>
+    <string name="community_button_in_profile">community button in profile</string>
+    >>>>>>> f04a560b7d03318612feba4ad97d10f993e2eb32
 </resources>

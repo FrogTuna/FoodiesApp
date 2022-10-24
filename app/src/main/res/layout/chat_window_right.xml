@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/chatWindowRightUserImage"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:background="@drawable/old_man"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/chatMessageRightSendText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:riv_oval="true" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:id="@+id/chatMessageRightSendText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-</LinearLayout>
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_send_message"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toStartOf="@+id/chatWindowRightUserImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/chatMessageRightDateAndTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="12:30pm"
+        android:textColor="@color/deepGrey"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/chatMessageRightSendText"
+        app:layout_constraintTop_toBottomOf="@+id/chatMessageRightSendText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
