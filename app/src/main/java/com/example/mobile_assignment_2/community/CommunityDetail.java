@@ -18,8 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.home.ForYouFragment;
-import com.example.mobile_assignment_2.home.Post;
+//import com.example.mobile_assignment_2.home.ForYouFragment;
+//import com.example.mobile_assignment_2.home.Post;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class CommunityDetail extends Fragment {
         View view = inflater.inflate(R.layout.fragment_com_detail, container, false);
 
         ArrayList<Event> events = new ArrayList<>();
-        ArrayList<Post> newPosts = new ArrayList<>();
+//        ArrayList<Post> newPosts = new ArrayList<>();
         CustomAdapter customAdapter = new CustomAdapter(getContext(), events);
         listView_event = (ListView) view.findViewById(R.id.event_list);
         listView_event.setAdapter(customAdapter);
@@ -86,7 +86,7 @@ public class CommunityDetail extends Fragment {
     }
 
     private void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.app_bar);
+        Toolbar toolbar = view.findViewById(R.id.com_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
