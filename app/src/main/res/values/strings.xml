@@ -11,7 +11,15 @@
     <string name="comment">Enter a cmment...</string>
     <string name="create_post_title">Enter title</string>
     <string name="create_post_description">Enter description</string>
-
+    <string name="name">Enter Event Name</string>
+    <string name="time">When to Start</string>
+    <string name="location">Enter the Location</string>
+    <string name="people_num">Enter People Number</string>
+    <string name="com_name">Enter Community Name</string>
+    <string name="com_category">Select Category</string>
+    <string name="com_description">Enter Description</string>
+    <string name="com_filter">Filter</string>
+    <string name="com_search">Search</string>
 
 
     <string-array name="messageLeftText">
@@ -30,7 +38,7 @@
         <item>12:010pm</item>
     </string-array>
 
-    
+
     <string-array name="messageRightText">
         <item>Hello Peter</item>
         <item>Nice to meet you</item>
@@ -48,8 +56,7 @@
     </string-array>
 
 
-    
-=======
+    =======
     <string name="post_name">Enter poster name:</string>
     <string name="head_protrait">head protrait</string>
     <string name="post_button_in_profile">post button in profile</string>
