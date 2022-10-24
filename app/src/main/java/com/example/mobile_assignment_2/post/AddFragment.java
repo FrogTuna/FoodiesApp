@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -21,10 +22,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.Post;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,8 +64,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private Button postBtn;
     private Button imageBtn;
     LinearLayout linearLayout;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
-
+    ArrayList<Uri> pickedImageUris = new ArrayList<>();
 
     public AddFragment() {
         // Required empty public constructor
@@ -88,13 +107,77 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_createpost, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.imageLinearLayout);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         imageBtn = view.findViewById(R.id.imageButton);
         imageBtn.setOnClickListener(this);
         titleView = view.findViewById(R.id.create_post_title);
         descripView = view.findViewById(R.id.create_post_description);
         postBtn = view.findViewById(R.id.postButton);
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = titleView.getText().toString();
+                String descrip = descripView.getText().toString();
+                ArrayList<String> downloadimageUrls = new ArrayList<>();
+                if (!title.isEmpty() && !descrip.isEmpty()) {
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReference();
+                    // upload all picked images and download their Url, then upload post with post infor and these image Urls
+                    for (Uri imageUri: pickedImageUris) {
+                        StorageReference postImagesRef = storageRef.child("postImages/" + imageUri.getLastPathSegment());
+                        // upload picked images
+                        UploadTask uploadTask = postImagesRef.putFile(imageUri);
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                    @Override
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                        if (!task.isSuccessful()) {
+                                            throw task.getException();
+                                        }
+
+                                        // retrieve the download URL of uploaded image
+                                        return postImagesRef.getDownloadUrl();
+                                    }
+                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if (task.isSuccessful()) {
+                                            // get downloaded URL of uploaded image
+                                            Uri downloadUri = task.getResult();
+                                            downloadimageUrls.add(downloadUri.toString());
+                                            if (downloadimageUrls.size() == pickedImageUris.size()) {
+                                                Post post = new Post(title, descrip, "", currentUser.getUid(), downloadimageUrls);
+                                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                                DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
+
+                                                // add post data to firebase database
+                                                databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                            }
+                                        } else {
+
+                                        }
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+                }
 
 
+
+
+                }});
         return view;
     }
 
@@ -131,6 +214,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
                     linearLayout.addView(imageView);
 
+                    pickedImageUris.add(uri);
                 }
             });
 
