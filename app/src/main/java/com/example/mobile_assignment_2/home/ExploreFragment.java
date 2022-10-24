@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 
 import java.util.ArrayList;
@@ -71,12 +72,12 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        posts.add(new Post("title 1", "description 1", "author 1"));
-        posts.add(new Post("title 2", "description 2", "author 2"));
-        posts.add(new Post("title 3", "description 3", "author 3"));
-        posts.add(new Post("title 4", "description 4", "author 4"));
-        posts.add(new Post("title 5", "description 5", "author 5"));
-        posts.add(new Post("title 6", "description 6", "author 6"));
+        posts.add(new Post("title 1", "description 1", "author 1", ""));
+        posts.add(new Post("title 2", "description 2", "author 2", ""));
+        posts.add(new Post("title 3", "description 3", "author 3", ""));
+        posts.add(new Post("title 4", "description 4", "author 4", ""));
+        posts.add(new Post("title 5", "description 5", "author 5", ""));
+        posts.add(new Post("title 6", "description 6", "author 6", ""));
         // Inflate the layout for this fragment
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -108,10 +109,7 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
         private PostItemClickListener postItemClickListener;
-        /**
-         * Provide a reference to the type of views that you are using
-         * (custom ViewHolder).
-         */
+
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
 
@@ -134,12 +132,6 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
             }
         }
 
-        /**
-         * Initialize the dataset of the Adapter.
-         *
-         * @param posts String[] containing the data to populate views to be used
-         * by RecyclerView.
-         */
         public CustomAdapter(ArrayList<Post> posts) {
             this.posts = posts;
 
@@ -147,7 +139,7 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
         public void setClickListener(PostItemClickListener postItemClickListener) {
             this.postItemClickListener = postItemClickListener;
         }
-        // Create new views (invoked by the layout manager)
+        // Create new view
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             // Create a new view, which defines the UI of the list item
@@ -157,12 +149,9 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
             return new ViewHolder(view);
         }
 
-        // Replace the contents of a view (invoked by the layout manager)
+
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
-            // Get element from your dataset at this position and replace the
-            // contents of the view with that element
             //Post post = (Post) posts.get(position);
             viewHolder.titleView.setText(posts.get(position).getTitle());
 
@@ -170,7 +159,7 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
 
         }
 
-        // Return the size of your dataset (invoked by the layout manager)
+
         @Override
         public int getItemCount() {
             return posts.size();

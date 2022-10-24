@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 
 import java.util.ArrayList;
@@ -79,9 +80,9 @@ public class ForYouFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         listView.setAdapter(customAdapter);
         ArrayList<Post> newPosts = new ArrayList<>();
-        newPosts.add(new Post("title 1", "description 1", "author 1"));
-        newPosts.add(new Post("title 2", "description 2", "author 2"));
-        newPosts.add(new Post("title 3", "description 3", "author 3"));
+        newPosts.add(new Post("title 1", "description 1", "author 1", ""));
+        newPosts.add(new Post("title 2", "description 2", "author 2", ""));
+        newPosts.add(new Post("title 3", "description 3", "author 3", ""));
         customAdapter.addAll(newPosts);
 
         return view;

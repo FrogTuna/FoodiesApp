@@ -31,7 +31,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference myReference;
 
-    String defaultUsername = "leo727268082@gmail.com";
+    //String defaultUsername = "leo727268082@gmail.com";
+    String defaultUsername = "zouweiran9122@gmail.com";
     String defaultPassword = "123456789";
 
 
@@ -65,7 +66,10 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 
 
     private void loginUser(){
