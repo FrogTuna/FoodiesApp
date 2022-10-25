@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.Post;
+import com.example.mobile_assignment_2.message.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,8 +35,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -122,6 +126,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 String title = titleView.getText().toString();
                 String descrip = descripView.getText().toString();
                 ArrayList<String> downloadimageUrls = new ArrayList<>();
+
                 if (!title.isEmpty() && !descrip.isEmpty()) {
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
@@ -151,17 +156,33 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                             Uri downloadUri = task.getResult();
                                             downloadimageUrls.add(downloadUri.toString());
                                             if (downloadimageUrls.size() == pickedImageUris.size()) {
-                                                Post post = new Post(title, descrip, "", currentUser.getUid(), downloadimageUrls);
-                                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                                DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
 
-                                                // add post data to firebase database
-                                                databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                                // Get a reference to users
+                                                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+
+                                                usersRef.child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                                     @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                        if (!task.isSuccessful()) {
+                                                            Log.e("firebase", "Error in fetching data", task.getException());
+                                                        }
+                                                        else {
+                                                            String author = task.getResult().getValue(String.class);
+                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls);
+                                                            DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
+
+                                                            // add post data to firebase database
+                                                            databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                                }
+                                                            });
+                                                        }
                                                     }
                                                 });
+
                                             }
                                         } else {
 

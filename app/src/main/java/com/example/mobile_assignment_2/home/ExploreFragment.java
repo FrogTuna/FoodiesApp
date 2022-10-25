@@ -72,6 +72,8 @@ public class ExploreFragment extends Fragment implements PostItemClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
+
+
         posts.add(new Post("title 1", "description 1", "author 1", "", new ArrayList<>()));
         posts.add(new Post("title 2", "description 2", "author 2", "", new ArrayList<>()));
         posts.add(new Post("title 3", "description 3", "author 3", "", new ArrayList<>()));
