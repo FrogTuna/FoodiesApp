@@ -98,65 +98,65 @@ public class ExploreFragment extends Fragment {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         // Get a reference to users
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-        usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String friendId = dataSnapshot.getKey();
-                    friends.add(friendId);
-                }
-                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
-                postsRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            posts.add(post);
-                        }
-                        // posts for stranger
-                        ArrayList<Post> strangerPosts = new ArrayList<>();
-                        for (Post p : posts) {
-                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
-                                strangerPosts.add(p);
-                            }
-                        }
-                        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-                        recyclerView.setHasFixedSize(true);
-                        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-                        recyclerView.setLayoutManager(gridLayoutManager);
-                        customAdapter = new CustomAdapter(strangerPosts);
-                        customAdapter.setClickListener(new PostItemClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
-                                Post post = strangerPosts.get(position);
-                                Intent i = new Intent(getActivity(), PostDetails.class);
-                                i.putExtra("title", post.getTitle());
-                                i.putExtra("description", post.getDescription());
-                                i.putExtra("author", post.getAuthor());
-                                Log.i("hello", post.getTitle());
-                                Log.i("hello", post.getDescription());
-                                startActivity(i);
-                            }
-                        });
-                        recyclerView.setAdapter(customAdapter);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-
-        });
+//        usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    String friendId = dataSnapshot.getKey();
+//                    friends.add(friendId);
+//                }
+//                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+//                postsRef.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            Post post = dataSnapshot.getValue(Post.class);
+//                            posts.add(post);
+//                        }
+//                        // posts for stranger
+//                        ArrayList<Post> strangerPosts = new ArrayList<>();
+//                        for (Post p : posts) {
+//                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
+//                                strangerPosts.add(p);
+//                            }
+//                        }
+//                        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+//                        recyclerView.setHasFixedSize(true);
+//                        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+//                        recyclerView.setLayoutManager(gridLayoutManager);
+//                        customAdapter = new CustomAdapter(strangerPosts);
+//                        customAdapter.setClickListener(new PostItemClickListener() {
+//                            @Override
+//                            public void onClick(View view, int position) {
+//                                Post post = strangerPosts.get(position);
+//                                Intent i = new Intent(getActivity(), PostDetails.class);
+//                                i.putExtra("title", post.getTitle());
+//                                i.putExtra("description", post.getDescription());
+//                                i.putExtra("author", post.getAuthor());
+//                                Log.i("hello", post.getTitle());
+//                                Log.i("hello", post.getDescription());
+//                                startActivity(i);
+//                            }
+//                        });
+//                        recyclerView.setAdapter(customAdapter);
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//
+//        });
         return view;
     }
 

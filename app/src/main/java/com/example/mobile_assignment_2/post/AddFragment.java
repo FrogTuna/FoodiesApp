@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.Post;
-import com.example.mobile_assignment_2.message.User;
+import com.example.mobile_assignment_2.authentication.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +40,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
