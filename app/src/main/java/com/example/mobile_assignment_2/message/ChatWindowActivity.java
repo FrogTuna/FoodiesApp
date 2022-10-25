@@ -31,7 +31,6 @@ public class ChatWindowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //chatBinding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_chat_window);
 
         RecyclerView recyclerView =  findViewById(R.id.chatWindowRecycleView);
@@ -40,7 +39,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         MessageAdapter2 messageAdapter2 = new MessageAdapter2(this, conversationLeft, conversationRight);
         recyclerView.setAdapter(messageAdapter2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        backSocialFragmentIntent();
+        //backSocialFragmentIntent();
 
     }
 
