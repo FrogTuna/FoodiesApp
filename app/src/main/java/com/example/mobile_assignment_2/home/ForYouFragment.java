@@ -192,8 +192,8 @@ public class ForYouFragment extends Fragment {
             String imageUrl = posts.get(position).getImageUrl().get(0);
 
             // Download image from URL and set to imageView
-            //Picasso.with(getContext()).load(imageUrl).into(viewHolder.imageView);
-            Picasso.with(getContext()).load("https://cdn.concreteplayground.com/content/uploads/2017/08/Glamp-Cocktail-Bar-32-1920x1440.jpg").into(viewHolder.imageView);
+            Picasso.with(getContext()).load(imageUrl).into(viewHolder.imageView);
+
 
         }
 
