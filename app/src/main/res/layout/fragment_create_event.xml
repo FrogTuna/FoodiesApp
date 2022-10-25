@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/TextView11"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center_horizontal"-->
+    <!--        android:text="Create Event"-->
+    <!--        android:textColor="@color/orange"-->
+    <!--        android:textSize="22dp"-->
+    <!--        tools:layout_editor_absoluteX="0dp"-->
+    <!--        tools:layout_editor_absoluteY="460dp" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView3"-->
+    <!--        android:layout_width="82dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="Name"-->
+    <!--        android:textColor="@color/orange"-->
+    <!--        android:textSize="22dp" />-->
+
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/editText"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="Name"-->
+    <!--        tools:layout_editor_absoluteX="28dp"-->
+    <!--        tools:layout_editor_absoluteY="53dp" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView5"-->
+    <!--        android:layout_width="154dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="When to start"-->
+    <!--        android:textColor="@color/orange"-->
+    <!--        android:textSize="22dp"-->
+    <!--        tools:layout_editor_absoluteX="241dp"-->
+    <!--        tools:layout_editor_absoluteY="46dp" />-->
+
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/editText2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="Time"-->
+    <!--        tools:layout_editor_absoluteX="0dp"-->
+    <!--        tools:layout_editor_absoluteY="186dp" />-->
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView8"-->
+    <!--        android:layout_width="102dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="location"-->
+    <!--        android:textColor="@color/orange"-->
+    <!--        android:textSize="22dp"-->
+    <!--        tools:layout_editor_absoluteX="198dp"-->
+    <!--        tools:layout_editor_absoluteY="99dp" />-->
+
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/editText3"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="location"-->
+    <!--        tools:layout_editor_absoluteX="-16dp"-->
+    <!--        tools:layout_editor_absoluteY="366dp" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView10"-->
+    <!--        android:layout_width="198dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="number of people"-->
+    <!--        android:textColor="@color/orange"-->
+    <!--        android:textSize="22dp"-->
+    <!--        tools:layout_editor_absoluteX="0dp"-->
+    <!--        tools:layout_editor_absoluteY="106dp" />-->
+
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/editText4"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="68dp"-->
+    <!--        android:contentDescription="Number"-->
+    <!--        tools:layout_editor_absoluteX="0dp"-->
+    <!--        tools:layout_editor_absoluteY="224dp" />-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="392dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Create Event"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/orange"
+            android:textSize="30dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/event_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:layout_margin="30dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/event_time"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:hint="@string/time">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/event_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:hint="@string/location"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/event_people_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:hint="@string/people_num"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_marginLeft="30dp"
+                android:text="Save"
+                android:padding="4dip"
+                android:backgroundTint="@color/grey"/>
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_marginRight="10dp"
+                android:padding="4dip"
+                android:backgroundTint="@color/orange"
+                android:text="Post" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

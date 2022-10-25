@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class MeFragment extends Fragment {
     private String mParam2;
     FirebaseAuth myAuth;
     Button signOutBtn;
+    ImageButton postsBtn;
     ImageView editProfileBtn;
     DatabaseReference userRef;
     FirebaseUser fuser;
@@ -97,6 +99,9 @@ public class MeFragment extends Fragment {
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
         editProfileBtn = (ImageView) view.findViewById(R.id.headPortrait);
         loadDatabase(view);
+        postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
+
+
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,9 +109,20 @@ public class MeFragment extends Fragment {
                 signOut(view);
             }
         });
+        postsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromMePageToMyPostsPageIntent(view);
+            }
+        });
 
 
         return view;
+    }
+
+    public void fromMePageToMyPostsPageIntent(View view){
+        Intent intent = new Intent(getActivity(), MyPostsActivity.class);
+        startActivity(intent);
     }
 
     public void signOut(View v) {

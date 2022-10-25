@@ -56,6 +56,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+<<<<<<< HEAD
 
 
+=======
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+>>>>>>> 864d8f7f4441a6777e2ede8a53668a86390fbe04
 }

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".me.MeFragment">
+    tools:context=".me.MeFragment"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -41,7 +42,6 @@
         app:layout_constraintTop_toBottomOf="@+id/headPortrait" />
 
 
-
     <ImageButton
         android:id="@+id/postButtonProfile"
         android:layout_width="100dp"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
     <ImageButton
-        android:id="@+id/messageButtonProfile"
+        android:id="@+id/communityButtonProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="12dp"

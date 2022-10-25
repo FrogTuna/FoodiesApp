@@ -1,23 +1,22 @@
 package com.example.mobile_assignment_2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.mobile_assignment_2.chat.ChatActivity;
-import com.example.mobile_assignment_2.chat.ChatListAdapter;
-import com.example.mobile_assignment_2.chat.ChatListData;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
+import com.example.mobile_assignment_2.chat.addFriendsActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +30,7 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SocialFragment#newInstance} factory method to
+ * Use the {@link SocialFragment#} factory method to
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
@@ -56,6 +55,7 @@ public class SocialFragment extends Fragment {
     private static final String TAG = "Child: ";
     private static final String loginUsername = "Wen";  // this var is login user, and should be pass when login to chat page
 
+    private FloatingActionButton addFriendsBtn;
     public SocialFragment() {
         // Required empty public constructor
 
@@ -105,7 +105,16 @@ public class SocialFragment extends Fragment {
         View view  = inflater.inflate(R.layout.fragment_social, container, false);
         // Implement following
 
-
+        TextView logo = view.findViewById(R.id.logoInSocial);
+        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
+        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("1111111",logo.getText().toString());
+                Intent intent = new Intent(getActivity(), addFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
 //        ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
 //
 //        System.out.println("[+] chat list: " + chatArrayList);
@@ -353,6 +362,7 @@ public class SocialFragment extends Fragment {
                         }).attach();
 
             }
+
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {

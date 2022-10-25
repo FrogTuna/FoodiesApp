@@ -1,18 +1,22 @@
 package com.example.mobile_assignment_2.community;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.home.PostDetails;
 
 import java.util.ArrayList;
 
@@ -21,7 +25,7 @@ import java.util.ArrayList;
  * Use the {@link DiscoverCommunityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscoverCommunityFragment extends Fragment {
+public class DiscoverCommunityFragment extends Fragment implements commPostItemClickListener{
     private ArrayList<Communitypost> posts = new ArrayList<>();
     private RecyclerView recyclerView;
 
@@ -65,12 +69,6 @@ public class DiscoverCommunityFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.community_joinin_posts, container, false);
-//    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,31 +86,49 @@ public class DiscoverCommunityFragment extends Fragment {
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         CustomAdapter customAdapter = new CustomAdapter(posts);
-//        customAdapter.setClickListener(this);
+        customAdapter.setClickListener(this);
         recyclerView.setAdapter(customAdapter);
 
         return view;
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        Communitypost post = posts.get(position);
+        Intent i = new Intent(getActivity(), CommunityDetail.class);
+//        i.putExtra("title", post.getCommName());
+//        i.putExtra("description", post.getDescription());
+//        i.putExtra("author", post.getAuthor());
+//        Log.i("hello", post.getTitle());
+//        Log.i("hello", post.getDescription());
+        startActivity(i);
+    }
+
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
         private ArrayList<Communitypost> posts = new ArrayList<Communitypost>();
-//        private PostItemClickListener postItemClickListener;
+        private commPostItemClickListener communityPostItemClickListener;
         /**
          * Provide a reference to the type of views that you are using
          * (custom ViewHolder).
          */
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
-
             ImageView imgView;
 
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
-//                view.setOnClickListener(this);
+                view.setOnClickListener(this);
                 titleView =   view.findViewById(R.id.communityName);
                 imgView =  view.findViewById(R.id.communityImg);
+            }
+
+            @Override
+            public void onClick(View view) {
+                if(communityPostItemClickListener != null) {
+                    communityPostItemClickListener.onClick(view, getAbsoluteAdapterPosition());
+                }
             }
 
         }
@@ -127,9 +143,9 @@ public class DiscoverCommunityFragment extends Fragment {
             this.posts = posts;
 
         }
-//        public void setClickListener(PostItemClickListener postItemClickListener) {
-//            this.postItemClickListener = postItemClickListener;
-//        }
+        public void setClickListener(commPostItemClickListener communityPostItemClickListener) {
+            this.communityPostItemClickListener = communityPostItemClickListener;
+        }
         // Create new views (invoked by the layout manager)
         @Override
         public CustomAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
