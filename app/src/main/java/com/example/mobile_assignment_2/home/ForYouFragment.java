@@ -5,16 +5,20 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,8 @@ public class ForYouFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView listView;
+    CustomAdapter customAdapter;
+    RecyclerView recyclerView;
     public ForYouFragment() {
         // Required empty public constructor
     }
@@ -66,7 +71,6 @@ public class ForYouFragment extends Fragment {
         }
     }
 
-    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,49 +78,72 @@ public class ForYouFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_for_you, container, false);
 
 
-        ArrayList<Post> posts = new ArrayList<>();
-
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), posts);
-        listView = (ListView) view.findViewById(R.id.list);
-        listView.setAdapter(customAdapter);
-        ArrayList<Post> newPosts = new ArrayList<>();
-        newPosts.add(new Post("title 1", "description 1", "author 1", "", new ArrayList<>()));
-        newPosts.add(new Post("title 2", "description 2", "author 2", "", new ArrayList<>()));
-        newPosts.add(new Post("title 3", "description 3", "author 3", "", new ArrayList<>()));
-        customAdapter.addAll(newPosts);
-
+        ArrayList<Post> forYouPosts = new ArrayList<>();
+        forYouPosts.add(new Post("1","a","","",new ArrayList<>()));
+        forYouPosts.add(new Post("2","b","","",new ArrayList<>()));
+        forYouPosts.add(new Post("3","c","","",new ArrayList<>()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        customAdapter = new CustomAdapter(forYouPosts);
+        recyclerView.setAdapter(customAdapter);
         return view;
     }
 
-    public class CustomAdapter extends ArrayAdapter<Post> {
-        List<Post> posts;
-        int resource;
-        Context context;
-        public CustomAdapter(Context context, ArrayList<Post> users) {
-            super(context, 0, users);
-        }
-//        public CustomAdapter(@NonNull Context context, int resource, List<Post> posts) {
-//            super(context, resource);
-//            this.resource = resource;
-//            this.context = context;
-//            this.posts = posts;
-//        }
+    public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Post post = getItem(position);
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.for_you_posts, parent, false);
+        private ArrayList<Post> posts = new ArrayList<Post>();
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView titleView;
+            TextView authorView;
+            TextView descpView;
+            ImageView imageView;
+
+            public ViewHolder(View view) {
+                super(view);
+                titleView =  (TextView) view.findViewById(R.id.post_title);
+                authorView = (TextView)  view.findViewById(R.id.author_name);
+                imageView = (ImageView) view.findViewById(R.id.post_image);
+                descpView =  (TextView) view.findViewById(R.id.post_description);
             }
-//            LayoutInflater layoutInflater = LayoutInflater.from(context);
-//            @SuppressLint("ViewHolder") View view = layoutInflater.inflate(resource, null, false);
-            TextView titleView =  (TextView) convertView.findViewById(R.id.post_title);
-            TextView descpView =  (TextView) convertView.findViewById(R.id.post_description);
-            TextView authorView = (TextView)  convertView.findViewById(R.id.author_name);
 
-            titleView.setText(post.getTitle());
-            descpView.setText(post.getDescription());
-            authorView.setText(post.getAuthor());
-            return  convertView;
+        }
+
+        public CustomAdapter(ArrayList<Post> posts) {
+            this.posts = posts;
+        }
+
+        // Create new view
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            // Create a new view, which defines the UI of the list item
+            View view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.for_you_posts, viewGroup, false);
+
+            return new ViewHolder(view);
+        }
+
+
+        @Override
+        public void onBindViewHolder(CustomAdapter.ViewHolder viewHolder, final int position) {
+
+            viewHolder.titleView.setText(posts.get(position).getTitle());
+            viewHolder.authorView.setText(posts.get(position).getAuthor());
+            viewHolder.descpView.setText(posts.get(position).getDescription());
+
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return posts.size();
+        }
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
         }
     }
+
 }
