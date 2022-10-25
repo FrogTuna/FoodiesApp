@@ -13,7 +13,6 @@
     <string name="create_post_description">Enter description</string>
 
 
-
     <string-array name="messageLeftText">
         <item>A</item>
         <item>B</item>
@@ -30,12 +29,12 @@
         <item>12:010pm</item>
     </string-array>
 
-    
+
     <string-array name="messageRightText">
         <item>Hello Peter</item>
         <item>Nice to meet you</item>
         <item>My name is leo</item>
-        <item>Would you buy me a house in Beijing i will appreciate it</item>
+        <item>Would you buy me a house in Beijingxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</item>
         <item>i will assume you agree you</item>
     </string-array>
 
@@ -48,8 +47,7 @@
     </string-array>
 
 
-    
-=======
+    =======
     <string name="post_name">Enter poster name:</string>
->>>>>>> f04a560b7d03318612feba4ad97d10f993e2eb32
+    >>>>>>> f04a560b7d03318612feba4ad97d10f993e2eb32
 </resources>

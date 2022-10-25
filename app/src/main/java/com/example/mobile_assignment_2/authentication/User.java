@@ -1,4 +1,4 @@
-package com.example.mobile_assignment_2.message;
+package com.example.mobile_assignment_2.authentication;
 
 import com.google.firebase.database.FirebaseDatabase;
 
