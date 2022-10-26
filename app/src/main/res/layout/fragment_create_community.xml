@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Create Community"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:textColor="@color/orange"
         android:textSize="30dp" />
 
@@ -154,6 +154,7 @@
         android:hint="@string/com_name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/community_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -162,20 +163,21 @@
         android:id="@+id/com_description"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="20dp"
         android:hint="@string/com_description"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/com_desc"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="140dp" />
     </com.google.android.material.textfield.TextInputLayout>
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="30dp"
+        android:layout_margin="0dp"
         >
         <LinearLayout
             android:id="@+id/imageLinearLayout"
@@ -187,17 +189,46 @@
     </HorizontalScrollView>
 
 
-    <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/choose_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/grey"
+                android:padding="4dip"
+                android:text="Add IMAGE" />
+
+            <Button
+                android:id="@+id/use_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/orange"
+                android:padding="4dip"
+                android:text="Use Camera" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:gravity="center">
 
-        <Button
+            <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="0dp"
             android:layout_marginLeft="30dp"
             android:text="Save"
             android:padding="4dip"
