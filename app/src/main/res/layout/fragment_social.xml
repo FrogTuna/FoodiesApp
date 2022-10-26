@@ -26,9 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="25dp"
         android:text="Foodies"
         android:textColor="@color/orange"
         android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,13 +38,31 @@
         android:id="@+id/searchView"
         android:layout_width="44dp"
         android:layout_height="50dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/addFriendsButton"
-        app:layout_constraintStart_toEndOf="@+id/addFriendsButton"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintStart_toEndOf="@+id/logoInSocial"
+        app:layout_constraintTop_toTopOf="parent" />
 
+
+    <Spinner
+        android:id="@+id/customIconSpinner"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/searchView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65999997" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -56,33 +76,19 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:tabIconTint="@color/orange"
         app:tabIndicatorColor="@color/orange"
-        app:tabTextColor="@color/orange"/>
+        app:tabTextColor="@color/orange" />
 
-
-    <androidx.viewpager2.widget.ViewPager2
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/viewPager2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" />
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addFriendsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
-        android:clickable="true"
-        android:contentDescription="add new friend"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="33dp"
+        android:layout_height="28dp"
         android:src="@drawable/add_user"
-        app:backgroundTint="@android:color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toEndOf="@+id/searchView"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
