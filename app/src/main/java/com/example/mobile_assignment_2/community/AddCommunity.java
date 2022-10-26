@@ -11,7 +11,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-public class AddEvent extends AppCompatActivity {
+public class AddCommunity extends AppCompatActivity {
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;
 

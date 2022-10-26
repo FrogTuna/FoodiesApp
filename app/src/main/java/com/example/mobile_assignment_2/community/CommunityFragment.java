@@ -75,7 +75,7 @@ public class CommunityFragment extends Fragment implements View.OnClickListener{
     {
         switch(v.getId()) {
             case R.id.add_community:
-                Intent i = new Intent(getActivity(), AddEvent.class);
+                Intent i = new Intent(getActivity(), AddCommunity.class);
                 startActivity(i);
                 break;
         }
