@@ -5,8 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobileassignment2"
         tools:targetApi="31">
+        <activity
+            android:name=".chat.addFriendsActivity"
+            android:exported="false" />
         <activity
             android:name=".home.PostDetails"
             android:exported="false"
@@ -35,18 +36,20 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".me.EditProfileActivity"
+            android:name=".me.MyPostsActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.Register"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false"/>
-        <activity
             android:name=".authentication.login"
-            android:exported="true" >
-
+            android:exported="false" />
+        <activity
+            android:name=".message.startChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

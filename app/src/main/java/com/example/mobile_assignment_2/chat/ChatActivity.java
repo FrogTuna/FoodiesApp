@@ -85,7 +85,6 @@ public class ChatActivity extends AppCompatActivity {
 
                 }
 
-
             }
 
             @Override
