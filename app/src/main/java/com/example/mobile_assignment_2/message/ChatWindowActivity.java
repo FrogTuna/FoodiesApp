@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +16,6 @@ import com.example.mobile_assignment_2.databinding.ActivityChatBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,6 @@ public class ChatWindowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //chatBinding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_chat_window);
 
         RecyclerView recyclerView =  findViewById(R.id.chatWindowRecycleView);
@@ -40,9 +39,19 @@ public class ChatWindowActivity extends AppCompatActivity {
         MessageAdapter2 messageAdapter2 = new MessageAdapter2(this, conversationLeft, conversationRight);
         recyclerView.setAdapter(messageAdapter2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //backSocialFragmentIntent();
 
     }
 
+    private void backSocialFragmentIntent(){
+
+        Intent intent = new Intent(this, startChatActivity.class);
+        startActivity(intent);
+
+    }
+
+
+    //left side message
     private void setUpConversationLeft(){
         String [] messageList = getResources().getStringArray(R.array.messageLeftText);
         String [] messageTime = getResources().getStringArray(R.array.messageTimeLeft);
@@ -53,7 +62,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         }
     }
 
-
+    //right side message
     private void setUpConversationRight(){
         String [] messageList = getResources().getStringArray(R.array.messageRightText);
         String [] messageTime = getResources().getStringArray(R.array.messageTimeRight);
@@ -63,35 +72,4 @@ public class ChatWindowActivity extends AppCompatActivity {
 
         }
     }
-
-
-//    ArrayList<ChatMessage> conversation = new ArrayList<>();
-//
-//    int[] imageList = {R.drawable.old_man, R.drawable.old_man, R.drawable.old_man, R.drawable.old_man, R.drawable.old_man};
-//
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        //chatBinding = ActivityChatBinding.inflate(getLayoutInflater());
-//        setContentView(R.layout.activity_chat_window);
-//
-//        RecyclerView recyclerView =  findViewById(R.id.chatWindowRecycleView);
-//        setUpConversation();
-//        MessageAdapter messageAdapter = new MessageAdapter(this, conversation);
-//        recyclerView.setAdapter(messageAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//    }
-//
-//    private void setUpConversation(){
-//        String [] messageList = getResources().getStringArray(R.array.messageList);
-//        String [] messageTime = getResources().getStringArray(R.array.messageTime);
-//        for(int i = 0; i < messageList.length; i++){
-//
-//            conversation.add(new ChatMessage(messageList[i], messageTime[i], imageList[i]));
-//
-//        }
-//    }
-
 }

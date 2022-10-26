@@ -1,6 +1,11 @@
 package com.example.mobile_assignment_2.message;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -52,11 +58,8 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         if (allConversation.get(position).getRole().equals("receiver")) {
-            System.out.println("长度： " + allConversation.size());
-            System.out.println("0的： " + allConversation.get(position).getIndex());
             return LAYOUT_LEFT;
         } else if((allConversation.get(position).getRole().equals("sender"))) {
-            System.out.println("1的： " + allConversation.get(position).getIndex());
             return LAYOUT_RIGHT;
         }
 
@@ -97,22 +100,10 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         else if (allConversation.get(position).getRole().equals("sender")){
             ViewHolderRight holderRight = (ViewHolderRight) holder;
             holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
+            holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
             holderRight.senderTime.setText(allConversation.get(position).getSenderTime());
             holderRight.senderImage.setImageResource(allConversation.get(position).getSenderImage());
         }
-
-//        if(allConversation.get(position).getRole().equals("receiver")){
-//            ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
-//            holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
-//            holderLeft.receiverTime.setText(allConversation.get(position).getSenderTime());
-//            holderLeft.receiverImage.setImageResource(allConversation.get(position).getSenderImage());
-//        }
-//        else if (allConversation.get(position).getRole().equals("sender")){
-//            ViewHolderRight holderRight = (ViewHolderRight) holder;
-//            holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
-//            holderRight.senderTime.setText(allConversation.get(position).getSenderTime());
-//            holderRight.senderImage.setImageResource(allConversation.get(position).getSenderImage());
-//        }
 
     }
 
@@ -125,10 +116,11 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolderLeft extends RecyclerView.ViewHolder {
 
-        RoundedImageView receiverImage;
+        CircleImageView receiverImage;
         TextView receiverInfo, receiverTime;
 
         public ViewHolderLeft(@NonNull View itemView) {
+
             super(itemView);
 
             receiverImage = itemView.findViewById(R.id.chatWindowLeftUserImage);
@@ -143,7 +135,7 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolderRight extends RecyclerView.ViewHolder {
 
-        RoundedImageView senderImage;
+        CircleImageView senderImage;
         TextView senderInfo, senderTime;
 
         public ViewHolderRight(@NonNull View itemView) {
@@ -155,5 +147,4 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }
     }
-
 }

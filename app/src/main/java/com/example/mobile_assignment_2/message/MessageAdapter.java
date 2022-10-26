@@ -10,9 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyMessageViewHolder> {
 
@@ -58,7 +59,7 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyMessageViewHo
         //grabbing the views from our recycler_view_row layout file
         //kind like in the onCreate method
 
-        RoundedImageView senderImage;
+        CircleImageView senderImage;
         TextView senderInfo, senderTime;
 
         public MyMessageViewHolder(@NonNull View itemView) {
