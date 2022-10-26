@@ -26,11 +26,11 @@ public class addFriendsAdapter extends ArrayAdapter {
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner_layout,parent,false);
         }
-        CustomItem item = (CustomItem) getItem(position);
-        ImageView spinnerIV = convertView.findViewById(R.id.ivSpinnerLayout);
-        if(item!=null) {
-            spinnerIV.setImageResource(item.getSpinnerItemImage());
-        }
+//        CustomItem item = (CustomItem) getItem(position);
+//        ImageView spinnerIV = convertView.findViewById(R.id.ivSpinnerLayout);
+//        if(item!=null) {
+//            spinnerIV.setImageResource(item.getSpinnerItemImage());
+//        }
         return convertView;
     }
 

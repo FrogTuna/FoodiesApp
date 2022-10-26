@@ -1,6 +1,5 @@
 package com.example.mobile_assignment_2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,10 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.add.CustomItem;
-import com.example.mobile_assignment_2.add.addActivity;
+import com.example.mobile_assignment_2.add.activities.addActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-import com.example.mobile_assignment_2.add.nearByActivity;
-import com.example.mobile_assignment_2.add.shackActivity;
+import com.example.mobile_assignment_2.add.activities.nearByActivity;
+import com.example.mobile_assignment_2.add.activities.shakeActivity;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 import com.google.android.material.tabs.TabLayout;
@@ -107,6 +106,7 @@ public class SocialFragment extends Fragment {
 
     public ArrayList<CustomItem> getCustomList() {
         customList = new ArrayList<>();
+        customList.add(new CustomItem("null", R.drawable.add_user));
         customList.add(new CustomItem("add", R.drawable.ic_baseline_add_24));
         customList.add(new CustomItem("Shake", R.drawable.ic_baseline_screen_rotation_24));
         customList.add(new CustomItem("NearBy", R.drawable.ic_baseline_near_me_24));
@@ -139,7 +139,7 @@ public class SocialFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), addActivity.class);
                         startActivity(intent);
                     }else if(item.getSpinnerItemName().equals("Shake")){
-                        Intent intent = new Intent(getActivity(), shackActivity.class);
+                        Intent intent = new Intent(getActivity(), shakeActivity.class);
                         startActivity(intent);
                     }else if(item.getSpinnerItemName().equals("NearBy")) {
                         Intent intent = new Intent(getActivity(), nearByActivity.class);
