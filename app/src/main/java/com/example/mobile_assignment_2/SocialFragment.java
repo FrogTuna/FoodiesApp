@@ -1,5 +1,6 @@
 package com.example.mobile_assignment_2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -10,10 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
+
+import com.example.mobile_assignment_2.chat.addFriendsActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +58,7 @@ public class SocialFragment extends Fragment {
     private ViewPager2 viewPager2;
     private ChatPagerAdapter chatPagerAdapter;
     private SearchView searchView;
-    private FloatingActionButton addFriendsBtn;
+//    private FloatingActionButton addFriendsBtn;
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
 
@@ -62,6 +67,7 @@ public class SocialFragment extends Fragment {
     private static final String TAG = "Child: ";
 
 
+    private FloatingActionButton addFriendsBtn;
     public SocialFragment() {
         // Required empty public constructor
 
@@ -94,8 +100,10 @@ public class SocialFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //        searchView = (SearchView) findViewById(R.id.searchView);
-        FirebaseUser fuser = myAuth.getCurrentUser();
-        userID = fuser.getUid();
+//        FirebaseUser fuser = myAuth.getCurrentUser();
+        myAuth = FirebaseAuth.getInstance();
+        userID = myAuth.getCurrentUser().getUid();
+        System.out.println("Current UID:" + userID);
         friendshipArrayList = new ArrayList();
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
@@ -136,6 +144,35 @@ public class SocialFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view  = inflater.inflate(R.layout.fragment_social, container, false);
+
+
+        TextView logo = view.findViewById(R.id.logoInSocial);
+        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
+        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("1111111",logo.getText().toString());
+                Intent intent = new Intent(getActivity(), addFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+//        ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
+//
+//        System.out.println("[+] chat list: " + chatArrayList);
+//        for (int i = 0; i < chatArrayList.size(); i++) {
+//            chatListData[i] = new ChatListData(
+//                    ((HashMap<String, String>)chatArrayList.get(i)).get("name"),
+//                    ((HashMap<String, String>)chatArrayList.get(i)).get("content"),
+//                    android.R.drawable.ic_dialog_email
+//            );
+//        }
+//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.chatRecyclerView);
+//        ChatListAdapter chatListAdapter = new ChatListAdapter(chatListData);
+//
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setAdapter(chatListAdapter);
+//        return view;
 
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -314,10 +351,20 @@ public class SocialFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-//                HashMap<String, String> friendInfo = new HashMap<String, String>();
-//                friendInfo.put("name", dataSnapshot.child("Name").getValue(String.class));
-//                friendInfo.put("remark", dataSnapshot.child("Remark").getValue(String.class));
-//                userArrayList.add(friendInfo);
+                HashMap<String, String> friendsInfo = new HashMap<String, String>();
+                HashMap<String, String> usersInfo = new HashMap<String, String>();
+                usersInfo.put("ID", dataSnapshot.getKey());
+                usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
+                usersInfo.put("username", (String) dataSnapshot.child("username").getValue());
+                usersInfo.put("remark", (String) dataSnapshot.child("remark").getValue());
+                userArrayList.add(usersInfo);
+                if(dataSnapshot.getKey().equals(userID)) {
+                    for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
+                        friendsInfo.put("ID", friendsSnapshot.getKey());
+                        friendshipArrayList.add(friendsInfo);
+
+                    }
+                }
             }
 
             @Override

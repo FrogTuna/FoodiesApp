@@ -32,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
         navigation();
 
     }
-
+    @Override
+    public void onBackPressed() {
+        return;
+    }
     protected void onStart() {
 
         super.onStart();

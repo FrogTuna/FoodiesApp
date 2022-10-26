@@ -15,8 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.home.ForYouFragment;
-import com.example.mobile_assignment_2.home.Post;
+
+
 
 import java.util.ArrayList;
 import java.util.List;

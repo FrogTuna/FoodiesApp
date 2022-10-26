@@ -53,7 +53,7 @@
                 />
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/create_post_title"
@@ -61,6 +61,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_post_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -68,7 +69,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/description"
+
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="10dp"
@@ -76,6 +77,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_post_description"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 />

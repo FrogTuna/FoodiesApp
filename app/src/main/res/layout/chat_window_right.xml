@@ -6,15 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="4dp">
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chatWindowRightUserImage"
-        android:layout_width="25sp"
-        android:layout_height="25sp"
-        android:background="@drawable/old_man"
-        android:scaleType="centerCrop"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/old_man"
+        app:civ_border_color="@color/orange"
+        app:civ_border_width="1dp"
         app:layout_constraintBottom_toBottomOf="@+id/chatMessageRightSendText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:riv_oval="true" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/chatMessageRightSendText"
@@ -32,7 +33,7 @@
 
     <TextView
         android:id="@+id/chatMessageRightDateAndTime"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="12:30pm"
