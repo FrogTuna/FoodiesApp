@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -14,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mobile_assignment_2.chat.ChatActivity;
-import com.example.mobile_assignment_2.chat.ChatListAdapter;
-import com.example.mobile_assignment_2.chat.ChatListData;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,11 +53,14 @@ public class SocialFragment extends Fragment {
     private ViewPager2 viewPager2;
     private ChatPagerAdapter chatPagerAdapter;
     private SearchView searchView;
+    private FloatingActionButton addFriendsBtn;
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
 
+    private FirebaseAuth myAuth;
+    private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
-    private static final String loginUsername = "Wen";  // this var is login user, and should be pass when login to chat page
+
 
     public SocialFragment() {
         // Required empty public constructor
@@ -93,11 +94,13 @@ public class SocialFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //        searchView = (SearchView) findViewById(R.id.searchView);
-
+        FirebaseUser fuser = myAuth.getCurrentUser();
+        userID = fuser.getUid();
         friendshipArrayList = new ArrayList();
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
         chatArrayList = new ArrayList();
+        initialFireBase();
 
         /* Search view */
 //        1. determine page
@@ -121,7 +124,7 @@ public class SocialFragment extends Fragment {
 //            }
 //        });
 
-        initialFireBase();
+
 
 
 
@@ -133,30 +136,20 @@ public class SocialFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view  = inflater.inflate(R.layout.fragment_social, container, false);
-        // Implement following
-
-
-//        ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
-//
-//        System.out.println("[+] chat list: " + chatArrayList);
-//        for (int i = 0; i < chatArrayList.size(); i++) {
-//            chatListData[i] = new ChatListData(
-//                    ((HashMap<String, String>)chatArrayList.get(i)).get("name"),
-//                    ((HashMap<String, String>)chatArrayList.get(i)).get("content"),
-//                    android.R.drawable.ic_dialog_email
-//            );
-//        }
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.chatRecyclerView);
-//        ChatListAdapter chatListAdapter = new ChatListAdapter(chatListData);
-//
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(chatListAdapter);
-//        return view;
 
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
         searchView = view.findViewById(R.id.searchView);
+        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
+
+        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Redirect to add friend page
+                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
+            }
+        });
+
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -202,133 +195,129 @@ public class SocialFragment extends Fragment {
     }
     private void initialFireBase(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        firebaseDatabase.setPersistenceEnabled(true);
-        friendshipRef = firebaseDatabase.getReference("Friendship"); // get the location URL https://foodies-27bb7-default-rtdb.firebaseio.com
-        chatRef = firebaseDatabase.getReference("Chat");
-        reqRef = firebaseDatabase.getReference("Request");
-        userRef = firebaseDatabase.getReference("User");
-        friendshipRef.keepSynced(true);
+//        friendshipRef = firebaseDatabase.getReference("Friendship"); // get the location URL https://foodies-27bb7-default-rtdb.firebaseio.com
+//        chatRef = firebaseDatabase.getReference("Chat");
+//        reqRef = firebaseDatabase.getReference("Request");
+        userRef = firebaseDatabase.getReference("Users");
+//        friendshipRef.keepSynced(true);
 
-        chatRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-
-                    HashMap<String, String> chatInfo = new HashMap<String, String>();
-                    chatInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
-                    chatInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
-                    chatArrayList.add(chatInfo);
-
-                }
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-            }
-
-        });
-        friendshipRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-                    friendshipArrayList.add(dataSnapshot.child("User2").getValue(String.class));
-                }
-//                System.out.println("[+] Friend: " + friendshipArrayList);
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-            }
-
-        });
+//        chatRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
+//
+//                    HashMap<String, String> chatInfo = new HashMap<String, String>();
+//                    chatInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
+//                    chatInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
+//                    chatArrayList.add(chatInfo);
+//
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so displayed the changed comment.
+//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so remove it.
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed position, use the key to determine if we are
+//                // displaying this comment and if so move it.
+//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+//            }
+//
+//        });
+//        friendshipRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
+//                    friendshipArrayList.add(dataSnapshot.child("User2").getValue(String.class));
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so displayed the changed comment.
+//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so remove it.
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed position, use the key to determine if we are
+//                // displaying this comment and if so move it.
+//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+//            }
+//
+//        });
 
 
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-                HashMap<String, String> friendInfo = new HashMap<String, String>();
-                friendInfo.put("name", dataSnapshot.child("Name").getValue(String.class));
-                friendInfo.put("remark", dataSnapshot.child("Remark").getValue(String.class));
-                userArrayList.add(friendInfo);
+//                HashMap<String, String> friendInfo = new HashMap<String, String>();
+//                friendInfo.put("name", dataSnapshot.child("Name").getValue(String.class));
+//                friendInfo.put("remark", dataSnapshot.child("Remark").getValue(String.class));
+//                userArrayList.add(friendInfo);
             }
 
             @Override
@@ -371,92 +360,92 @@ public class SocialFragment extends Fragment {
                 Log.w(TAG, "postComments:onCancelled", databaseError.toException());
             }
         });
-        reqRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-
-                    HashMap<String, String> reqInfo = new HashMap<String, String>();
-                    reqInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
-                    reqInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
-                    reqArrayList.add(reqInfo);
-
-                }
-                chatPagerAdapter = new ChatPagerAdapter(
-                        getActivity(),
-                        NUM_PAGES,
-                        friendshipArrayList,
-                        userArrayList,
-                        reqArrayList,
-                        chatArrayList
-                );
-                viewPager2.setAdapter(chatPagerAdapter);
-                new TabLayoutMediator(tabLayout, viewPager2,
-                        new TabLayoutMediator.TabConfigurationStrategy() {
-                            @Override
-                            public void onConfigureTab(TabLayout.Tab tab, int position) {
-                                switch (position) {
-                                    case 0:
-                                        tab.setText("Chat");
-                                        break;
-                                    case 1:
-                                        tab.setText("Friend");
-                                        break;
-                                    case 2:
-                                        tab.setText("Request");
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }).attach();
-
-            }
-
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-            }
-
-
-        });
+//        reqRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
+//
+//                    HashMap<String, String> reqInfo = new HashMap<String, String>();
+//                    reqInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
+//                    reqInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
+//                    reqArrayList.add(reqInfo);
+//
+//                }
+//                chatPagerAdapter = new ChatPagerAdapter(
+//                        getActivity(),
+//                        NUM_PAGES,
+//                        friendshipArrayList,
+//                        userArrayList,
+//                        reqArrayList,
+//                        chatArrayList
+//                );
+//                viewPager2.setAdapter(chatPagerAdapter);
+//                new TabLayoutMediator(tabLayout, viewPager2,
+//                        new TabLayoutMediator.TabConfigurationStrategy() {
+//                            @Override
+//                            public void onConfigureTab(TabLayout.Tab tab, int position) {
+//                                switch (position) {
+//                                    case 0:
+//                                        tab.setText("Chat");
+//                                        break;
+//                                    case 1:
+//                                        tab.setText("Friend");
+//                                        break;
+//                                    case 2:
+//                                        tab.setText("Request");
+//                                        break;
+//                                    default:
+//                                        break;
+//                                }
+//                            }
+//                        }).attach();
+//
+//            }
+//
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so displayed the changed comment.
+//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed, use the key to determine if we are displaying this
+//                // comment and if so remove it.
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+//
+//                // A comment has changed position, use the key to determine if we are
+//                // displaying this comment and if so move it.
+//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
+//                String friendshipKey = dataSnapshot.getKey();
+//
+//                // ...
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+//            }
+//
+//
+//        });
 
     }
 
