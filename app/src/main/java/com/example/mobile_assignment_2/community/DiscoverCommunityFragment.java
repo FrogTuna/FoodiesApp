@@ -96,7 +96,7 @@ public class DiscoverCommunityFragment extends Fragment implements commPostItemC
     public void onClick(View view, int position) {
         Communitypost post = posts.get(position);
         Intent i = new Intent(getActivity(), CommunityDetail.class);
-//        i.putExtra("title", post.getCommName());
+        i.putExtra("communityName", post.getCommName());
 //        i.putExtra("description", post.getDescription());
 //        i.putExtra("author", post.getAuthor());
 //        Log.i("hello", post.getTitle());

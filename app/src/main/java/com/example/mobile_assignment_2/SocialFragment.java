@@ -11,14 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_assignment_2.add.CustomItem;
+import com.example.mobile_assignment_2.add.activities.addActivity;
+import com.example.mobile_assignment_2.add.addFriendsAdapter;
+import com.example.mobile_assignment_2.add.activities.nearByActivity;
+import com.example.mobile_assignment_2.add.activities.shakeActivity;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
-
-import com.example.mobile_assignment_2.chat.addFriendsActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -58,7 +62,10 @@ public class SocialFragment extends Fragment {
     private ViewPager2 viewPager2;
     private ChatPagerAdapter chatPagerAdapter;
     private SearchView searchView;
-//    private FloatingActionButton addFriendsBtn;
+
+    private Spinner customSpinner;
+    private ArrayList<CustomItem> customList;
+
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
 
@@ -67,7 +74,6 @@ public class SocialFragment extends Fragment {
     private static final String TAG = "Child: ";
 
 
-    private FloatingActionButton addFriendsBtn;
     public SocialFragment() {
         // Required empty public constructor
 
@@ -138,6 +144,16 @@ public class SocialFragment extends Fragment {
 
     }
 
+
+    public ArrayList<CustomItem> getCustomList() {
+        customList = new ArrayList<>();
+        customList.add(new CustomItem("null", R.drawable.add_user));
+        customList.add(new CustomItem("add", R.drawable.ic_baseline_add_24));
+        customList.add(new CustomItem("Shake", R.drawable.ic_baseline_screen_rotation_24));
+        customList.add(new CustomItem("NearBy", R.drawable.ic_baseline_near_me_24));
+        return customList;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,15 +163,40 @@ public class SocialFragment extends Fragment {
 
 
         TextView logo = view.findViewById(R.id.logoInSocial);
-        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
-        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("1111111",logo.getText().toString());
-                Intent intent = new Intent(getActivity(), addFriendsActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        customSpinner = view.findViewById(R.id.customIconSpinner);
+        customList=getCustomList();
+        addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(),customList);
+        if(customSpinner!=null) {
+            customSpinner.setAdapter(adapter);
+            customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    CustomItem item = (CustomItem) adapterView.getSelectedItem();
+                    Log.d(TAG, "selected:" + item.getSpinnerItemName());
+
+                    if(item.getSpinnerItemName().equals("add")){
+                        Intent intent = new Intent(getActivity(), addActivity.class);
+                        startActivity(intent);
+                    }else if(item.getSpinnerItemName().equals("Shake")){
+                        Intent intent = new Intent(getActivity(), shakeActivity.class);
+                        startActivity(intent);
+                    }else if(item.getSpinnerItemName().equals("NearBy")) {
+                        Intent intent = new Intent(getActivity(), nearByActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    Log.d(TAG, "Non-selected:");
+                }
+            });
+        }
+
+
+
 //        ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
 //
 //        System.out.println("[+] chat list: " + chatArrayList);
@@ -177,15 +218,15 @@ public class SocialFragment extends Fragment {
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
         searchView = view.findViewById(R.id.searchView);
-        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
-
-        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Redirect to add friend page
-                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
-            }
-        });
+//        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
+//
+//        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Redirect to add friend page
+//                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
