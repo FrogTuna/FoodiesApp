@@ -34,6 +34,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".community.CommunityDetail"
+            android:exported="false"
+            android:theme="@style/Theme.Mobileassignment2">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".me.MyPostsActivity"
             android:exported="false" />
         <activity
