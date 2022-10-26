@@ -34,13 +34,13 @@
             android:name=".authentication.Register"
             android:exported="false" />
         <activity
-            android:name=".authentication.login"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".message.startChatActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".authentication.login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
