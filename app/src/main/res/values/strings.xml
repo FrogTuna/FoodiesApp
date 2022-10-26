@@ -21,7 +21,6 @@
     <string name="com_filter">Filter</string>
     <string name="com_search">Search</string>
 
-
     <string-array name="messageLeftText">
         <item>A</item>
         <item>B</item>
@@ -43,7 +42,7 @@
         <item>Hello Peter</item>
         <item>Nice to meet you</item>
         <item>My name is leo</item>
-        <item>Would you buy me a house in Beijing i will appreciate it</item>
+        <item>Would you buy me a house in Beijingxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</item>
         <item>i will assume you agree you</item>
     </string-array>
 
@@ -56,12 +55,10 @@
     </string-array>
 
 
-    =======
     <string name="post_name">Enter poster name:</string>
     <string name="head_protrait">head protrait</string>
     <string name="post_button_in_profile">post button in profile</string>
     <string name="star_button_in_profile">star button in profile</string>
     <string name="message_button_in_profile">message button in profile</string>
     <string name="community_button_in_profile">community button in profile</string>
-    >>>>>>> f04a560b7d03318612feba4ad97d10f993e2eb32
 </resources>
