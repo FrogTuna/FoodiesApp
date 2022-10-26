@@ -42,6 +42,9 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".community.AddEvent"
+            android:exported="false" />
+        <activity
             android:name=".me.MyPostsActivity"
             android:exported="false" />
         <activity
