@@ -12,12 +12,11 @@ public class ChatMessage{
     private int index;
 
 
-    public ChatMessage(String senderText, String senderTime, int senderImage, String role, int index) {
+    public ChatMessage(String senderText, String senderTime, int senderImage, String role) {
         this.senderText = senderText;
         this.senderTime = senderTime;
         this.senderImage = senderImage;
         this.role = role;
-        this.index = index;
     }
 
 

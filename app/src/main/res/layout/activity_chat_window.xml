@@ -26,12 +26,12 @@
         android:layout_marginTop="24dp"
         android:padding="5dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
-        app:layout_constraintBottom_toBottomOf="@+id/textName"
+        app:layout_constraintBottom_toBottomOf="@+id/oppositeHeadingInChat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textName"
+        android:id="@+id/oppositeHeadingInChat"
         android:layout_width="197dp"
         android:layout_height="31dp"
         android:layout_marginStart="40dp"
