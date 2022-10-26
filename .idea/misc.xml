@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/mobileA2/app/src/main/res/layout/activity_com_detail.xml" value="0.20989583333333334" />
+        <entry key="..\:/mobileA2/app/src/main/res/layout/activity_event.xml" value="0.20989583333333334" />
+        <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_community.xml" value="0.17300724637681159" />
+        <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_community_home.xml" value="0.17300724637681159" />
+        <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_my_community.xml" value="0.17300724637681159" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
       </map>
     </option>

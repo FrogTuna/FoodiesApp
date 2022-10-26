@@ -42,7 +42,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/add_community"
             android:layout_width="86dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
