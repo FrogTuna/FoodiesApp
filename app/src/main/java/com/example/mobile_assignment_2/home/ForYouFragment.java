@@ -192,7 +192,7 @@ public class ForYouFragment extends Fragment {
             String imageUrl = posts.get(position).getImageUrl().get(0);
 
             // Download image from URL and set to imageView
-            Picasso.with(getContext()).load(imageUrl).into(viewHolder.imageView);
+            Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
 
 
         }

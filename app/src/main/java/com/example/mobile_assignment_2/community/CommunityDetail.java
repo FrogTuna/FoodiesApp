@@ -52,18 +52,18 @@ public class CommunityDetail extends AppCompatActivity {
         ArrayList<Event> events = new ArrayList<>();
         CustomAdapter customAdapter = new CustomAdapter(getBaseContext(), events);
         listView_event = findViewById(R.id.event_list);
-//        listView_event.setAdapter(customAdapter);
-//        ArrayList<Event> newEvents = new ArrayList<>();
+        listView_event.setAdapter(customAdapter);
+        ArrayList<Event> newEvents = new ArrayList<>();
 //        ArrayList<Post> com_posts = new ArrayList<>();
-        events.add(new Event("aaa", "Sun Oct 23", "university", "author 1"));
-        events.add(new Event("bbb", "Sun Oct 24", "home", "author 2"));
-        events.add(new Event("ccc", "Sun Oct 25", "bridge", "author 3"));
-        events.add(new Event("ddd", "Sun Oct 26", "acvne", "author 4"));
+        newEvents.add(new Event("aaa", "Sun Oct 23", "university", "author 1"));
+        newEvents.add(new Event("bbb", "Sun Oct 24", "home", "author 2"));
+        newEvents.add(new Event("ccc", "Sun Oct 25", "bridge", "author 3"));
+        newEvents.add(new Event("ddd", "Sun Oct 26", "acvne", "author 4"));
 //        com_posts.add(new Post("title 1", "description 1", "author 1"));
 //        com_posts.add(new Post("title 2", "description 2", "author 2"));
 //        com_posts.add(new Post("title 3", "description 3", "author 3"));
 
-        customAdapter.addAll(events);
+        customAdapter.addAll(newEvents);
 //      setUpToolbar(comNameView);
 //        return comNameView;
     }

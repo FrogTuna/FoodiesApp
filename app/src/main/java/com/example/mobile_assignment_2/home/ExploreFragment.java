@@ -134,6 +134,7 @@ public class ExploreFragment extends Fragment {
                                 i.putExtra("title", post.getTitle());
                                 i.putExtra("description", post.getDescription());
                                 i.putExtra("author", post.getAuthor());
+                                i.putStringArrayListExtra("imageURL", post.getImageUrl());
                                 Log.i("hello", post.getTitle());
                                 Log.i("hello", post.getDescription());
                                 startActivity(i);
@@ -215,7 +216,7 @@ public class ExploreFragment extends Fragment {
             String imageUrl = posts.get(position).getImageUrl().get(0);
 
             // Download image from URL and set to imageView
-            Picasso.with(getContext()).load(imageUrl).into(viewHolder.imageView);
+            Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
 
         }
 
