@@ -140,7 +140,10 @@ public class ChatWindowActivity extends AppCompatActivity {
                             conversation.add(message);
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
                             recyclerView.setAdapter(messageAdapter2);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(ChatWindowActivity.this));
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
+                            linearLayoutManager.setStackFromEnd(true);
+                            recyclerView.setLayoutManager(linearLayoutManager);
+
                         }
                     }
                     @Override
