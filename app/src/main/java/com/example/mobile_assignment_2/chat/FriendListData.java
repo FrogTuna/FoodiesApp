@@ -15,6 +15,7 @@ public class FriendListData {
         this.remark = _remark;
         this.avatarID = _avatarID;
     }
+
     // Following is Get/Set function
     public String getUsername() {
         return this.username;
@@ -43,7 +44,5 @@ public class FriendListData {
     public void setUID(String _UID) {
         this.UID = _UID;
     }
-
-
 
 }

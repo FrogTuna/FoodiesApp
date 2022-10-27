@@ -69,6 +69,7 @@ public class SocialFragment extends Fragment {
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
+    public static  HashMap<String, String> outsideFriendInfo;
 
 
     public SocialFragment() {
@@ -399,11 +400,12 @@ public class SocialFragment extends Fragment {
                 userArrayList.add(usersInfo);
                 if(dataSnapshot.getKey().equals(userID)) {
 
+
                     for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
-                        if(userArrayList != null){
-                            //userArrayList.clear();
-                            friendshipArrayList.clear();
-                        }
+//                        if(userArrayList != null){
+//                            //userArrayList.clear();
+//                            friendshipArrayList.clear();
+//                        }
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
