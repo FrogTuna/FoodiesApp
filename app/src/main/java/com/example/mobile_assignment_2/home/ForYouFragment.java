@@ -16,8 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.Post;
@@ -50,8 +53,8 @@ public class ForYouFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Post> posts = new ArrayList<>();
-    CustomAdapter customAdapter;
-    RecyclerView recyclerView;
+    ForYouPostsAdapter explorePosts;
+    RecyclerView postsRecyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
 
@@ -121,12 +124,12 @@ public class ForYouFragment extends Fragment {
                                 forYouPosts.add(p);
                             }
                         }
-                        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-                        recyclerView.setHasFixedSize(true);
+                        postsRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+                        postsRecyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        customAdapter = new CustomAdapter(forYouPosts);
-                        recyclerView.setAdapter(customAdapter);
+                        postsRecyclerView.setLayoutManager(linearLayoutManager);
+                        explorePosts = new ForYouPostsAdapter(forYouPosts);
+                        postsRecyclerView.setAdapter(explorePosts);
 
                     }
 
@@ -148,7 +151,7 @@ public class ForYouFragment extends Fragment {
 
     }
 
-    public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    public class ForYouPostsAdapter extends RecyclerView.Adapter<ForYouPostsAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
 
@@ -156,19 +159,22 @@ public class ForYouFragment extends Fragment {
             TextView titleView;
             TextView authorView;
             TextView descpView;
-            ImageView imageView;
+            //ImageView imageView;
+            RecyclerView imagesRecyclerView;
 
             public ViewHolder(View view) {
                 super(view);
                 titleView =  (TextView) view.findViewById(R.id.post_title);
                 authorView = (TextView)  view.findViewById(R.id.author_name);
-                imageView = (ImageView) view.findViewById(R.id.post_image);
+                //imageView = (ImageView) view.findViewById(R.id.post_image);
                 descpView =  (TextView) view.findViewById(R.id.post_description);
+                imagesRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+
             }
 
         }
 
-        public CustomAdapter(ArrayList<Post> posts) {
+        public ForYouPostsAdapter(ArrayList<Post> posts) {
             this.posts = posts;
         }
 
@@ -179,21 +185,23 @@ public class ForYouFragment extends Fragment {
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.for_you_posts, viewGroup, false);
 
+
             return new ViewHolder(view);
         }
 
 
         @Override
-        public void onBindViewHolder(CustomAdapter.ViewHolder viewHolder, final int position) {
+        public void onBindViewHolder(ForYouPostsAdapter.ViewHolder viewHolder, final int position) {
 
             viewHolder.titleView.setText(posts.get(position).getTitle());
             viewHolder.authorView.setText(posts.get(position).getAuthor());
             viewHolder.descpView.setText(posts.get(position).getDescription());
-            String imageUrl = posts.get(position).getImageUrl().get(0);
-
-            // Download image from URL and set to imageView
-            Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
-
+            ArrayList<String> imageUrls = posts.get(position).getImageUrls();
+            ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext());
+            viewHolder.imagesRecyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+            viewHolder.imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
+            viewHolder.imagesRecyclerView.setAdapter(imagesAdapter);
 
         }
 
@@ -207,5 +215,6 @@ public class ForYouFragment extends Fragment {
             super.onAttachedToRecyclerView(recyclerView);
         }
     }
+
 
 }

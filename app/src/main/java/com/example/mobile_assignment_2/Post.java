@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Post {
     private String title, description, author, uid;
-    private ArrayList<String> imageUrl;
-    public Post(String title, String description, String author, String uid, ArrayList<String> imageUrl) {
+    private ArrayList<String> imageUrls;
+    public Post(String title, String description, String author, String uid, ArrayList<String> imageUrls) {
         this.title = title;
         this.description = description;
         this.author = author;
         this.uid = uid;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
     }
     public Post(){
 
@@ -28,5 +28,5 @@ public class Post {
     public String getUid() {
         return uid;
     }
-    public ArrayList<String> getImageUrl() {return imageUrl;}
+    public ArrayList<String> getImageUrls() {return imageUrls;}
 }

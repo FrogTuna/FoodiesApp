@@ -3,11 +3,15 @@ package com.example.mobile_assignment_2.home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +27,8 @@ public class PostDetails extends AppCompatActivity {
     TextView descripView;
     TextView authorView;
     LinearLayout linearLayout;
-    ImageView imageView;
+    RecyclerView imagesRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +39,7 @@ public class PostDetails extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         String author = intent.getStringExtra("author");
         String description = intent.getStringExtra("description");
-        ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURL");
+        ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURLs");
         titleView = findViewById(R.id.post_title);
         descripView = findViewById(R.id.post_description);
         authorView = findViewById(R.id.author_name);
@@ -42,9 +47,13 @@ public class PostDetails extends AppCompatActivity {
         descripView.setText(description);
         authorView.setText(author);
         linearLayout = findViewById(R.id.post_linearLayout);
-        imageView = findViewById(R.id.post_image);
-        // Download image from URL and set to imageView
-        Picasso.with(this).load(imageURLs.get(0)).fit().centerCrop().into(imageView);
+        imagesRecyclerView = findViewById(R.id.recyclerView);
+        imagesRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
+        imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
+        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this);
+        imagesRecyclerView.setAdapter(imagesAdapter);
+
         for (int i = 0; i < 3; i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.comment, null);
             TextView authorView = view.findViewById(R.id.author_name);
@@ -64,4 +73,6 @@ public class PostDetails extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
