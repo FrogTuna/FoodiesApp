@@ -53,6 +53,9 @@ public class ForYouFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Post> posts = new ArrayList<>();
+    ArrayList<String> friends = new ArrayList<>();
+    // posts for user and user's friends
+    ArrayList<Post> forYouPosts = new ArrayList<>();
     ForYouPostsAdapter explorePosts;
     RecyclerView postsRecyclerView;
     FirebaseAuth mAuth;
@@ -96,7 +99,7 @@ public class ForYouFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_for_you, container, false);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        ArrayList<String> friends = new ArrayList<>();
+
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         // Get a reference to users
@@ -105,6 +108,7 @@ public class ForYouFragment extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                friends.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String friendId = dataSnapshot.getKey();
                     friends.add(friendId);
@@ -113,12 +117,13 @@ public class ForYouFragment extends Fragment {
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        posts.clear();
+                        forYouPosts.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Post post = dataSnapshot.getValue(Post.class);
                             posts.add(post);
                         }
-                        // posts for user and user's friends
-                        ArrayList<Post> forYouPosts = new ArrayList<>();
+
                         for (Post p : posts) {
                             if (friends.contains(p.getUid()) || p.getUid().equals(currentUser.getUid())) {
                                 forYouPosts.add(p);
