@@ -249,6 +249,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     Bitmap photoBitmap = null;
                     try {
                         photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+
                     }
                     catch (IOException e) {
                         e.printStackTrace();
@@ -258,7 +259,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         ((ViewGroup)imageView.getParent()).removeView(imageView);
                     }
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            300,
+                            500,
                             RelativeLayout.LayoutParams.MATCH_PARENT
                     );
                     imageView.setLayoutParams(params);
@@ -283,7 +284,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                             ((ViewGroup)imageView.getParent()).removeView(imageView);
                         }
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                                300,
+                                500,
                                 RelativeLayout.LayoutParams.MATCH_PARENT
                         );
                         imageView.setLayoutParams(params);
