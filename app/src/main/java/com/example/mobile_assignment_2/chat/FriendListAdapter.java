@@ -38,12 +38,14 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final FriendListData friendListItem = friendListData[position];
+
         holder.textViewUsername.setText(friendListData[position].getUsername());
         holder.textViewRemark.setText(friendListData[position].getRemark());
         holder.imageViewAvatar.setImageResource(friendListData[position].getAvatar());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                System.out.println("[+] catch : " + friendListData[position].getUID());
                 username = "";
                 // Redirect to user page
                 Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
