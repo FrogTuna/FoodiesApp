@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
@@ -12,7 +13,7 @@ import com.example.mobile_assignment_2.R;
 
 import java.util.Calendar;
 
-public class EventCreate extends AppCompatActivity {
+public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateBtn;
 
@@ -97,7 +98,7 @@ public class EventCreate extends AppCompatActivity {
         return "JAN";
     }
 
-    public void openDatePicker() {
+    public void openDatePicker(View view) {
         datePickerDialog.show();
     }
 

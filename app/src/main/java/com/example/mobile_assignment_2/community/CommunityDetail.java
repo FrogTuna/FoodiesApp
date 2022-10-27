@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,15 @@ public class CommunityDetail extends AppCompatActivity {
         String comName = intent.getStringExtra("communityName");
 //        String comImg = intent.getStringExtra("communityImg");
 
+        ImageButton btn = (ImageButton)findViewById(R.id.add_event);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CommunityDetail.this, AddEvent.class);
+                startActivity(i);
+            }
+        });
         comNameView = findViewById(R.id.communityName);
 //        imgView = findViewById(R)
         comNameView.setText(comName);
@@ -62,7 +72,8 @@ public class CommunityDetail extends AppCompatActivity {
 //        com_posts.add(new Post("title 1", "description 1", "author 1"));
 //        com_posts.add(new Post("title 2", "description 2", "author 2"));
 //        com_posts.add(new Post("title 3", "description 3", "author 3"));
-//        setUpToolbar(comNameView);
+
+
         customAdapter.addAll(newEvents);
 
 //        return comNameView;
@@ -100,73 +111,14 @@ public class CommunityDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.com_bar);
-        setSupportActionBar(toolbar);
-    }
+//    private void setUpToolbar(View view) {
+//        Toolbar toolbar = view.findViewById(R.id.com_bar);
+//        setSupportActionBar(toolbar);
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.com_select_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.com_select_menu, menu);
+//        return true;
+//    }
 }
-
-
-
-//        listView_event = findViewById(R.id.event_linear);
-//
-//        Date currentTime = Calendar.getInstance().getTime();
-//        for (int i = 0; i < 3; i++) {
-//            View view = LayoutInflater.from(this).inflate(R.layout.activity_event, null);
-//            TextView organizer = view.findViewById(R.id.event_organizer);
-//            TextView date_item = view.findViewById(R.id.date_item);
-//            TextView place_item = view.findViewById(R.id.place_item);
-//            organizer.setText(new String(String.valueOf(i)));
-//            date_item.setText(new String(String.valueOf(currentTime)));
-//            place_item.setText("Will be hold at: " + new String(String.valueOf(i)));
-//            listView_event.addView(view);
-//        }
-//        Toolbar myToolbar = (Toolbar) findViewById(R.id.com_bar);
-//        setSupportActionBar(myToolbar);
-
-//public class CommunityDetail extends Fragment {
-//
-//    private ListView listView_event, listView_com;
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
-//    }
-//
-//    @SuppressLint("MissingInflatedId")
-//    @Override
-//    public View onCreateView(
-//            @NonNull LayoutInflater inflater,
-//            ViewGroup container,
-//            Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        View view = inflater.inflate(R.layout.fragment_com_detail, container, false);
-//
-//        ArrayList<Event> events = new ArrayList<>();
-////        ArrayList<Post> newPosts = new ArrayList<>();
-//        CustomAdapter customAdapter = new CustomAdapter(getContext(), events);
-//        listView_event = (ListView) view.findViewById(R.id.event_list);
-//        listView_event.setAdapter(customAdapter);
-//        ArrayList<Event> newEvents = new ArrayList<>();
-////        ArrayList<Post> com_posts = new ArrayList<>();
-//        newEvents.add(new Event("Sun Oct 23", "university", "author 1"));
-//        newEvents.add(new Event("Sun Oct 24", "home", "author 2"));
-//        newEvents.add(new Event("Sun Oct 25", "bridge", "author 3"));
-//
-////        com_posts.add(new Post("title 1", "description 1", "author 1"));
-////        com_posts.add(new Post("title 2", "description 2", "author 2"));
-////        com_posts.add(new Post("title 3", "description 3", "author 3"));
-//
-//        customAdapter.addAll(newEvents);
-//
-//        setUpToolbar(view);
-//        return view;
-//    }
-//
