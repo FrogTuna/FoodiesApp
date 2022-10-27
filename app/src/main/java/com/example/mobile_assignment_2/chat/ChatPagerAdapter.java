@@ -57,6 +57,4 @@ public class ChatPagerAdapter extends FragmentStateAdapter {
         return NUM_PAGES;
     }
 
-
-
 }

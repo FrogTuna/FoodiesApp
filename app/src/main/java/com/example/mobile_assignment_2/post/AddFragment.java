@@ -225,7 +225,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     }
                     ImageView imageView = new ImageView(getContext());
                     if(imageView.getParent() != null) {
-                        ((ViewGroup)imageView.getParent()).removeView(imageView); // <- fix
+                        ((ViewGroup)imageView.getParent()).removeView(imageView);
                     }
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                             300,
