@@ -69,7 +69,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         //firebase
         myAuth = FirebaseAuth.getInstance();
         fuser = myAuth.getCurrentUser();
-        userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child("HFpfPrZESjfWBQGS7A8C5EO83e53");
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID);
         allRef = FirebaseDatabase.getInstance().getReference();
         chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
 
@@ -86,7 +86,7 @@ public class ChatWindowActivity extends AppCompatActivity {
 
         //methods
         loadDatabase();
-        backSocialFragmentIntent(backIcon);
+
 
         //send button listener
         chatSendButton.setOnClickListener(new View.OnClickListener() {
@@ -104,14 +104,17 @@ public class ChatWindowActivity extends AppCompatActivity {
                     String chatID = chatMessageRef.getKey();
                     ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date),R.drawable.old_man,chatID, fuser.getUid());
                     chatMessageRef.setValue(message);
-                    DatabaseReference fuserFriendChatRef = userRef.child(fuser.getUid()).child("friends").child("HFpfPrZESjfWBQGS7A8C5EO83e53").child("chats").push();
+                    DatabaseReference fuserFriendChatRef = userRef.child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("chats").push();
                     fuserFriendChatRef.setValue(chatID);
                     chatInputBar.clearFocus();
                     chatInputBar.setText("");
+                    //Log.d("长度：",String.valueOf(chatInputBar.getText().length()));
                     Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
+
+        backSocialFragmentIntent(backIcon);
 
 
     }
@@ -133,12 +136,11 @@ public class ChatWindowActivity extends AppCompatActivity {
                             String chatMessageRole = snapshot3.child("role").getValue().toString();
                             String chatMessageText = snapshot3.child("senderText").getValue().toString();
                             String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
-                            ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,"",chatMessageRole);
+                            ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,"", chatMessageRole);
                             conversation.add(message);
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
                             recyclerView.setAdapter(messageAdapter2);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ChatWindowActivity.this));
-                            Snackbar.make(chatSendButton,"Message has sent it", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                     @Override

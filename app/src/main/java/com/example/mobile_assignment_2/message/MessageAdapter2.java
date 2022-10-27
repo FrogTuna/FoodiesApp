@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.chat.FriendListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,7 +48,7 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (allConversation.get(position).getRole().equals("HFpfPrZESjfWBQGS7A8C5EO83e53")) {
+        if (allConversation.get(position).getRole().equals(FriendListAdapter.userID)) {
             return LAYOUT_LEFT;
         } else if(allConversation.get(position).getRole().equals(fuser.getUid())) {
             return LAYOUT_RIGHT;
@@ -81,7 +82,7 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if(allConversation.get(position).getRole().equals("HFpfPrZESjfWBQGS7A8C5EO83e53")){
+        if(allConversation.get(position).getRole().equals(FriendListAdapter.userID)){
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
             holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
             holderLeft.receiverTime.setText(allConversation.get(position).getSenderTime());
