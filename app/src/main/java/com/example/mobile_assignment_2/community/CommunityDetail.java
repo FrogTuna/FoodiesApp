@@ -62,9 +62,9 @@ public class CommunityDetail extends AppCompatActivity {
 //        com_posts.add(new Post("title 1", "description 1", "author 1"));
 //        com_posts.add(new Post("title 2", "description 2", "author 2"));
 //        com_posts.add(new Post("title 3", "description 3", "author 3"));
-
+//        setUpToolbar(comNameView);
         customAdapter.addAll(newEvents);
-//      setUpToolbar(comNameView);
+
 //        return comNameView;
     }
 
@@ -100,21 +100,16 @@ public class CommunityDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-//    private void setUpToolbar(View view) {
-//        Toolbar toolbar = view.findViewById(R.id.com_bar);
-//        AppCompatActivity activity = (AppCompatActivity) getActivity();
-//        if (activity != null) {
-//            activity.setSupportActionBar(toolbar);
-//        }
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-//        getMenuInflater().inflate(R.menu.com_select_menu, menu);
-//        return true;
-////        menuInflater.inflate(R.menu.com_select_menu, menu);
-////        super.onCreateOptionsMenu(menu, menuInflater);
-//    }
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.com_bar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.com_select_menu, menu);
+        return true;
+    }
 }
 
 
