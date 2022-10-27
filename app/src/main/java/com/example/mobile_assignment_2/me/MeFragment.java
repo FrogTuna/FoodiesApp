@@ -139,6 +139,7 @@ public class MeFragment extends Fragment {
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 if(snapshot.child("userID").getValue().equals(fuser.getUid())){
                     TextView username = (TextView) view.findViewById(R.id.profileName);
                     username.setText(snapshot.child("name").getValue().toString());

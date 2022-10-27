@@ -36,6 +36,8 @@
         android:layout_height="31dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
+        android:textSize="25dp"
+        android:textColor="@color/orange"
         android:ellipsize="end"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/chatWindowBackIcon"
@@ -43,15 +45,18 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatWindowRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="411dp"
+        android:layout_height="580dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:overScrollMode="never"
         android:padding="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@+id/chatViewBackground"
-        app:layout_constraintTop_toBottomOf="@+id/chatWindowBackIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/chatWindowBackIcon"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
 
     <EditText
         android:id="@+id/chatInputBar"

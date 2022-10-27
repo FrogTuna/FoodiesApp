@@ -54,9 +54,6 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".message.startChatActivity"
-            android:exported="false" />
-        <activity
             android:name=".message.ChatWindowActivity"
             android:exported="false" />
         <activity

@@ -392,6 +392,7 @@ public class SocialFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
                 HashMap<String, String> friendsInfo = new HashMap<String, String>();
                 HashMap<String, String> usersInfo = new HashMap<String, String>();
                 usersInfo.put("ID", dataSnapshot.getKey());
@@ -400,7 +401,12 @@ public class SocialFragment extends Fragment {
                 usersInfo.put("remark", (String) dataSnapshot.child("remark").getValue());
                 userArrayList.add(usersInfo);
                 if(dataSnapshot.getKey().equals(userID)) {
+
                     for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
+                        if(userArrayList != null){
+                            //userArrayList.clear();
+                            friendshipArrayList.clear();
+                        }
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
@@ -416,6 +422,7 @@ public class SocialFragment extends Fragment {
                 // comment and if so displayed the changed comment.
                 FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
                 String friendshipKey = dataSnapshot.getKey();
+
 
                 // ...
             }
