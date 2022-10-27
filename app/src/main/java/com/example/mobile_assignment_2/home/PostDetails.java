@@ -34,7 +34,7 @@ public class PostDetails extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         String author = intent.getStringExtra("author");
         String description = intent.getStringExtra("description");
-        ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURL");
+        ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURLs");
         titleView = findViewById(R.id.post_title);
         descripView = findViewById(R.id.post_description);
         authorView = findViewById(R.id.author_name);
