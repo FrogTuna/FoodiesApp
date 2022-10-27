@@ -209,9 +209,11 @@ public class DiscoverCommunityFragment extends Fragment {
                 ib.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("join","yes");
-                        Intent i = new Intent(getActivity(), CommunityDetail.class);
-                        startActivity(i);
+//                        Log.d("join","yes");
+//                        Intent i = new Intent(getActivity(), CommunityDetail.class);
+//                        startActivity(i);
+                        BottomSheet bottomSheet = new BottomSheet();
+                        bottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
                     }
                 });
             }
