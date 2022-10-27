@@ -8,7 +8,6 @@ import java.util.List;
 public class User {
 
     public String userID, username, email, password, imageUrl;
-    FirebaseDatabase firebaseDatabase;
 
     public User(String userID, String username, String email, String password, String imageUrl){
 
