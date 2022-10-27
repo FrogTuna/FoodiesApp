@@ -3,6 +3,7 @@ package com.example.mobile_assignment_2.community;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,17 @@ import android.widget.TextView;
 
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.home.ExploreFragment;
 import com.example.mobile_assignment_2.home.PostDetails;
+import com.example.mobile_assignment_2.home.PostItemClickListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,9 +36,11 @@ import java.util.ArrayList;
  * Use the {@link DiscoverCommunityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscoverCommunityFragment extends Fragment implements commPostItemClickListener{
+public class DiscoverCommunityFragment extends Fragment {
     private ArrayList<Communitypost> posts = new ArrayList<>();
     private RecyclerView recyclerView;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,45 +86,104 @@ public class DiscoverCommunityFragment extends Fragment implements commPostItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
+        ArrayList<String> friends = new ArrayList<>();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        // Get a reference to users
+        DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+        usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
 
-        posts.add(new Communitypost(R.drawable.food, "commName1"));
-        posts.add(new Communitypost(R.drawable.food2, "commName2"));
-        posts.add(new Communitypost(R.drawable.food, "commName3"));
-        posts.add(new Communitypost(R.drawable.food2, "commName4"));
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String friendId = dataSnapshot.getKey();
+                    friends.add(friendId);
+                }
+                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+                postsRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Communitypost post = dataSnapshot.getValue(Communitypost.class);
+                            posts.add(post);
+                        }
+                        // posts for stranger
+                        ArrayList<Communitypost> strangerPosts = new ArrayList<>();
+                        for (Communitypost p : posts) {
+                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
+                                strangerPosts.add(p);
+                            }
+                        }
+                        recyclerView =  view.findViewById(R.id.recyclerView);
+                        recyclerView.setHasFixedSize(true);
+                        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                        recyclerView.setLayoutManager(gridLayoutManager);
+                        CustomAdapter customAdapter = new CustomAdapter(posts);
+                        customAdapter.setClickListener(new commPostItemClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                Communitypost post = strangerPosts.get(position);
+                                Intent i = new Intent(getActivity(), CommunityDetail.class);
+                                i.putExtra("communityName", post.getCommName());
+                                i.putStringArrayListExtra("imageURLs", post.getImageUrls());
+                                startActivity(i);
+                            }
+                        });
+                        recyclerView.setAdapter(customAdapter);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
+//        posts.add(new Communitypost(R.drawable.food, "commName1"));
+//        posts.add(new Communitypost(R.drawable.food2, "commName2"));
+//        posts.add(new Communitypost(R.drawable.food, "commName3"));
+//        posts.add(new Communitypost(R.drawable.food2, "commName4"));
 
         // Inflate the layout for this fragment
 
-        recyclerView =  view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        CustomAdapter customAdapter = new CustomAdapter(posts);
-        customAdapter.setClickListener(this);
-        recyclerView.setAdapter(customAdapter);
+//        recyclerView =  view.findViewById(R.id.recyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+//        recyclerView.setLayoutManager(gridLayoutManager);
+//        CustomAdapter customAdapter = new CustomAdapter(posts);
+//        customAdapter.setClickListener(this);
+//        recyclerView.setAdapter(customAdapter);
 
         return view;
     }
 
-    @Override
-    public void onClick(View view, int position) {
-        Communitypost post = posts.get(position);
-        Intent i = new Intent(getActivity(), CommunityDetail.class);
-        i.putExtra("communityName", post.getCommName());
-//        i.putExtra("description", post.getDescription());
-//        i.putExtra("author", post.getAuthor());
-//        Log.i("hello", post.getTitle());
-//        Log.i("hello", post.getDescription());
-        startActivity(i);
-    }
+//    @Override
+//    public void onClick(View view, int position) {
+//        Communitypost post = posts.get(position);
+//        Intent i = new Intent(getActivity(), CommunityDetail.class);
+//        i.putExtra("communityName", post.getCommName());
+////        i.putExtra("description", post.getDescription());
+////        i.putExtra("author", post.getAuthor());
+////        Log.i("hello", post.getTitle());
+////        Log.i("hello", post.getDescription());
+//        startActivity(i);
+//    }
 
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
         private ArrayList<Communitypost> posts = new ArrayList<Communitypost>();
         private commPostItemClickListener communityPostItemClickListener;
-        /**
-         * Provide a reference to the type of views that you are using
-         * (custom ViewHolder).
-         */
+
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
             ImageView imgView;
@@ -133,12 +205,7 @@ public class DiscoverCommunityFragment extends Fragment implements commPostItemC
 
         }
 
-        /**
-         * Initialize the dataset of the Adapter.
-         *
-         * @param posts String[] containing the data to populate views to be used
-         * by RecyclerView.
-         */
+
         public CustomAdapter(ArrayList<Communitypost> posts) {
             this.posts = posts;
 
@@ -160,12 +227,12 @@ public class DiscoverCommunityFragment extends Fragment implements commPostItemC
         @Override
         public void onBindViewHolder(CustomAdapter.ViewHolder viewHolder, final int position) {
 
-            // Get element from your dataset at this position and replace the
-            // contents of the view with that element
-            //Post post = (Post) posts.get(position);
             viewHolder.titleView.setText(posts.get(position).getCommName());
+            String imageUrl = posts.get(position).getImageUrls().get(0);
 
-            viewHolder.imgView.setBackgroundResource(posts.get(position).getCommImage());
+            // Download image from URL and set to imageView
+            Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imgView);
+//            viewHolder.imgView.setBackgroundResource(posts.get(position).getCommImage());
 
         }
 
