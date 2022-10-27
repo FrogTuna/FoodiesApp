@@ -1,16 +1,24 @@
 package com.example.mobile_assignment_2.post;
 
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -28,10 +36,12 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.authentication.User;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,6 +78,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     private Button postBtn;
     private Button imageBtn;
+    private Button cameraBtn;
     LinearLayout linearLayout;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -120,6 +131,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         imageBtn.setOnClickListener(this);
         titleView = view.findViewById(R.id.create_post_title);
         descripView = view.findViewById(R.id.create_post_description);
+        cameraBtn = view.findViewById(R.id.cameraButton);
+
+        cameraBtn.setOnClickListener(this);
         postBtn = view.findViewById(R.id.postButton);
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,16 +216,32 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }});
         return view;
     }
-
+    private static final int CAMERA_REQUEST_CODE = 100;
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageButton:
-                getContent.launch("image/*");
+                galleryActivityResultLauncher.launch("image/*");
+                break;
+            case R.id.cameraButton:
+                if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Request permission from user
+                    requestPermissionLauncher.launch(
+                            Manifest.permission.CAMERA);
+                } else { // permission is already granted
+                    openCamera();
+                }
+
         }
     }
 
-    ActivityResultLauncher<String> getContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+    private void openCamera(){
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<String> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
@@ -240,6 +270,38 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                        ImageView imageView = new ImageView(getContext());
+                        if(imageView.getParent() != null) {
+                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        }
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                300,
+                                RelativeLayout.LayoutParams.MATCH_PARENT
+                        );
+                        imageView.setLayoutParams(params);
+                        imageView.setImageBitmap(bitmap);
 
+                        linearLayout.addView(imageView);
 
+                    }
+                }
+            });
+
+    //Handle the user's selection result from the dialog of system permissions
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    openCamera();
+                } else {
+                    Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 }
