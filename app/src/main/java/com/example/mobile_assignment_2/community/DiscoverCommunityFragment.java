@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -86,6 +87,8 @@ public class DiscoverCommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
+
+
         ArrayList<String> friends = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -184,24 +187,49 @@ public class DiscoverCommunityFragment extends Fragment {
         private ArrayList<Communitypost> posts = new ArrayList<Communitypost>();
         private commPostItemClickListener communityPostItemClickListener;
 
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class ViewHolder extends RecyclerView.ViewHolder{
             TextView titleView;
             ImageView imgView;
+            ImageButton ib;
 
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
-                view.setOnClickListener(this);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("join","yes");
+                        Intent i = new Intent(getActivity(), CommunityDetail.class);
+                        startActivity(i);
+                    }
+                });
                 titleView =   view.findViewById(R.id.communityName);
                 imgView =  view.findViewById(R.id.communityImg);
+                ib = view.findViewById(R.id.join_community_button);
+                ib.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("join","yes");
+                        Intent i = new Intent(getActivity(), CommunityDetail.class);
+                        startActivity(i);
+                    }
+                });
             }
 
-            @Override
-            public void onClick(View view) {
-                if(communityPostItemClickListener != null) {
-                    communityPostItemClickListener.onClick(view, getAbsoluteAdapterPosition());
-                }
-            }
+//            @Override
+//            public void onClick(View view) {
+////                if(communityPostItemClickListener != null) {
+////                    communityPostItemClickListener.onClick(view, getAbsoluteAdapterPosition());
+////                }
+//                Log.d("voie","yed");
+//                switch(view.getId()) {
+//                    case R.id.join_community_button:
+//                        Log.d("join","yes");
+//                        Intent i = new Intent(getActivity(), AddCommunity.class);
+//                        startActivity(i);
+//                        break;
+//                }
+//            }
 
         }
 
