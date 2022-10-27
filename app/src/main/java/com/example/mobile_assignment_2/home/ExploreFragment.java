@@ -53,7 +53,7 @@ public class ExploreFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    CustomAdapter customAdapter;
+    ExplorePostsAdapter explorePostsAdapter;
 
 
     public ExploreFragment() {
@@ -125,8 +125,8 @@ public class ExploreFragment extends Fragment {
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                         recyclerView.setLayoutManager(gridLayoutManager);
-                        customAdapter = new CustomAdapter(strangerPosts);
-                        customAdapter.setClickListener(new PostItemClickListener() {
+                        explorePostsAdapter = new ExplorePostsAdapter(strangerPosts);
+                        explorePostsAdapter.setClickListener(new PostItemClickListener() {
                             @Override
                             public void onClick(View view, int position) {
                                 Post post = strangerPosts.get(position);
@@ -140,7 +140,7 @@ public class ExploreFragment extends Fragment {
                                 startActivity(i);
                             }
                         });
-                        recyclerView.setAdapter(customAdapter);
+                        recyclerView.setAdapter(explorePostsAdapter);
 
                     }
 
@@ -162,7 +162,7 @@ public class ExploreFragment extends Fragment {
     }
 
 
-    public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    public class ExplorePostsAdapter extends RecyclerView.Adapter<ExplorePostsAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
         private PostItemClickListener postItemClickListener;
@@ -190,7 +190,7 @@ public class ExploreFragment extends Fragment {
             }
         }
 
-        public CustomAdapter(ArrayList<Post> posts) {
+        public ExplorePostsAdapter(ArrayList<Post> posts) {
             this.posts = posts;
 
         }

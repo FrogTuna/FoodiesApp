@@ -53,7 +53,7 @@ public class ForYouFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Post> posts = new ArrayList<>();
-    ExplorePostsAdapter explorePosts;
+    ForYouPostsAdapter explorePosts;
     RecyclerView postsRecyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -128,7 +128,7 @@ public class ForYouFragment extends Fragment {
                         postsRecyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         postsRecyclerView.setLayoutManager(linearLayoutManager);
-                        explorePosts = new ExplorePostsAdapter(forYouPosts);
+                        explorePosts = new ForYouPostsAdapter(forYouPosts);
                         postsRecyclerView.setAdapter(explorePosts);
 
                     }
@@ -151,7 +151,7 @@ public class ForYouFragment extends Fragment {
 
     }
 
-    public class ExplorePostsAdapter extends RecyclerView.Adapter<ExplorePostsAdapter.ViewHolder> {
+    public class ForYouPostsAdapter extends RecyclerView.Adapter<ForYouPostsAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
 
@@ -174,7 +174,7 @@ public class ForYouFragment extends Fragment {
 
         }
 
-        public ExplorePostsAdapter(ArrayList<Post> posts) {
+        public ForYouPostsAdapter(ArrayList<Post> posts) {
             this.posts = posts;
         }
 
@@ -191,13 +191,13 @@ public class ForYouFragment extends Fragment {
 
 
         @Override
-        public void onBindViewHolder(ExplorePostsAdapter.ViewHolder viewHolder, final int position) {
+        public void onBindViewHolder(ForYouPostsAdapter.ViewHolder viewHolder, final int position) {
 
             viewHolder.titleView.setText(posts.get(position).getTitle());
             viewHolder.authorView.setText(posts.get(position).getAuthor());
             viewHolder.descpView.setText(posts.get(position).getDescription());
             ArrayList<String> imageUrls = posts.get(position).getImageUrls();
-            ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls);
+            ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext());
             viewHolder.imagesRecyclerView.setHasFixedSize(true);
             RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
             viewHolder.imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
@@ -209,57 +209,6 @@ public class ForYouFragment extends Fragment {
         @Override
         public int getItemCount() {
             return posts.size();
-        }
-        @Override
-        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-            super.onAttachedToRecyclerView(recyclerView);
-        }
-    }
-
-    public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
-
-        private ArrayList<String> imageUrls = new ArrayList<String>();
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
-            TextView imagePositionView;
-            public ViewHolder(View view) {
-                super(view);
-                imageView =  (ImageView) view.findViewById(R.id.post_image);
-                imagePositionView = (TextView) view.findViewById(R.id.image_position);
-
-            }
-
-        }
-
-        public  ImagesAdapter(ArrayList<String> imageUrls) {
-            this.imageUrls = imageUrls;
-        }
-
-        // Create new view
-        @Override
-        public ImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            // Create a new view, which defines the UI of the list item
-            View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.image_view, viewGroup, false);
-
-
-            return new ImagesAdapter.ViewHolder(view);
-        }
-
-
-        @Override
-        public void onBindViewHolder(ImagesAdapter.ViewHolder viewHolder, final int position) {
-
-            // Download image from URL and set to imageView
-            Picasso.with(getContext()).load(imageUrls.get(position)).fit().centerCrop().into(viewHolder.imageView);
-            viewHolder.imagePositionView.setText(position+1 + "/" + imageUrls.size());
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return imageUrls.size();
         }
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {

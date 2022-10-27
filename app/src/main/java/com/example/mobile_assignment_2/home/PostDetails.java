@@ -51,7 +51,7 @@ public class PostDetails extends AppCompatActivity {
         imagesRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
         imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
-        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs);
+        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this);
         imagesRecyclerView.setAdapter(imagesAdapter);
 
         for (int i = 0; i < 3; i++) {
@@ -74,55 +74,5 @@ public class PostDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
-
-        private ArrayList<String> imageUrls = new ArrayList<String>();
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView;
-            TextView imagePositionView;
-            public ViewHolder(View view) {
-                super(view);
-                imageView =  (ImageView) view.findViewById(R.id.post_image);
-                imagePositionView = (TextView) view.findViewById(R.id.image_position);
-
-            }
-
-        }
-
-        public  ImagesAdapter(ArrayList<String> imageUrls) {
-            this.imageUrls = imageUrls;
-        }
-
-        // Create new view
-        @Override
-        public ImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            // Create a new view, which defines the UI of the list item
-            View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.image_view, viewGroup, false);
-
-
-            return new ImagesAdapter.ViewHolder(view);
-        }
-
-
-        @Override
-        public void onBindViewHolder(ImagesAdapter.ViewHolder viewHolder, final int position) {
-
-            // Download image from URL and set to imageView
-            Picasso.with(getApplicationContext()).load(imageUrls.get(position)).fit().centerCrop().into(viewHolder.imageView);
-            viewHolder.imagePositionView.setText(position+1 + "/" + imageUrls.size());
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return imageUrls.size();
-        }
-        @Override
-        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-            super.onAttachedToRecyclerView(recyclerView);
-        }
-    }
 
 }
