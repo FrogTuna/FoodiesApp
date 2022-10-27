@@ -104,7 +104,7 @@ public class ChatWindowActivity extends AppCompatActivity {
                     String chatID = chatMessageRef.getKey();
                     ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date),R.drawable.old_man,chatID, fuser.getUid());
                     chatMessageRef.setValue(message);
-                    DatabaseReference fuserFriendChatRef = userRef.child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("chats").push();
+                    DatabaseReference fuserFriendChatRef = userRef.child("chats").push();
                     fuserFriendChatRef.setValue(chatID);
                     chatInputBar.clearFocus();
                     chatInputBar.setText("");
@@ -141,7 +141,9 @@ public class ChatWindowActivity extends AppCompatActivity {
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
                             recyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            linearLayoutManager.setStackFromEnd(true);
+                            if(conversation.size()>5){
+                                linearLayoutManager.setStackFromEnd(true);
+                            }
                             recyclerView.setLayoutManager(linearLayoutManager);
 
                         }
