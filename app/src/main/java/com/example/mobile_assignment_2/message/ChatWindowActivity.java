@@ -60,6 +60,7 @@ public class ChatWindowActivity extends AppCompatActivity {
     DatabaseReference userLastMessageRef;
     DatabaseReference oppositeUserLastMessageRef;
     FirebaseAuth myAuth;
+    Query lastQuery;
     ImageView chatSendButton;
     EditText chatInputBar;
     RecyclerView userRecyclerView;
@@ -173,7 +174,7 @@ public class ChatWindowActivity extends AppCompatActivity {
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
                             oppositeUserRecyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            if(oppositeUserconversation.size()>5){
+                            if(oppositeUserconversation.size()>6){
                                 linearLayoutManager.setStackFromEnd(true);
                             }
                             oppositeUserRecyclerView.setLayoutManager(linearLayoutManager);
@@ -229,7 +230,7 @@ public class ChatWindowActivity extends AppCompatActivity {
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, userConversation);
                             userRecyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            if(userConversation.size()>5){
+                            if(userConversation.size()>6){
                                 linearLayoutManager.setStackFromEnd(true);
                             }
                             userRecyclerView.setLayoutManager(linearLayoutManager);
