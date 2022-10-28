@@ -391,7 +391,7 @@ public class SocialFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-                HashMap<String, String> friendsInfo = new HashMap<String, String>();
+
                 HashMap<String, String> usersInfo = new HashMap<String, String>();
                 usersInfo.put("ID", dataSnapshot.getKey());
                 usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
@@ -400,17 +400,43 @@ public class SocialFragment extends Fragment {
                 userArrayList.add(usersInfo);
                 if(dataSnapshot.getKey().equals(userID)) {
 
-
                     for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
-//                        if(userArrayList != null){
-//                            //userArrayList.clear();
-//                            friendshipArrayList.clear();
-//                        }
+                        HashMap<String, String> friendsInfo = new HashMap<String, String>();
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
+
                     }
                 }
+                System.out.println("[+] Friend : " + friendshipArrayList);
+//                chatPagerAdapter = new ChatPagerAdapter(
+//                        getActivity(),
+//                        NUM_PAGES,
+//                        friendshipArrayList,
+//                        userArrayList,
+//                        reqArrayList,
+//                        chatArrayList
+//                );
+//                viewPager2.setAdapter(chatPagerAdapter);
+//                new TabLayoutMediator(tabLayout, viewPager2,
+//                        new TabLayoutMediator.TabConfigurationStrategy() {
+//                            @Override
+//                            public void onConfigureTab(TabLayout.Tab tab, int position) {
+//                                switch (position) {
+//                                    case 0:
+//                                        tab.setText("Chat");
+//                                        break;
+//                                    case 1:
+//                                        tab.setText("Friend");
+//                                        break;
+//                                    case 2:
+//                                        tab.setText("Request");
+//                                        break;
+//                                    default:
+//                                        break;
+//                                }
+//                            }
+//                        }).attach();
             }
 
             @Override
