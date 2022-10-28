@@ -5,32 +5,23 @@
     android:layout_width="300dp"
     android:layout_height="?android:attr/listPreferredItemHeightLarge"
     android:layout_marginLeft="50dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="5dp"
     android:background="@drawable/friend_card">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewAvatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:contentDescription="Icon"
-        app:civ_border_color="@color/lightPink"
+        app:civ_border_color="@color/black"
         app:civ_border_width="1dp"
         app:layout_constraintStart_toStartOf="parent" />
-    <!--    <ImageView-->
-    <!--        android:id="@+id/imageViewAvatar"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_alignParentLeft="true"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginStart="@dimen/activity_horizontal_margin"-->
-    <!--        android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
-    <!--        android:contentDescription="Icon" />-->
+
 
     <TextView
         android:id="@+id/textViewUsername"
@@ -40,7 +31,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="29dp"
         android:layout_marginLeft="29dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/imageViewAvatar"
         android:layout_toRightOf="@id/imageViewAvatar"
         android:gravity="center_vertical"

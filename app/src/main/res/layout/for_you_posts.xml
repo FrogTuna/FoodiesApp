@@ -99,7 +99,7 @@
                 android:backgroundTint="@color/orange"
                 android:drawableLeft="@drawable/like"
                 android:textSize="11sp"
-                android:text="154"
+                android:text=""
                 android:textColor="@color/black"/>
 
             <Button
