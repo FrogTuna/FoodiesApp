@@ -5,93 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/TextView11"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:gravity="center_horizontal"-->
-    <!--        android:text="Create Event"-->
-    <!--        android:textColor="@color/orange"-->
-    <!--        android:textSize="22dp"-->
-    <!--        tools:layout_editor_absoluteX="0dp"-->
-    <!--        tools:layout_editor_absoluteY="460dp" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView3"-->
-    <!--        android:layout_width="82dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="Name"-->
-    <!--        android:textColor="@color/orange"-->
-    <!--        android:textSize="22dp" />-->
-
-    <!--    <com.google.android.material.textfield.TextInputEditText-->
-    <!--        android:id="@+id/editText"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="Name"-->
-    <!--        tools:layout_editor_absoluteX="28dp"-->
-    <!--        tools:layout_editor_absoluteY="53dp" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView5"-->
-    <!--        android:layout_width="154dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="When to start"-->
-    <!--        android:textColor="@color/orange"-->
-    <!--        android:textSize="22dp"-->
-    <!--        tools:layout_editor_absoluteX="241dp"-->
-    <!--        tools:layout_editor_absoluteY="46dp" />-->
-
-    <!--    <com.google.android.material.textfield.TextInputEditText-->
-    <!--        android:id="@+id/editText2"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="Time"-->
-    <!--        tools:layout_editor_absoluteX="0dp"-->
-    <!--        tools:layout_editor_absoluteY="186dp" />-->
-
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView8"-->
-    <!--        android:layout_width="102dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="location"-->
-    <!--        android:textColor="@color/orange"-->
-    <!--        android:textSize="22dp"-->
-    <!--        tools:layout_editor_absoluteX="198dp"-->
-    <!--        tools:layout_editor_absoluteY="99dp" />-->
-
-    <!--    <com.google.android.material.textfield.TextInputEditText-->
-    <!--        android:id="@+id/editText3"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="location"-->
-    <!--        tools:layout_editor_absoluteX="-16dp"-->
-    <!--        tools:layout_editor_absoluteY="366dp" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView10"-->
-    <!--        android:layout_width="198dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="number of people"-->
-    <!--        android:textColor="@color/orange"-->
-    <!--        android:textSize="22dp"-->
-    <!--        tools:layout_editor_absoluteX="0dp"-->
-    <!--        tools:layout_editor_absoluteY="106dp" />-->
-
-    <!--    <com.google.android.material.textfield.TextInputEditText-->
-    <!--        android:id="@+id/editText4"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="68dp"-->
-    <!--        android:contentDescription="Number"-->
-    <!--        tools:layout_editor_absoluteX="0dp"-->
-    <!--        tools:layout_editor_absoluteY="224dp" />-->
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -121,18 +34,45 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/event_time"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:hint="@string/time">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="Select Time: "
+                android:textSize="20dp"/>
+
+            <Button
+                android:id="@+id/calendar_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="30dp"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:text="Wed 17 Oct"
+                style="?android:spinnerStyle"
+                android:onClick="openDatePicker"/>
+        </LinearLayout>
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/event_time"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="30dp"-->
+<!--            android:hint="@string/time">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_location"

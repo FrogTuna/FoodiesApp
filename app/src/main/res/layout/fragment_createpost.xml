@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/purple_200">
+    android:background="@color/white">
     <LinearLayout
         android:id="@+id/mainLinearLayout"
         android:layout_width="0dp"
@@ -15,18 +15,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/postButton"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
         tools:context=".post.AddFragment"
         android:orientation="vertical"
         android:fillViewport="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+
+            android:text="Picked Images"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/create_post_stroke_bg"
             >
             <LinearLayout
                 android:id="@+id/imageLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_margin="8dp"
                 android:orientation="horizontal">
             </LinearLayout>
 
@@ -43,6 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Add Image"
+                android:textStyle="bold"
+                android:backgroundTint="@color/orange"
                 />
             <Button
                 android:id="@+id/cameraButton"
@@ -50,6 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="Use Camera"
+                android:textStyle="bold"
+                android:backgroundTint="@color/orange"
                 />
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -98,5 +113,7 @@
         android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:text="Post"
+        android:textStyle="bold"
+        android:backgroundTint="@color/orange"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
