@@ -5,7 +5,8 @@
     android:layout_width="300dp"
     android:layout_height="?android:attr/listPreferredItemHeightLarge"
     android:layout_marginLeft="50dp"
-    android:background="@drawable/radius45_square">
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/friend_card">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewAvatar"
