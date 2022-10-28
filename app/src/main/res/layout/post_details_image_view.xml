@@ -8,7 +8,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/post_image"
         android:layout_width="match_parent"
-        android:layout_height="193dp"
+        android:layout_height="350dp"
         android:background="@color/white"
         android:contentDescription="my_image_description"
         android:src="@drawable/add_user" />
@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+
+        android:layout_marginLeft="10dp"
         android:text=""
         android:textSize="16sp"
         android:textStyle="bold" />

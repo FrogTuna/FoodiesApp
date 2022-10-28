@@ -7,11 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/orange"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="6dp"
     app:cardUseCompatPadding="true"
-    app:contentPadding="5dp"
+
     tools:ignore="MissingConstraints">
 
     <LinearLayout
@@ -22,16 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/add_user">
+            android:paddingBottom="10dp"
+            android:background="@color/orange"
+            >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/ic_baseline_perm_identity_24"
+                android:src="@drawable/protrait"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp" />
 
@@ -40,15 +41,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="17dp"
                 android:text="Name"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+
         </LinearLayout>
 
 
@@ -56,34 +54,40 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+
+
+
             android:layout_marginBottom="10dp" />
 
         <TextView
-        android:id="@+id/post_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-
-        android:text="Title"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Title"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/post_description"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="39dp"
-            android:text="Description" />
+            android:layout_marginLeft="10dp"
 
+            android:text="Description" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
         <LinearLayout
-                android:src="@drawable/add_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            android:src="@drawable/add_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
             <Button
                 android:id="@+id/like"
@@ -95,7 +99,8 @@
                 android:backgroundTint="@color/orange"
                 android:drawableLeft="@drawable/like"
                 android:textSize="11sp"
-                android:text="154" />
+                android:text="154"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/collect"
@@ -107,7 +112,7 @@
                 android:backgroundTint="@color/orange"
                 android:textSize="11sp"
                 android:drawableLeft="@drawable/collect"
-
+                android:textColor="@color/black"
                 android:text="154" />
 
             <Button
@@ -120,7 +125,7 @@
                 android:textSize="11sp"
                 android:backgroundTint="@color/orange"
                 android:drawableLeft="@drawable/comment"
-
+                android:textColor="@color/black"
                 android:text="154" />
 
         </LinearLayout>

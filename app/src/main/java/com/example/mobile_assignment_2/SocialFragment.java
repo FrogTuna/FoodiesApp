@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobile_assignment_2.add.CustomItem;
-import com.example.mobile_assignment_2.add.activities.addActivity;
+import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
 import com.example.mobile_assignment_2.add.activities.nearByActivity;
 import com.example.mobile_assignment_2.add.activities.shakeActivity;
@@ -25,10 +24,8 @@ import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,6 +69,7 @@ public class SocialFragment extends Fragment {
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
+    public static  HashMap<String, String> outsideFriendInfo;
 
 
     public SocialFragment() {
@@ -227,7 +225,7 @@ public class SocialFragment extends Fragment {
 //                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
 //            }
 //        });
-
+        System.out.println("[+] friendList : " + friendshipArrayList);
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -402,11 +400,12 @@ public class SocialFragment extends Fragment {
                 userArrayList.add(usersInfo);
                 if(dataSnapshot.getKey().equals(userID)) {
 
+
                     for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
-                        if(userArrayList != null){
-                            //userArrayList.clear();
-                            friendshipArrayList.clear();
-                        }
+//                        if(userArrayList != null){
+//                            //userArrayList.clear();
+//                            friendshipArrayList.clear();
+//                        }
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
