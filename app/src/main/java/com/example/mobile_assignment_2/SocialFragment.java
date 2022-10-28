@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.example.mobile_assignment_2.add.CustomItem;
 import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-import com.example.mobile_assignment_2.add.activities.nearByActivity;
-import com.example.mobile_assignment_2.add.activities.shakeActivity;
+import com.example.mobile_assignment_2.add.activities.addByNearBy.nearByActivity;
+import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 

@@ -11,26 +11,15 @@
         android:id="@+id/logoInSocial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="25dp"
         android:text="Foodies"
         android:textColor="@color/orange"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="44dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-        app:layout_constraintStart_toEndOf="@+id/logoInSocial"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -39,28 +28,27 @@
         android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="103dp"
+        android:layout_marginEnd="68dp"
         android:contentDescription="spinner"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toEndOf="@+id/searchView"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toEndOf="@+id/logoInSocial"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65999997" />
+        app:layout_constraintVertical_bias="0.604" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="322dp"
         android:layout_height="41dp"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96"
         app:tabIconTint="@color/orange"
         app:tabIndicatorColor="@color/orange"
         app:tabTextColor="@color/orange" />
@@ -78,14 +66,13 @@
         android:id="@+id/imageView4"
         android:layout_width="31dp"
         android:layout_height="25dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="86dp"
         android:src="@drawable/add_user"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/searchView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toEndOf="@+id/logoInSocial"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
