@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.Post;
@@ -153,14 +155,12 @@ public class ForYouFragment extends Fragment {
             TextView titleView;
             TextView authorView;
             TextView descpView;
-            //ImageView imageView;
             RecyclerView imagesRecyclerView;
 
             public ViewHolder(View view) {
                 super(view);
                 titleView =  (TextView) view.findViewById(R.id.post_title);
                 authorView = (TextView)  view.findViewById(R.id.author_name);
-                //imageView = (ImageView) view.findViewById(R.id.post_image);
                 descpView =  (TextView) view.findViewById(R.id.post_description);
                 imagesRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 

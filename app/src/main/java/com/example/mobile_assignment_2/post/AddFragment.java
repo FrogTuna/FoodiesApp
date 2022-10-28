@@ -184,14 +184,20 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                         }
                                                         else {
                                                             String author = task.getResult().getValue(String.class);
-                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls);
-                                                            DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
 
+                                                            DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
+                                                            String pid = databaseReference.getKey();
+                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls, pid);
                                                             // add post data to firebase database
                                                             databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
                                                                     Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                                    // clear post
+                                                                    titleView.setText("");
+                                                                    descripView.setText("");
+                                                                    linearLayout.removeAllViews();
+
                                                                 }
                                                             });
                                                         }
