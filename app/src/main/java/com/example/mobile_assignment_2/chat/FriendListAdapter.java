@@ -40,7 +40,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         final FriendListData friendListItem = friendListData[position];
 
         holder.textViewUsername.setText(friendListData[position].getUsername());
-        holder.textViewRemark.setText(friendListData[position].getRemark());
+//        holder.textViewRemark.setText(friendListData[position].getRemark());
         holder.imageViewAvatar.setImageResource(friendListData[position].getAvatar());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
-            this.textViewRemark = (TextView) itemView.findViewById(R.id.textViewRemark);
+//            this.textViewRemark = (TextView) itemView.findViewById(R.id.textViewRemark);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }
