@@ -1,26 +1,15 @@
 package com.example.mobile_assignment_2.home;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.Post;
@@ -32,10 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -129,6 +117,7 @@ public class ForYouFragment extends Fragment {
                                 forYouPosts.add(p);
                             }
                         }
+                        Collections.reverse(forYouPosts);
                         postsRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
                         postsRecyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -202,7 +191,7 @@ public class ForYouFragment extends Fragment {
             viewHolder.authorView.setText(posts.get(position).getAuthor());
             viewHolder.descpView.setText(posts.get(position).getDescription());
             ArrayList<String> imageUrls = posts.get(position).getImageUrls();
-            ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext());
+            ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext(), R.layout.for_you_posts_image_view);
             viewHolder.imagesRecyclerView.setHasFixedSize(true);
             RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
             viewHolder.imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);

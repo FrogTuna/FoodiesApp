@@ -77,8 +77,9 @@
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:autoLink="all"
-                    android:backgroundTint="@color/orange"
-
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:background="#00000000"
                     android:drawableLeft="@drawable/like"
 
                     android:text="154" />
@@ -93,7 +94,9 @@
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:autoLink="all"
-                    android:backgroundTint="@color/orange"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:background="#00000000"
                     android:drawableLeft="@drawable/comment"
 
                     android:text="154" />

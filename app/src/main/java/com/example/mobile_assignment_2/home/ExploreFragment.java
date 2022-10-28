@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -125,6 +126,7 @@ public class ExploreFragment extends Fragment {
                                 strangerPosts.add(p);
                             }
                         }
+                        Collections.reverse(strangerPosts);
                         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
