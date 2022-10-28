@@ -108,7 +108,6 @@ public class ChatWindowActivity extends AppCompatActivity {
                     fuserFriendChatRef.setValue(chatID);
                     chatInputBar.clearFocus();
                     chatInputBar.setText("");
-                    //Log.d("长度：",String.valueOf(chatInputBar.getText().length()));
                     Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
                 }
             }

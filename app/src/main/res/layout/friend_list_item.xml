@@ -4,55 +4,46 @@
     android:id="@+id/relativeLayout"
     android:layout_width="300dp"
     android:layout_height="?android:attr/listPreferredItemHeightLarge"
-    android:layout_marginLeft="50dp">
+    android:layout_marginLeft="50dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/friend_card">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:contentDescription="Icon"
         app:civ_border_color="@color/lightPink"
         app:civ_border_width="1dp"
         app:layout_constraintStart_toStartOf="parent" />
-<!--    <ImageView-->
-<!--        android:id="@+id/imageViewAvatar"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_centerVertical="true"-->
-<!--        android:layout_marginStart="@dimen/activity_horizontal_margin"-->
-<!--        android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
-<!--        android:contentDescription="Icon" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageViewAvatar"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+    <!--        android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
+    <!--        android:contentDescription="Icon" />-->
 
     <TextView
         android:id="@+id/textViewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginLeft="63dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="28dp"
         android:layout_toEndOf="@id/imageViewAvatar"
         android:layout_toRightOf="@id/imageViewAvatar"
         android:gravity="center_vertical"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/textViewRemark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/textViewUsername"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginBottom="7dp"
-        android:gravity="center_vertical"
-        android:textSize="16sp" />
+        android:textSize="25sp" />
 
 </RelativeLayout>

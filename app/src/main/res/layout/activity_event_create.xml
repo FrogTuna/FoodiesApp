@@ -8,29 +8,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="392dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="Create Event"
-            android:layout_marginTop="20dp"
             android:textColor="@color/orange"
             android:textSize="30dp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
             android:layout_margin="30dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,42 +46,75 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
-                android:text="Select Time: "
-                android:textSize="20dp"/>
+                android:text="Select Date: "
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/calendar_select"
+                style="?android:spinnerStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="30dp"
-                android:textSize="20dp"
                 android:layout_weight="1"
+                android:onClick="openDatePicker"
                 android:text="Wed 17 Oct"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_timePicker"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="Select Time: "
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/time_select"
                 style="?android:spinnerStyle"
-                android:onClick="openDatePicker"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="30dp"
+                android:onClick="openTimePicker"
+                android:layout_weight="1"
+                android:text="Time"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
         </LinearLayout>
 
         <!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/event_time"-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_margin="30dp"-->
-<!--            android:hint="@string/time">-->
+        <!--            android:id="@+id/event_time"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_margin="30dp"-->
+        <!--            android:hint="@string/time">-->
 
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content" />-->
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_location"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:hint="@string/location"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:hint="@string/location">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -88,11 +122,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_people_number"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:hint="@string/people_num"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:hint="@string/people_num">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -101,27 +136,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/event_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
                 android:layout_marginLeft="30dp"
-                android:text="Save"
+                android:backgroundTint="@color/grey"
                 android:padding="4dip"
-                android:backgroundTint="@color/grey"/>
+                android:text="Save" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/event_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
                 android:layout_marginRight="10dp"
-                android:padding="4dip"
                 android:backgroundTint="@color/orange"
+                android:padding="4dip"
                 android:text="Post" />
 
 

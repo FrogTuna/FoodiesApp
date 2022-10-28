@@ -225,7 +225,7 @@ public class SocialFragment extends Fragment {
 //                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
 //            }
 //        });
-
+        System.out.println("[+] friendList : " + friendshipArrayList);
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
