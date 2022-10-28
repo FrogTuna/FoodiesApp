@@ -140,9 +140,9 @@ public class ExploreFragment extends Fragment {
                                 i.putExtra("title", post.getTitle());
                                 i.putExtra("description", post.getDescription());
                                 i.putExtra("author", post.getAuthor());
+                                i.putExtra("pid", post.getPid());
+                                i.putExtra("likes", String.valueOf(post.getLikes()));
                                 i.putStringArrayListExtra("imageURLs", post.getImageUrls());
-                                Log.i("hello", post.getTitle());
-                                Log.i("hello", post.getDescription());
                                 startActivity(i);
                             }
                         });

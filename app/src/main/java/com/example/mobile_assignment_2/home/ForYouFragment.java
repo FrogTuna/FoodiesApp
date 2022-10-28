@@ -58,7 +58,6 @@ public class ForYouFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
 
-
     int lastViewPosition = 0;
     public ForYouFragment() {
         // Required empty public constructor
