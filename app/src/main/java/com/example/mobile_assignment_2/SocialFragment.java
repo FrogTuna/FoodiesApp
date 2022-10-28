@@ -21,6 +21,7 @@ import com.example.mobile_assignment_2.add.addFriendsAdapter;
 import com.example.mobile_assignment_2.add.activities.addByNearBy.nearByActivity;
 import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
+import com.example.mobile_assignment_2.chat.FriendListAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 
 import com.google.android.material.tabs.TabLayout;
@@ -115,6 +116,8 @@ public class SocialFragment extends Fragment {
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
         chatArrayList = new ArrayList();
+        //DatabaseReference oppositeUserRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("chats");
+
         initialFireBase();
 
         /* Search view */

@@ -80,7 +80,7 @@ public class FriendFragment extends Fragment {
         for (int i = 0; i < friendArrayList.size(); i++) {
             for (int j = 0; j < userArrayList.size(); j++) {
                 if(((HashMap<String, String>)friendArrayList.get(i)).get("ID").equals(((HashMap<String, String>)userArrayList.get(j)).get("ID"))) {
-                    friendListData[i] = new FriendListData(((HashMap<String, String>)friendArrayList.get(i)).get("ID"), ((HashMap<String, String>)userArrayList.get(j)).get("username"), ((HashMap<String, String>)userArrayList.get(j)).get("remark"), android.R.drawable.ic_dialog_email);
+                    friendListData[i] = new FriendListData(((HashMap<String, String>)friendArrayList.get(i)).get("ID"), ((HashMap<String, String>)userArrayList.get(j)).get("username"), ((HashMap<String, String>)userArrayList.get(j)).get("remark"), R.drawable.protrait);
                 }
             }
 //            friendListData[i] = new FriendListData((String)friendArrayList.get(i), "I am user 1", android.R.drawable.ic_dialog_email);
