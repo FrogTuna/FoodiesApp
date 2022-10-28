@@ -26,6 +26,7 @@ import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +66,7 @@ public class SocialFragment extends Fragment {
 
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
+    private FirebaseUser fuser;
 
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
@@ -104,8 +106,9 @@ public class SocialFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //        searchView = (SearchView) findViewById(R.id.searchView);
-//        FirebaseUser fuser = myAuth.getCurrentUser();
         myAuth = FirebaseAuth.getInstance();
+        fuser = myAuth.getCurrentUser();
+        //userRef = FirebaseDatabase.getInstance().getReference();
         userID = myAuth.getCurrentUser().getUid();
         System.out.println("Current UID:" + userID);
         friendshipArrayList = new ArrayList();
@@ -405,10 +408,9 @@ public class SocialFragment extends Fragment {
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
-
                     }
                 }
-                System.out.println("[+] Friend : " + friendshipArrayList);
+                //System.out.println("[+] Friend : " + friendshipArrayList);
 //                chatPagerAdapter = new ChatPagerAdapter(
 //                        getActivity(),
 //                        NUM_PAGES,
