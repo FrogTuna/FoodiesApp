@@ -140,9 +140,9 @@ public class ExploreFragment extends Fragment {
                                 i.putExtra("title", post.getTitle());
                                 i.putExtra("description", post.getDescription());
                                 i.putExtra("author", post.getAuthor());
+                                i.putExtra("pid", post.getPid());
+                                i.putExtra("likes", String.valueOf(post.getLikes()));
                                 i.putStringArrayListExtra("imageURLs", post.getImageUrls());
-                                Log.i("hello", post.getTitle());
-                                Log.i("hello", post.getDescription());
                                 startActivity(i);
                             }
                         });
@@ -177,7 +177,7 @@ public class ExploreFragment extends Fragment {
             TextView titleView;
             TextView authorView;
             ImageView imageView;
-
+            TextView num_like_View;
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
@@ -185,6 +185,7 @@ public class ExploreFragment extends Fragment {
                 titleView =  (TextView) view.findViewById(R.id.post_title);
                 authorView = (TextView)  view.findViewById(R.id.author_name);
                 imageView = (ImageView) view.findViewById(R.id.post_image);
+                num_like_View = (TextView) view.findViewById(R.id.like_text);
             }
 
 
@@ -223,7 +224,7 @@ public class ExploreFragment extends Fragment {
 
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
-
+            viewHolder.num_like_View.setText(posts.get(position).getLikes()+" Likes");
         }
 
 

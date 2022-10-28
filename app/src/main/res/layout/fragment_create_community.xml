@@ -80,32 +80,33 @@
             android:layout_height="140dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/choose_image"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/two_btn_linear_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:backgroundTint="@color/purple_200"
-            android:padding="4dip"
-            android:text="Add IMAGE" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/use_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:backgroundTint="@color/purple_200"
-            android:padding="4dip"
-            android:text="Use Camera" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/choose_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/purple_200"
+                android:padding="4dip"
+                android:text="Add IMAGE" />
+
+            <Button
+                android:id="@+id/use_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/purple_200"
+                android:padding="4dip"
+                android:text="Delete IMAGE" />
+        </LinearLayout>
 
 
     <HorizontalScrollView

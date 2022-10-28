@@ -131,6 +131,44 @@ public class ChatWindowActivity extends AppCompatActivity {
                     chatIDList.add(snapshot1.getValue().toString());
                     //Log.d("chatIDList1", snapshot1.getValue().toString());
                 }
+
+                chatMessageRef.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                        conversation.clear();
+                        for(DataSnapshot snapshot3: snapshot2.getChildren()){
+
+                            for(int i = 0; i < chatIDList.size(); i++){
+                                if(snapshot3.getKey().matches(chatIDList.get(i))){
+                                    Log.d("chatIDList3", snapshot3.getKey());
+                                    String chatMessageRole = snapshot3.child("role").getValue().toString();
+                                    String chatMessageText = snapshot3.child("senderText").getValue().toString();
+                                    String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
+                                    String chatMessagechatID = snapshot3.child("chatID").getValue().toString();
+                                    ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,chatMessagechatID, chatMessageRole);
+                                    conversation.add(message);
+
+                                }
+                            }
+
+                            MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
+                            recyclerView.setAdapter(messageAdapter2);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
+                            if(conversation.size()>5){
+                                linearLayoutManager.setStackFromEnd(true);
+                            }
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
             }
 
             @Override
@@ -139,10 +177,13 @@ public class ChatWindowActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //chatIDList.clear();
+                chatIDList.clear();
 
                 for(DataSnapshot snapshot1: snapshot.getChildren()){
                     chatIDList.add(snapshot1.getValue().toString());
@@ -168,9 +209,6 @@ public class ChatWindowActivity extends AppCompatActivity {
                                 }
                             }
 
-
-
-
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
                             recyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
@@ -193,6 +231,10 @@ public class ChatWindowActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
     private void backSocialFragmentIntent(AppCompatImageView imageView){
 
