@@ -8,8 +8,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chatWindowRightUserImage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="64dp"
         android:src="@drawable/old_man"
         app:civ_border_color="@color/orange"
@@ -26,10 +26,10 @@
         android:background="@drawable/background_send_message"
         android:padding="12dp"
         android:textColor="@color/black"
-        android:textSize="13dp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/chatWindowRightUserImage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.5" />
 
     <TextView
         android:id="@+id/chatMessageRightDateAndTime"

@@ -8,10 +8,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -33,30 +35,30 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChatWindowActivity extends AppCompatActivity {
 
-    public ArrayList<ChatMessage> conversationRight = new ArrayList<>();
-//    ArrayList<ChatMessage> conversationLeft = new ArrayList<>();
-//    int[] sender = {R.drawable.old_man, R.drawable.old_man, R.drawable.old_man, R.drawable.old_man, R.drawable.old_man};
-//    int[] recevier = {R.drawable.female,R.drawable.female, R.drawable.female, R.drawable.female, R.drawable.female};
-//    int[] senderIndex = {1,2,3,5,8};
-//    int[] recevierIndex = {4,6,7,9,10};
+    public ArrayList<ChatMessage> conversation = new ArrayList<>();
     AppCompatImageView backIcon;
     FirebaseUser fuser;
     TextView oppositeHeadingInChat;
     DatabaseReference userRef;
     DatabaseReference allRef;
+    DatabaseReference chatMessageRef;
     FirebaseAuth myAuth;
     ImageView chatSendButton;
     EditText chatInputBar;
     RecyclerView recyclerView;
+    List<String> chatIDList = new ArrayList<String>();
 
 
     @Override
@@ -67,56 +69,90 @@ public class ChatWindowActivity extends AppCompatActivity {
         //firebase
         myAuth = FirebaseAuth.getInstance();
         fuser = myAuth.getCurrentUser();
-        userRef = FirebaseDatabase.getInstance().getReference("Users");
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID);
         allRef = FirebaseDatabase.getInstance().getReference();
+        chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
 
 
 
         //find id from xml
         backIcon = findViewById(R.id.chatWindowBackIcon);
         oppositeHeadingInChat = findViewById(R.id.oppositeHeadingInChat);
+        oppositeHeadingInChat.setText(FriendListAdapter.username);
         recyclerView =  findViewById(R.id.chatWindowRecycleView);
         chatSendButton = findViewById(R.id.chatSendButton);
         chatInputBar = findViewById(R.id.chatInputBar);
+
+
+        //methods
         loadDatabase();
 
 
-        //concat left side and right side messages
-        setUpConversationRight();
-//        setUpConversationLeft();
-        //invoke recycle view in chat window activity
-//        MessageAdapter2 messageAdapter2 = new MessageAdapter2(this, conversationRight);
-//        recyclerView.setAdapter(messageAdapter2);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //send button listener
+        chatSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        //back to social fragment
-        //backSocialFragmentIntent(backIcon);
+                if(chatInputBar.length()==0){
+
+                    Snackbar.make(chatSendButton,"input text could not be empty", Snackbar.LENGTH_SHORT).show();
+
+                }else{
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = new Date();
+                    DatabaseReference chatMessageRef = allRef.child("chatMessage").push();
+                    String chatID = chatMessageRef.getKey();
+                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date),R.drawable.old_man,chatID, fuser.getUid());
+                    chatMessageRef.setValue(message);
+                    DatabaseReference fuserFriendChatRef = userRef.child("chats").push();
+                    fuserFriendChatRef.setValue(chatID);
+                    chatInputBar.clearFocus();
+                    chatInputBar.setText("");
+                    //Log.d("长度：",String.valueOf(chatInputBar.getText().length()));
+                    Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        backSocialFragmentIntent(backIcon);
+
+
     }
 
     private void loadDatabase(){
-
-        userRef.addChildEventListener(new ChildEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                //oppositeHeadingInChat.setText(FriendListAdapter.username);
-                if(snapshot.child("name").getValue().equals(FriendListAdapter.username)){
-                    oppositeHeadingInChat.setText(FriendListAdapter.username);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatIDList.clear();
+                for(DataSnapshot snapshot1: snapshot.getChildren()){
+                    chatIDList.add(snapshot1.getValue().toString());
                 }
-            }
+                chatMessageRef.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                        conversation.clear();
+                        for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                            String chatMessageRole = snapshot3.child("role").getValue().toString();
+                            String chatMessageText = snapshot3.child("senderText").getValue().toString();
+                            String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
+                            ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,"", chatMessageRole);
+                            conversation.add(message);
+                            MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, conversation);
+                            recyclerView.setAdapter(messageAdapter2);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
+                            if(conversation.size()>5){
+                                linearLayoutManager.setStackFromEnd(true);
+                            }
+                            recyclerView.setLayoutManager(linearLayoutManager);
 
-            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                    }
+                });
             }
 
             @Override
@@ -136,54 +172,4 @@ public class ChatWindowActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    //left side message
-//    private void setUpConversationLeft(){
-//        String [] messageList = getResources().getStringArray(R.array.messageLeftText);
-//        String [] messageTime = getResources().getStringArray(R.array.messageTimeLeft);
-//        for(int i = 0; i < messageList.length; i++){
-//
-//            conversationLeft.add(new ChatMessage(messageList[i], messageTime[i], recevier[i], "receiver"));
-//
-//        }
-//    }
-//
-//    //right side message
-    private void setUpConversationRight(){
-
-        chatSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(chatInputBar.length()==0){
-
-                    Snackbar.make(chatSendButton,"input text could not be empty", Snackbar.LENGTH_SHORT).show();
-
-                }else{
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date date = new Date();
-                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date),R.drawable.old_man,fuser.getUid());
-                    Log.d("username: ", fuser.getUid());
-                    allRef.child("chatMessage").push().setValue(message);
-                    chatInputBar.clearFocus();
-                    chatInputBar.setText("");
-                    conversationRight.add(message);
-                    MessageAdapter2 messageAdapter2 = new MessageAdapter2(view.getContext(), conversationRight);
-                    recyclerView.setAdapter(messageAdapter2);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-//        String [] messageList = getResources().getStringArray(R.array.messageRightText);
-//        String [] messageTime = getResources().getStringArray(R.array.messageTimeRight);
-//        for(int i = 0; i < messageList.length; i++){
-//
-//            conversationRight.add(new ChatMessage(messageList[i], messageTime[i], sender[i], "sender"));
-//
-//        }
-    }
-
 }
