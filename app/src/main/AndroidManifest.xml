@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -47,6 +47,9 @@
             android:name=".community.AddCommunity"
             android:exported="false" />
         <activity
+            android:name=".community.AddEvent"
+            android:exported="false" />
+        <activity
             android:name=".me.MyPostsActivity"
             android:exported="false" />
         <activity
@@ -57,10 +60,12 @@
             android:exported="false" />
         <activity
             android:name=".message.ChatWindowActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode= "adjustPan" />
         <activity
             android:name=".authentication.login"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode= "adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

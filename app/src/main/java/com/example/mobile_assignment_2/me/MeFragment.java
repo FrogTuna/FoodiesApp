@@ -1,8 +1,11 @@
 package com.example.mobile_assignment_2.me;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +51,7 @@ public class MeFragment extends Fragment {
     FirebaseAuth myAuth;
     Button signOutBtn;
     ImageButton postsBtn;
-    ImageView editProfileBtn;
+    ImageView editHeadPortrait;
     DatabaseReference userRef;
     FirebaseUser fuser;
     View view;
@@ -80,7 +84,7 @@ public class MeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         myAuth = FirebaseAuth.getInstance();
-
+        fuser = myAuth.getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference("Users");
 
 
@@ -88,16 +92,17 @@ public class MeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fuser = myAuth.getCurrentUser();
         view = inflater.inflate(R.layout.fragment_me, container, false);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
-        editProfileBtn = (ImageView) view.findViewById(R.id.headPortrait);
+        editHeadPortrait = (ImageView) view.findViewById(R.id.headPortrait);
         loadDatabase(view);
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
 
@@ -115,9 +120,23 @@ public class MeFragment extends Fragment {
                 fromMePageToMyPostsPageIntent(view);
             }
         });
+        editHeadPortrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+
+            }
+        });
 
 
         return view;
+    }
+
+    private void imageChooser() {
+
+
+
+
     }
 
     public void fromMePageToMyPostsPageIntent(View view){

@@ -8,8 +8,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chatWindowLeftUserImage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="64dp"
         android:src="@drawable/old_man"
         app:civ_border_color="@color/lightPink"
@@ -38,10 +38,10 @@
         android:background="@drawable/background_received_message"
         android:padding="12dp"
         android:textColor="@color/black"
-        android:textSize="13sp"
+        android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/chatWindowLeftUserImage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintWidth_percent="0.5"
         tools:ignore="NotSibling" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

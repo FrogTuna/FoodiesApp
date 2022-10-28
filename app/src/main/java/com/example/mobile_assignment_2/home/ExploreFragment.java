@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -41,6 +42,7 @@ import java.util.ArrayList;
  */
 public class ExploreFragment extends Fragment {
     private ArrayList<Post> posts = new ArrayList<>();
+    ArrayList<Post> strangerPosts = new ArrayList<>();
     private RecyclerView recyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -102,6 +104,7 @@ public class ExploreFragment extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                friends.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String friendId = dataSnapshot.getKey();
                     friends.add(friendId);
@@ -110,17 +113,20 @@ public class ExploreFragment extends Fragment {
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        posts.clear();
+                        strangerPosts.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Post post = dataSnapshot.getValue(Post.class);
                             posts.add(post);
                         }
                         // posts for stranger
-                        ArrayList<Post> strangerPosts = new ArrayList<>();
+
                         for (Post p : posts) {
                             if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
                                 strangerPosts.add(p);
                             }
                         }
+                        Collections.reverse(strangerPosts);
                         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);

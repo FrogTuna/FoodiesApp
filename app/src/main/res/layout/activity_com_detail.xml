@@ -19,12 +19,36 @@
 
 <!--            <androidx.appcompat.widget.Toolbar-->
 <!--                android:id="@+id/app_bar"-->
-<!--                style="@style/Widget.Shrine.AppBar"-->
+<!--                style="@style/Widget.Design.AppBarLayout"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="?attr/actionBarSize"-->
 <!--                app:navigationIcon="@drawable/filter"-->
 <!--                app:title="" />-->
 <!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/communityName"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center_vertical"
+                android:text="Community_1" />
+
+            <ImageButton
+                android:id="@+id/add_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/add" />
+        </LinearLayout>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -32,13 +56,10 @@
             style="@style/Widget.Design.AppBarLayout"
             android:background="@null"
             android:layout_marginTop="0dp">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/com_bar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/com_select_menu">
 
-            </androidx.appcompat.widget.Toolbar>
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,17 +68,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/communityName"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:gravity="center_vertical"
-                android:text="Community_1" />
-
             <ListView
                 android:id="@+id/event_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center"
                 android:divider="@android:color/transparent" />
 

@@ -9,13 +9,14 @@ public class ChatMessage{
     private String senderTime;
     private int senderImage;
     private String role;
-    private int index;
+    private String chatID;
 
 
-    public ChatMessage(String senderText, String senderTime, int senderImage, String role) {
+    public ChatMessage(String senderText, String senderTime, int senderImage, String chatID, String role) {
         this.senderText = senderText;
         this.senderTime = senderTime;
         this.senderImage = senderImage;
+        this.chatID = chatID;
         this.role = role;
     }
 
@@ -32,9 +33,11 @@ public class ChatMessage{
         return senderImage;
     }
 
+    public String getChatID(){ return chatID; }
+
     public String getRole(){ return role; }
 
-    public int getIndex(){ return index; }
+
 
 
 }

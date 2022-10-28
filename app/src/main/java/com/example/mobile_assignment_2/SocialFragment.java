@@ -26,6 +26,7 @@ import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,10 +66,12 @@ public class SocialFragment extends Fragment {
 
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
+    private FirebaseUser fuser;
 
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
+    public static  HashMap<String, String> outsideFriendInfo;
 
 
     public SocialFragment() {
@@ -103,8 +106,9 @@ public class SocialFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //        searchView = (SearchView) findViewById(R.id.searchView);
-//        FirebaseUser fuser = myAuth.getCurrentUser();
         myAuth = FirebaseAuth.getInstance();
+        fuser = myAuth.getCurrentUser();
+        //userRef = FirebaseDatabase.getInstance().getReference();
         userID = myAuth.getCurrentUser().getUid();
         System.out.println("Current UID:" + userID);
         friendshipArrayList = new ArrayList();
@@ -224,7 +228,7 @@ public class SocialFragment extends Fragment {
 //                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
 //            }
 //        });
-
+        System.out.println("[+] friendList : " + friendshipArrayList);
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -390,7 +394,7 @@ public class SocialFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-                HashMap<String, String> friendsInfo = new HashMap<String, String>();
+
                 HashMap<String, String> usersInfo = new HashMap<String, String>();
                 usersInfo.put("ID", dataSnapshot.getKey());
                 usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
@@ -400,15 +404,41 @@ public class SocialFragment extends Fragment {
                 if(dataSnapshot.getKey().equals(userID)) {
 
                     for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
-                        if(userArrayList != null){
-                            //userArrayList.clear();
-                            friendshipArrayList.clear();
-                        }
+                        HashMap<String, String> friendsInfo = new HashMap<String, String>();
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
 
                     }
                 }
+                //System.out.println("[+] Friend : " + friendshipArrayList);
+//                chatPagerAdapter = new ChatPagerAdapter(
+//                        getActivity(),
+//                        NUM_PAGES,
+//                        friendshipArrayList,
+//                        userArrayList,
+//                        reqArrayList,
+//                        chatArrayList
+//                );
+//                viewPager2.setAdapter(chatPagerAdapter);
+//                new TabLayoutMediator(tabLayout, viewPager2,
+//                        new TabLayoutMediator.TabConfigurationStrategy() {
+//                            @Override
+//                            public void onConfigureTab(TabLayout.Tab tab, int position) {
+//                                switch (position) {
+//                                    case 0:
+//                                        tab.setText("Chat");
+//                                        break;
+//                                    case 1:
+//                                        tab.setText("Friend");
+//                                        break;
+//                                    case 2:
+//                                        tab.setText("Request");
+//                                        break;
+//                                    default:
+//                                        break;
+//                                }
+//                            }
+//                        }).attach();
             }
 
             @Override

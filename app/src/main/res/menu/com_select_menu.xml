@@ -6,9 +6,14 @@
         android:icon="@drawable/search"
         android:title="@string/com_search"
         app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/filter"-->
+<!--        android:icon="@drawable/filter"-->
+<!--        android:title="@string/com_filter"-->
+<!--        app:showAsAction="always" />-->
     <item
-        android:id="@+id/filter"
-        android:icon="@drawable/filter"
-        android:title="@string/com_filter"
+        android:id="@+id/add_event"
+        android:icon="@drawable/add"
+        android:title="Add"
         app:showAsAction="always" />
 </menu>
