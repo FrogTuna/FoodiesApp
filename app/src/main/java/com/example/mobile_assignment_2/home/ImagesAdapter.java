@@ -18,6 +18,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     private ArrayList<String> imageUrls = new ArrayList<String>();
     private Context context;
+    private int resource;
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView imagePositionView;
@@ -31,9 +32,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     }
 
-    public  ImagesAdapter(ArrayList<String> imageUrls, Context context) {
+    public  ImagesAdapter(ArrayList<String> imageUrls, Context context, int resource) {
         this.imageUrls = imageUrls;
         this.context = context;
+        this.resource = resource;
     }
 
     // Create new view
@@ -41,7 +43,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     public ImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.image_view, viewGroup, false);
+                .inflate(resource, viewGroup, false);
 
 
         return new ImagesAdapter.ViewHolder(view);

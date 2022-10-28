@@ -51,7 +51,7 @@ public class PostDetails extends AppCompatActivity {
         imagesRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
         imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
-        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this);
+        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
         imagesRecyclerView.setAdapter(imagesAdapter);
 
         for (int i = 0; i < 3; i++) {
