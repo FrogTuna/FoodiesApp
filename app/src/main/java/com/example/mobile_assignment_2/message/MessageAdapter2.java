@@ -28,6 +28,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+
+    //fields
     Context context;
     public ArrayList<ChatMessage> allConversation;
     private static final int LAYOUT_LEFT = 0;
@@ -36,7 +38,12 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     FirebaseAuth firebaseAuth;
 
 
+
+    //constructor
     public MessageAdapter2(Context context, ArrayList<ChatMessage> conversationRight){
+
+
+
         this.context = context;
         this.allConversation = conversationRight;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -46,6 +53,7 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
 
+    //verify which viewholder should be returned
     @Override
     public int getItemViewType(int position) {
         if (allConversation.get(position).getRole().equals(FriendListAdapter.userID)) {
@@ -57,8 +65,12 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return 0;
     }
 
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        //This is where you inflate the layout (Giving a loop to our view)
 
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
@@ -82,6 +94,10 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
+
+        //assigning values to the views we created in the recycler_view_row layout file
+//      //based on the position of the recycler views
+
         if(allConversation.get(position).getRole().equals(FriendListAdapter.userID)){
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
             holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
@@ -97,14 +113,24 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+
+
+
+    //the recycler view just wants to know the number of items you want displayed
     @Override
     public int getItemCount() {
         return allConversation.size();
     }
 
+
+
+
     //****************  VIEW HOLDER 1 ******************//
 
     public class ViewHolderLeft extends RecyclerView.ViewHolder {
+
+        //grabbing the views from our recycler_view_row layout file
+        //kind like in the onCreate method
 
         CircleImageView receiverImage;
         TextView receiverInfo, receiverTime;
@@ -124,6 +150,9 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //****************  VIEW HOLDER 2 ******************//
 
     public class ViewHolderRight extends RecyclerView.ViewHolder {
+
+        //grabbing the views from our recycler_view_row layout file
+        //kind like in the onCreate method
 
         CircleImageView senderImage;
         TextView senderInfo, senderTime;
