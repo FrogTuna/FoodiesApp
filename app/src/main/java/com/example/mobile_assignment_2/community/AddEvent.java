@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.mobile_assignment_2.R;
 
@@ -15,15 +19,56 @@ import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
-    private Button dateBtn;
+    private TimePickerDialog timePickerDialog;
+    private Button dateBtn, timeBtn, saveBtn, postBtn;
+    private String format="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_create);
+        // init Date and Time to Now
         initDatePicker();
+        initTimePicker();
+
+        // select date and time data
         dateBtn = findViewById(R.id.calendar_select);
         dateBtn.setText(getTodaysDate());
+        timeBtn = findViewById(R.id.time_select);
+        timeBtn.setText(getNowTime());
+
+        // click save and post to new page
+        // saveBtn = findViewById(R.id.event_save);
+        postBtn = findViewById(R.id.event_post);
+
+        postBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+            }
+        });
+
+    }
+
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.event_save:
+//                // do your code
+//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+//                break;
+//            case R.id.event_post:
+//                // do your code
+//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+
+    private String getNowTime() {
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+        return makeTimeString(hour, min);
     }
 
     private String getTodaysDate() {
@@ -52,6 +97,36 @@ public class AddEvent extends AppCompatActivity {
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
         datePickerDialog = new DatePickerDialog(this,style, dateSetListener,year, month, day);
+    }
+    private void initTimePicker() {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                String time = makeTimeString(hour, minute);
+                timeBtn.setText(time);
+            }
+        };
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+
+        timePickerDialog = new TimePickerDialog(this, timeSetListener , hour, min, false);
+    }
+
+    private String makeTimeString(int hour, int minute) {
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        String time_str = String.valueOf(new StringBuilder().append(hour).append(" : ").append(minute).append(" ").append(format));
+        return time_str;
     }
 
     private String makeDateString(int day, int month, int year) {
@@ -100,6 +175,9 @@ public class AddEvent extends AppCompatActivity {
 
     public void openDatePicker(View view) {
         datePickerDialog.show();
+    }
+    public void openTimePicker(View view) {
+        timePickerDialog.show();
     }
 
 }
