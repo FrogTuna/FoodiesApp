@@ -187,7 +187,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
                                                             DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
                                                             String pid = databaseReference.getKey();
-                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls, pid, 0, 0);
+                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls, pid, 0, 0, 0, new ArrayList<String>());
                                                             // add post data to firebase database
                                                             databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
