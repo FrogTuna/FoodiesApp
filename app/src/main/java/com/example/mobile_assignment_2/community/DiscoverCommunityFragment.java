@@ -198,10 +198,13 @@ public class DiscoverCommunityFragment extends Fragment {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        Log.d("join","yes");
-//                        Intent i = new Intent(getActivity(), CommunityDetail.class);
-//                        startActivity(i);
+
+                        Bundle bundle = new Bundle();
+                        String myMessage = "Stack Overflow is cool!";  // pass this message from current fragment to bottomsheet fragment
+                        bundle.putString("message", myMessage );
+
                         BottomSheet bottomSheet = new BottomSheet();
+                        bottomSheet.setArguments(bundle);
                         bottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
                     }
                 });
