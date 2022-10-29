@@ -1,13 +1,14 @@
 package com.example.mobile_assignment_2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Post {
     private String title, description, author, uid, pid;
     private int likes, collects, numComments;
-    private ArrayList<String> comments;
+    private HashMap<String, Comment> comments;
     private ArrayList<String> imageUrls;
-    public Post(String title, String description, String author, String uid, ArrayList<String> imageUrls, String pid, int likes, int collects, int numComments, ArrayList<String> comments) {
+    public Post(String title, String description, String author, String uid, ArrayList<String> imageUrls, String pid, int likes, int collects, int numComments, HashMap<String, Comment> comments) {
         this.title = title;
         this.description = description;
         this.author = author;
@@ -40,5 +41,5 @@ public class Post {
     public int getLikes() {return likes;}
     public int getCollects() {return collects;}
     public int getNumComments() {return numComments;}
-    public ArrayList<String> getComments() {return comments;}
+    public HashMap<String, Comment> getComments() {return comments;}
 }

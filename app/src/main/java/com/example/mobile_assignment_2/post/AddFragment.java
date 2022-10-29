@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.authentication.User;
@@ -57,6 +58,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -187,7 +190,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
                                                             DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
                                                             String pid = databaseReference.getKey();
-                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls, pid, 0, 0, 0, new ArrayList<String>());
+                                                            Post post = new Post(title, descrip, author, currentUser.getUid(), downloadimageUrls, pid, 0, 0, 0, new HashMap<String, Comment>());
                                                             // add post data to firebase database
                                                             databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
