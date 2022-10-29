@@ -5,15 +5,15 @@ public class FriendListData {
     private String UID;
     private String username;
     private String remark;
-    private int avatarID;
+    private String imgURL;
 
 
 
-    public FriendListData(String _UID, String _username, String _remark, int _avatarID) {
+    public FriendListData(String _UID, String _username, String _remark, String _imgURL) {
         this.UID = _UID;
         this.username = _username;
         this.remark = _remark;
-        this.avatarID = _avatarID;
+        this.imgURL = _imgURL;
     }
 
     // Following is Get/Set function
@@ -31,11 +31,11 @@ public class FriendListData {
         this.remark = _remark;
     }
 
-    public int getAvatar() {
-        return this.avatarID;
+    public String getImgURL() {
+        return this.imgURL;
     }
-    public void setAvatar(int _avatarID) {
-        this.avatarID = _avatarID;
+    public void setImgURL(String _imgURL) {
+        this.imgURL = _imgURL;
     }
 
     public String getUID() {
@@ -44,5 +44,7 @@ public class FriendListData {
     public void setUID(String _UID) {
         this.UID = _UID;
     }
+
+
 
 }

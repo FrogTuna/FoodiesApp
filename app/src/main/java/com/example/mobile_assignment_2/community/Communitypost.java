@@ -4,19 +4,25 @@ import java.util.ArrayList;
 
 public class Communitypost {
     // fruitImage to store the resource id if post image
-    private int commImage;
+    // private int commImage;
     // fruitName to store the string of fruit name
-    private String commName, uid;
+    private String commName, uid, cid;
     private ArrayList<String> imageUrls;
+    private String comType;
+    private String authorName;
+    private String comDescription;
 
     public Communitypost() {
     }
 
-    public Communitypost(int commImage, String commName) {
-        this.commImage = commImage;
-        this.commName = commName;
+    public Communitypost(String cid, String uid, String commName, ArrayList<String> imageUrls, String comType, String authorName, String comDescription) {
+        this.cid = cid;
         this.uid = uid;
+        this.commName = commName;
         this.imageUrls = imageUrls;
+        this.comType = comType;
+        this.authorName = authorName;
+        this.comDescription = comDescription;
     }
 
     public String getUid() {
@@ -27,6 +33,14 @@ public class Communitypost {
         this.uid = uid;
     }
 
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
     public ArrayList<String> getImageUrls() {
         return imageUrls;
     }
@@ -35,13 +49,13 @@ public class Communitypost {
         this.imageUrls = imageUrls;
     }
 
-    public int getCommImage() {
-        return commImage;
-    }
-
-    public void setCommImage(int commImage) {
-        this.commImage = commImage;
-    }
+//    public int getCommImage() {
+//        return commImage;
+//    }
+//
+//    public void setCommImage(int commImage) {
+//        this.commImage = commImage;
+//    }
 
     public String getCommName() {
         return commName;
@@ -49,5 +63,29 @@ public class Communitypost {
 
     public void setCommName(String commName) {
         this.commName = commName;
+    }
+
+    public String getComType() {
+        return comType;
+    }
+
+    public void setComType(String comType) {
+        this.comType = comType;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getComDescription() {
+        return comDescription;
+    }
+
+    public void setComDescription(String comDescription) {
+        this.comDescription = comDescription;
     }
 }
