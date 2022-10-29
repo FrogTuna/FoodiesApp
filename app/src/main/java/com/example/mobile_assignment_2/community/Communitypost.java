@@ -7,7 +7,7 @@ public class Communitypost {
     // private int commImage;
     // fruitName to store the string of fruit name
     private String commName, uid, cid;
-    private ArrayList<String> imageUrls;
+    private String imageUrls;
     private String comType;
     private String authorName;
     private String comDescription;
@@ -15,7 +15,7 @@ public class Communitypost {
     public Communitypost() {
     }
 
-    public Communitypost(String cid, String uid, String commName, ArrayList<String> imageUrls, String comType, String authorName, String comDescription) {
+    public Communitypost(String cid, String uid, String commName, String imageUrls, String comType, String authorName, String comDescription) {
         this.cid = cid;
         this.uid = uid;
         this.commName = commName;
@@ -41,11 +41,11 @@ public class Communitypost {
         this.cid = cid;
     }
 
-    public ArrayList<String> getImageUrls() {
+    public String getImageUrls() {
         return imageUrls;
     }
 
-    public void setImageUrls(ArrayList<String> imageUrls) {
+    public void setImageUrls(String imageUrls) {
         this.imageUrls = imageUrls;
     }
 

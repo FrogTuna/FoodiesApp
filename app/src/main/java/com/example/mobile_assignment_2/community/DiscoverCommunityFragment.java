@@ -94,16 +94,17 @@ public class DiscoverCommunityFragment extends Fragment {
         currentUser = mAuth.getCurrentUser();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         // Get a reference to users
-        DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-        usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
-
+        DatabaseReference commRef = firebaseDatabase.getReference("Community");
+//        commRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
+        commRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String friendId = dataSnapshot.getKey();
-                    friends.add(friendId);
-                }
-                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    String friendId = dataSnapshot.getKey();
+//                    friends.add(friendId);
+//                }
+//                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+                DatabaseReference postsRef = firebaseDatabase.getReference("Community");
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -112,12 +113,12 @@ public class DiscoverCommunityFragment extends Fragment {
                             posts.add(post);
                         }
                         // posts for stranger
-                        ArrayList<Communitypost> strangerPosts = new ArrayList<>();
-                        for (Communitypost p : posts) {
-                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
-                                strangerPosts.add(p);
-                            }
-                        }
+//                        ArrayList<Communitypost> strangerPosts = new ArrayList<>();
+//                        for (Communitypost p : posts) {
+//                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
+//                                strangerPosts.add(p);
+//                            }
+//                        }
                         recyclerView =  view.findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -126,10 +127,10 @@ public class DiscoverCommunityFragment extends Fragment {
                         customAdapter.setClickListener(new commPostItemClickListener() {
                             @Override
                             public void onClick(View view, int position) {
-                                Communitypost post = strangerPosts.get(position);
+                                Communitypost post = posts.get(position);
                                 Intent i = new Intent(getActivity(), CommunityDetail.class);
                                 i.putExtra("communityName", post.getCommName());
-                                i.putStringArrayListExtra("imageURLs", post.getImageUrls());
+                                i.putExtra("imageURLs", post.getImageUrls());
                                 startActivity(i);
                             }
                         });
@@ -263,7 +264,7 @@ public class DiscoverCommunityFragment extends Fragment {
         public void onBindViewHolder(CustomAdapter.ViewHolder viewHolder, final int position) {
 
             viewHolder.titleView.setText(posts.get(position).getCommName());
-            String imageUrl = posts.get(position).getImageUrls().get(0);
+            String imageUrl = posts.get(position).getImageUrls();
 
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imgView);
