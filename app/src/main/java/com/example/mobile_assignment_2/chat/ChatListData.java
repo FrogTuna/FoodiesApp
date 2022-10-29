@@ -17,7 +17,7 @@ public class ChatListData {
     public String getFriendID() {
         return this.friendID;
     }
-    public void setfriendID(String _friendID) {
+    public void setFriendID(String _friendID) {
         this.friendID = friendID;
     }
 
