@@ -38,7 +38,7 @@ public class ChatPagerAdapter extends FragmentStateAdapter {
 
         switch(position) {
             case 0:
-                fragment = new ChatFragment(this.chatArrayList);
+                fragment = new ChatFragment(this.chatArrayList, this.userArrayList);
                 break;
             case 1:
                 fragment = new FriendFragment(this.friendArrayList, this.userArrayList);
