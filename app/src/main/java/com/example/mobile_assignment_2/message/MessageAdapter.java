@@ -44,7 +44,7 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyMessageViewHo
 
         holder.senderInfo.setText(conversation.get(position).getSenderText());
         holder.senderTime.setText(conversation.get(position).getSenderTime());
-        holder.senderImage.setImageResource(conversation.get(position).getSenderImage());
+        holder.senderImage.setImageResource(conversation.get(position).getSendImage());
 
     }
 
