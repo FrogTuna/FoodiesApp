@@ -99,7 +99,15 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         Log.i("hello", descrip);
         linearLayout = (LinearLayout) findViewById(R.id.imageLinearLayout);
         imageBtn = findViewById(R.id.choose_image);
-        imageBtn.setOnClickListener(this);
+//        imageBtn.setOnClickListener(this);
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
+                galleryActivityResultLauncher.launch("image/*");
+
+            }
+        });
 
         postBtn = findViewById(R.id.post_community);
 
