@@ -27,6 +27,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public FriendListData[] friendListData;
     public static String username;
     public static String userID;
+    public static String imageUrl;
 
     public FriendListAdapter(FriendListData[] _friendListData) {
         this.friendListData = _friendListData;
@@ -58,10 +59,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 //                System.out.println("[+] catch : " + friendListData[position].getUID());
                 username = "";
                 userID = "";
+                imageUrl = "";
                 // Redirect to user page
                 Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
                 username = friendListItem.getUsername();
                 userID = friendListData[position].getUID();
+                imageUrl = friendListData[position].getImgURL();
                 Context context = view.getContext();
                 Intent intent = new Intent(context,ChatWindowActivity.class);
                 context.startActivity(intent);

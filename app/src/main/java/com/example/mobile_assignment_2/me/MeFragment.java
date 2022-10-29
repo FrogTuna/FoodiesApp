@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -187,6 +188,7 @@ public class MeFragment extends Fragment {
     private void imageChooser() {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.setType("image/*");
         startActivityForResult(i, GALLERY_REQUEST);
 
 
@@ -293,6 +295,8 @@ public class MeFragment extends Fragment {
 
                 username.setText(snapshot.child("name").getValue().toString());
                 if(snapshot.child("imageUrl").getValue().toString().length() > 0){
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(snapshot.child("imageUrl").getValue().toString())).build();
+                    fuser.updateProfile(userProfileChangeRequest);
                     Picasso.with(view.getContext()).load(snapshot.child("imageUrl").getValue().toString()).into(editHeadPortrait);
                 }
                 Log.d("snapshot", snapshot.getValue().toString());

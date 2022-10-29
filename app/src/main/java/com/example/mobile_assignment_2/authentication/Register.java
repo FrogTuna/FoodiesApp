@@ -120,7 +120,7 @@ public class Register extends AppCompatActivity {
                                 Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
                                 UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(username.toString()).build();
                                 fuser.updateProfile(userProfileChangeRequest);
-                                User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "");
+                                User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg");
                                 myReference.child("Users").child(fuser.getUid()).setValue(user);
 //                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
                                 registerIntent();

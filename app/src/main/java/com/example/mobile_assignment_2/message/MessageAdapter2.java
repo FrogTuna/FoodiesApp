@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -109,28 +110,16 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
             holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
             holderLeft.receiverTime.setText(allConversation.get(position).getSenderTime());
-            if(ChatWindowActivity.isInteger(String.valueOf(allConversation.get(position).getSenderImage()))){
+            Picasso.with(context).load(allConversation.get(position).getSenderImage()).into(holderLeft.receiverImage);
 
-                holderLeft.receiverImage.setImageResource(allConversation.get(position).getSendImage());
-            }
-            else{
-
-                new DownloadImageFromInternet((ImageView) holderLeft.receiverImage).execute(allConversation.get(position).getSenderImage());
-            }
 
         }
         else if (allConversation.get(position).getRole().equals(fuser.getUid())){
             ViewHolderRight holderRight = (ViewHolderRight) holder;
             holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
             holderRight.senderTime.setText(allConversation.get(position).getSenderTime());
-            if(ChatWindowActivity.isInteger(String.valueOf(allConversation.get(position).getSenderImage()))){
+            Picasso.with(context).load(fuser.getPhotoUrl().toString()).into(holderRight.senderImage);
 
-                holderRight.senderImage.setImageResource(allConversation.get(position).getSendImage());
-            }
-            else{
-
-                new DownloadImageFromInternet((ImageView) holderRight.senderImage).execute(allConversation.get(position).getSenderImage());
-            }
         }
 
     }
