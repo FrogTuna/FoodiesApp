@@ -6,7 +6,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 
 
@@ -38,14 +44,19 @@ public class PostDetails extends AppCompatActivity {
     TextView titleView;
     TextView descripView;
     TextView authorView;
-    LinearLayout linearLayout;
+    LinearLayout commentsLinearLayout;
     RecyclerView imagesRecyclerView;
     Button likeBtn;
     Button collectBtn;
+    Button commentBtn;
+    Button sendBtn;
+    private TextInputEditText commentTextField;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ArrayList<String> likes = new ArrayList<>();
     ArrayList<String> collects = new ArrayList<>();
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,30 +70,55 @@ public class PostDetails extends AppCompatActivity {
         String author = intent.getStringExtra("author");
         String description = intent.getStringExtra("description");
         ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURLs");
+        ArrayList<Comment> commentsList = new ArrayList<>();
         String pid = intent.getStringExtra("pid");
         final int[] num_likes = {0};
         final int[] num_collects = {0};
+        final int[] num_comments = {0};
         likeBtn = findViewById(R.id.like);
         collectBtn = findViewById(R.id.collect);
-//        final int[] num_likes = {Integer.parseInt(intent.getStringExtra("likes"))};
-//        final int[] num_collects = {Integer.parseInt(intent.getStringExtra("collects"))};
+        commentBtn = findViewById(R.id.comment);
+        sendBtn = findViewById(R.id.sendCommentButton);
+        commentTextField = findViewById(R.id.textFieldComment);
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.getReference().child("Posts").child(pid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
                     if (dataSnapshot.getKey().equals("likes")) {
                         num_likes[0] = dataSnapshot.getValue(int.class);
                     }
                     if (dataSnapshot.getKey().equals("collects")) {
                         num_collects[0] = dataSnapshot.getValue(int.class);
                     }
+                    if (dataSnapshot.getKey().equals("numComments")) {
+                        num_comments[0] = dataSnapshot.getValue(int.class);
+                    }
+                    if (dataSnapshot.getKey().equals("comments")) {
+                        commentsList.clear();
+                        commentsLinearLayout.removeAllViews();
+                        for (DataSnapshot commentDataSnapshot : dataSnapshot.getChildren()) {
+                            Comment comment = commentDataSnapshot.getValue(Comment.class);
+                            commentsList.add(comment);
+
+                        }
+                        for (Comment c : commentsList){
+                            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.comment, null);
+                            TextView authorView = view.findViewById(R.id.author_name);
+                            TextView commentView = view.findViewById(R.id.comment_text);
+                            authorView.setText(c.getAuthor());
+                            commentView.setText(c.getCommentMessage());
+                            commentsLinearLayout.addView(view, 0);
+                        }
+                    }
 
                 }
 
                 likeBtn.setText(String.valueOf(num_likes[0]));
-
                 collectBtn.setText(String.valueOf(num_collects[0]));
+                commentBtn.setText(String.valueOf(num_comments[0]));
 
                 DatabaseReference usersRef = firebaseDatabase.getReference("Users");
 
@@ -146,18 +182,13 @@ public class PostDetails extends AppCompatActivity {
         titleView.setText(title);
         descripView.setText(description);
         authorView.setText(author);
-        linearLayout = findViewById(R.id.post_linearLayout);
+        commentsLinearLayout = findViewById(R.id.commentsLinearLayout);
         imagesRecyclerView = findViewById(R.id.recyclerView);
         imagesRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
         imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
         ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
         imagesRecyclerView.setAdapter(imagesAdapter);
-
-
-
-
-
 
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
@@ -223,15 +254,39 @@ public class PostDetails extends AppCompatActivity {
             }
         });
 
-        for (int i = 0; i < 3; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.comment, null);
-            TextView authorView = view.findViewById(R.id.author_name);
-            TextView commentView = view.findViewById(R.id.comment_text);
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentsLinearLayout.getParent().requestChildFocus(commentsLinearLayout,commentsLinearLayout);
+            }
+        });
 
-            authorView.setText(new String(String.valueOf(i)));
-            commentView.setText("comment: "+new String(String.valueOf(i)));
-            linearLayout.addView(view);
-        }
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String commentText = commentTextField.getText().toString();
+                if (!commentText.isEmpty()) {
+                    Comment comment = new Comment(author, commentText, "");
+                    DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                    commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                    commentTextField.setText("");
+                                }
+                            });
+
+                        }
+                    });
+
+                }
+            }
+        });
+
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

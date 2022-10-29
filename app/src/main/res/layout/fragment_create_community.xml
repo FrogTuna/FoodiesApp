@@ -142,7 +142,7 @@
 <!--            android:backgroundTint="@color/grey"/>-->
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/post_community"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"

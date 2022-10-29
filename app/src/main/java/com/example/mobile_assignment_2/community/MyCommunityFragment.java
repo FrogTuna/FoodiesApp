@@ -134,7 +134,8 @@ public class MyCommunityFragment extends Fragment{
 //            titleView.setText(post.getCommName());
 //            descpView.setText(post.getDescription());
 //            commImg.setBackgroundResource(post.getCommImage());
-            holder.image.setBackgroundResource(musers.get(position).getCommImage());
+//            holder.image.setBackgroundResource(musers.get(position).getCommImage());
+//            holder.image.setBackgroundResource(musers.get(position).getCommImage());
             holder.title.setText(musers.get(position).getCommName());
             return  convertView;
         }
@@ -143,10 +144,10 @@ public class MyCommunityFragment extends Fragment{
     // To generate an array of posts example
     private List<Communitypost> getcommPosts(List<Communitypost> newPosts) {
 //        ArrayList<Communitypost> newPosts = new ArrayList<>();
-        newPosts.add(new Communitypost(R.drawable.food, "commName1"));
-        newPosts.add(new Communitypost(R.drawable.food2, "commName2"));
-        newPosts.add(new Communitypost(R.drawable.food, "commName3"));
-        newPosts.add(new Communitypost(R.drawable.food2, "commName4"));
+        newPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
+        newPosts.add(new Communitypost("2", "2", "commName2", null, "type2", "user2", "comDescrip2"));
+        newPosts.add(new Communitypost("3", "3", "commName3", null, "type3", "user3", "comDescrip3"));
+        newPosts.add(new Communitypost("4", "4", "commName4", null, "type4", "user4", "comDescrip4"));
         return newPosts;
     }
 

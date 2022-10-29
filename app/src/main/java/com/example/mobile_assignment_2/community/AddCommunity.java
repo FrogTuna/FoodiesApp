@@ -28,15 +28,33 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import org.checkerframework.checker.units.qual.C;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
+public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;
     private Spinner comType;
@@ -45,12 +63,21 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     private Button cameraBtn;
     private Button postBtn;
     LinearLayout linearLayout;
+    DatabaseReference communityRef;
+    FirebaseAuth communityAuth;
+    FirebaseUser fuser;
     ArrayList<Uri> pickedImageUris = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);
         comType = findViewById(R.id.com_type);
         comType.setOnItemSelectedListener(this);
+
+        // connect to firebase
+        communityAuth = FirebaseAuth.getInstance();
+        fuser = communityAuth.getCurrentUser();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        communityRef = firebaseDatabase.getReference("Community").push();
 
         // Create the instance of ArrayAdapter
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
@@ -64,12 +91,15 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = getIntent();
         comNameView = findViewById(R.id.community_name);
         comDescriptionView = findViewById(R.id.com_desc);
+
+        // get comName and comDescription
         String name = comNameView.getText().toString();
         String descrip = comDescriptionView.getText().toString();
         Log.i("hello", name);
         Log.i("hello", descrip);
         linearLayout = (LinearLayout) findViewById(R.id.imageLinearLayout);
         imageBtn = findViewById(R.id.choose_image);
+//        imageBtn.setOnClickListener(this);
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +109,66 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        postBtn = findViewById(R.id.post_community);
+
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String commType = comType.getSelectedItem().toString();
+                String comName = comNameView.getText().toString();
+                String comDes = comDescriptionView.getText().toString();
+                ArrayList<String> downloadImgUrls = new ArrayList<>();
+                String cid = communityRef.getKey();
+
+                communityRef.setValue(new Communitypost());
+
+                // Get users information
+                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+                communityRef.setValue(new Communitypost());
+
+                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error in fetching data", task.getException());
+                        } else {
+                            String auName = task.getResult().getValue(String.class);
+                            String uid = fuser.getUid();
+                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadImgUrls, commType, auName, comDes);
+                            communityRef.setValue(comPost);
+                        }
+                    }
+                });
+//                startActivity(new Intent(AddCommunity.this, CommunityFragment.class));
+            }
+        });
+    }
+//        imageBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
+//                galleryActivityResultLauncher.launch("image/*");
+//
+//            }
+//        });
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageButton:
+                galleryActivityResultLauncher.launch("image/*");
+                break;
+//            case R.id.cameraButton:
+//                if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//                    // Request permission from user
+//                    requestPermissionLauncher.launch(
+//                            Manifest.permission.CAMERA);
+//                } else { // permission is already granted
+//                    openCamera();
+//                }
+
+        }
     }
 
     @Override

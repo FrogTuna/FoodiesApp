@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/textFieldComment"
+        app:layout_constraintBottom_toTopOf="@+id/inputSendComment"
         app:layout_constraintTop_toTopOf="parent"
         android:fillViewport="true"
         android:orientation="vertical">
@@ -141,7 +141,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:src="@drawable/add_user"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
@@ -159,24 +158,57 @@
                     tools:layout_editor_absoluteX="-2dp"
                     tools:layout_editor_absoluteY="488dp" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/commentsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
         </LinearLayout>
     </ScrollView>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldComment"
+    <LinearLayout
+        android:id="@+id/inputSendComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView"
-        android:hint="@string/comment"
-        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="7"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:hint="@string/comment"
+            >
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/sendCommentButton"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/paper_plane_solid"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp"
+
+            android:text="Send"
+            android:textStyle="bold"
+            android:backgroundTint="@color/orange"
             />
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
