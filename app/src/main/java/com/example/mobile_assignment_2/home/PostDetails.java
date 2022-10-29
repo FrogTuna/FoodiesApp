@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,62 +60,70 @@ public class PostDetails extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURLs");
         String pid = intent.getStringExtra("pid");
-        final int[] num_likes = {Integer.parseInt(intent.getStringExtra("likes"))};
-        final int[] num_collects = {Integer.parseInt(intent.getStringExtra("collects"))};
-
-        titleView = findViewById(R.id.post_title);
-        descripView = findViewById(R.id.post_description);
-        authorView = findViewById(R.id.author_name);
-        titleView.setText(title);
-        descripView.setText(description);
-        authorView.setText(author);
-        linearLayout = findViewById(R.id.post_linearLayout);
-        imagesRecyclerView = findViewById(R.id.recyclerView);
-        imagesRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
-        imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
-        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
-        imagesRecyclerView.setAdapter(imagesAdapter);
-
+        final int[] num_likes = {0};
+        final int[] num_collects = {0};
         likeBtn = findViewById(R.id.like);
-        likeBtn.setText(String.valueOf(num_likes[0]));
         collectBtn = findViewById(R.id.collect);
-        collectBtn.setText(String.valueOf(num_collects[0]));
-
+//        final int[] num_likes = {Integer.parseInt(intent.getStringExtra("likes"))};
+//        final int[] num_collects = {Integer.parseInt(intent.getStringExtra("collects"))};
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-
-        usersRef.child(currentUser.getUid()).child("likes").addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference().child("Posts").child(pid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                likes.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String likedPid = (String) dataSnapshot.getValue();
-                    likes.add(likedPid);
-                }
-                // if user likes, set like btn to filled heart, otherwise, to unfilled heart
-                if (likes.contains(pid)) {
-                    likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_solid, 0, 0, 0);
-                } else {
-                    likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.like, 0, 0, 0);
+                    if (dataSnapshot.getKey().equals("likes")) {
+                        num_likes[0] = dataSnapshot.getValue(int.class);
+                    }
+                    if (dataSnapshot.getKey().equals("collects")) {
+                        num_collects[0] = dataSnapshot.getValue(int.class);
+                    }
+
                 }
 
-                usersRef.child(currentUser.getUid()).child("collects").addValueEventListener(new ValueEventListener() {
+                likeBtn.setText(String.valueOf(num_likes[0]));
+
+                collectBtn.setText(String.valueOf(num_collects[0]));
+
+                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+
+                usersRef.child(currentUser.getUid()).child("likes").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        collects.clear();
+
+                        likes.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            String collectPid = (String) dataSnapshot.getValue();
-                            collects.add(collectPid);
+                            String likedPid = (String) dataSnapshot.getValue();
+                            likes.add(likedPid);
+                        }
+                        // if user likes, set like btn to filled heart, otherwise, to unfilled heart
+                        if (likes.contains(pid)) {
+                            likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_solid, 0, 0, 0);
+                        } else {
+                            likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.like, 0, 0, 0);
                         }
 
-                        // if user collects, set collect btn to filled star, otherwise, to unfilled star
-                        if (collects.contains(pid)) {
-                            collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.star_solid, 0, 0, 0);
-                        } else {
-                            collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.collect, 0, 0, 0);
-                        }
+                        usersRef.child(currentUser.getUid()).child("collects").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                collects.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    String collectPid = (String) dataSnapshot.getValue();
+                                    collects.add(collectPid);
+                                }
+
+                                // if user collects, set collect btn to filled star, otherwise, to unfilled star
+                                if (collects.contains(pid)) {
+                                    collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.star_solid, 0, 0, 0);
+                                } else {
+                                    collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.collect, 0, 0, 0);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -131,32 +140,50 @@ public class PostDetails extends AppCompatActivity {
         });
 
 
+        titleView = findViewById(R.id.post_title);
+        descripView = findViewById(R.id.post_description);
+        authorView = findViewById(R.id.author_name);
+        titleView.setText(title);
+        descripView.setText(description);
+        authorView.setText(author);
+        linearLayout = findViewById(R.id.post_linearLayout);
+        imagesRecyclerView = findViewById(R.id.recyclerView);
+        imagesRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
+        imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
+        ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
+        imagesRecyclerView.setAdapter(imagesAdapter);
+
+
+
+
+
+
+
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (!likes.contains(pid)) {
-                    num_likes[0] += 1;
-                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             // push to user's likes
                             DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes").push();
                             userLikesRef.setValue(pid);
                             Toast.makeText(getApplicationContext(), "You liked this post",Toast.LENGTH_LONG).show();
-                            likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_solid, 0, 0, 0);
-                            likeBtn.setText(String.valueOf(num_likes[0]));
+
                         }
                     });
                 } else {
-                    num_likes[0] -= 1;
-                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]-1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes").orderByValue().equalTo(pid).getRef().removeValue();
                             Toast.makeText(getApplicationContext(), "You cancelled like",Toast.LENGTH_LONG).show();
-                            likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.like, 0, 0, 0);
-                            likeBtn.setText(String.valueOf(num_likes[0]));
+
                         }
                     });
                 }
@@ -178,8 +205,6 @@ public class PostDetails extends AppCompatActivity {
                             DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects").push();
                             userLikesRef.setValue(pid);
                             Toast.makeText(getApplicationContext(), "You collected this post",Toast.LENGTH_LONG).show();
-                            collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.star_solid, 0, 0, 0);
-                            collectBtn.setText(String.valueOf(num_collects[0]));
 
                         }
                     });
@@ -190,8 +215,7 @@ public class PostDetails extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects").orderByValue().equalTo(pid).getRef().removeValue();
                             Toast.makeText(getApplicationContext(), "You cancelled collect",Toast.LENGTH_LONG).show();
-                            collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.collect, 0, 0, 0);
-                            collectBtn.setText(String.valueOf(num_collects[0]));
+
                         }
                     });
                 }
