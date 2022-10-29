@@ -1,5 +1,7 @@
 package com.example.mobile_assignment_2.message;
 
+import static com.google.firebase.firestore.model.Values.isInteger;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -38,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.protobuf.StringValue;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +48,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatWindowActivity extends AppCompatActivity {
 
@@ -59,12 +64,15 @@ public class ChatWindowActivity extends AppCompatActivity {
     DatabaseReference chatMessageRef;
     DatabaseReference userLastMessageRef;
     DatabaseReference oppositeUserLastMessageRef;
+    DatabaseReference userImageRef;
+    DatabaseReference oppositeUserImageRef;
     FirebaseAuth myAuth;
-    Query lastQuery;
     ImageView chatSendButton;
     EditText chatInputBar;
     RecyclerView userRecyclerView;
     RecyclerView oppositeUserRecyclerView;
+    CircleImageView userAvatar;
+    CircleImageView oppositeUserAvatar;
     List<String> userChatIDList = new ArrayList<String>();
     List<String> oppositeUserChatIDList = new ArrayList<String>();
 
@@ -83,7 +91,8 @@ public class ChatWindowActivity extends AppCompatActivity {
         oppositeUserLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("lastMessage");
         allRef = FirebaseDatabase.getInstance().getReference();
         chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
-
+        userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("imageUrl");
+        oppositeUserImageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("imageUrl");
 
 
         //find id from xml
@@ -94,6 +103,9 @@ public class ChatWindowActivity extends AppCompatActivity {
         oppositeUserRecyclerView = findViewById(R.id.chatWindowRecycleView);
         chatSendButton = findViewById(R.id.chatSendButton);
         chatInputBar = findViewById(R.id.chatInputBar);
+        userAvatar = findViewById(R.id.chatWindowRightUserImage);
+        oppositeUserAvatar = findViewById(R.id.chatWindowLeftUserImage);
+
 
 
         //methods
@@ -114,8 +126,6 @@ public class ChatWindowActivity extends AppCompatActivity {
                     Date date = new Date();
                     DatabaseReference chatMessageRef = allRef.child("chatMessage").push();
                     String chatID = chatMessageRef.getKey();
-                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date),R.drawable.old_man,chatID, fuser.getUid());
-                    chatMessageRef.setValue(message);
                     DatabaseReference fuserFriendChatRef = userRef.push();
                     DatabaseReference oppositeFuserChatRef = oppositeUserRef.push();
                     DatabaseReference userLastMessageRef2 = userLastMessageRef.push();
@@ -132,12 +142,14 @@ public class ChatWindowActivity extends AppCompatActivity {
             }
         });
 
+
         backSocialFragmentIntent(backIcon);
 
 
     }
 
     private void loadDatabase(){
+
 
 
         //oppositeUser listener
@@ -165,11 +177,19 @@ public class ChatWindowActivity extends AppCompatActivity {
                                     String chatMessageText = snapshot3.child("senderText").getValue().toString();
                                     String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
                                     String chatMessagechatID = snapshot3.child("chatID").getValue().toString();
-                                    ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,chatMessagechatID, chatMessageRole);
-                                    oppositeUserconversation.add(message);
+                                    String chatMessageImage = snapshot3.child("senderImage").getValue().toString();
+                                    if(isInteger(chatMessageImage.toString())){
+                                        ChatMessage message = new ChatMessage(chatMessageText, chatMessageTime, chatMessageImage, chatMessagechatID, chatMessageRole);
+                                        userConversation.add(message);
+                                    }
+                                    else{
+                                        ChatMessage message = new ChatMessage(chatMessageText, chatMessageTime, R.drawable.old_man, chatMessagechatID, chatMessageRole);
+                                        userConversation.add(message);
+                                    }
 
                                 }
                             }
+
 
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
                             oppositeUserRecyclerView.setAdapter(messageAdapter2);
@@ -221,11 +241,18 @@ public class ChatWindowActivity extends AppCompatActivity {
                                     String chatMessageText = snapshot3.child("senderText").getValue().toString();
                                     String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
                                     String chatMessagechatID = snapshot3.child("chatID").getValue().toString();
-                                    ChatMessage message = new ChatMessage(chatMessageText,chatMessageTime,R.drawable.old_man,chatMessagechatID, chatMessageRole);
-                                    userConversation.add(message);
-
+                                    String chatMessageImage = snapshot3.child("senderImage").getValue().toString();
+                                    if(isInteger(chatMessageImage.toString())){
+                                        ChatMessage message = new ChatMessage(chatMessageText, chatMessageTime, chatMessageImage, chatMessagechatID, chatMessageRole);
+                                        userConversation.add(message);
+                                    }
+                                    else{
+                                        ChatMessage message = new ChatMessage(chatMessageText, chatMessageTime, R.drawable.old_man, chatMessagechatID, chatMessageRole);
+                                        userConversation.add(message);
+                                    }
                                 }
                             }
+
 
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, userConversation);
                             userRecyclerView.setAdapter(messageAdapter2);
@@ -263,5 +290,14 @@ public class ChatWindowActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
     }
 }
