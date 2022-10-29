@@ -4,14 +4,14 @@ public class ChatListData {
     private String username;
     private String friendID;
     private String lastMsg;
-    private int avatarID;
+    private String imgURL;
 
 
-    public ChatListData(String _friendID, String _username, String _lastMsg, int _avatarID) {
+    public ChatListData(String _friendID, String _username, String _lastMsg, String _imgURL) {
         this.friendID = _friendID;
         this.username = _username;
         this.lastMsg = _lastMsg;
-        this.avatarID = _avatarID;
+        this.imgURL = _imgURL;
     }
     // Following is Get/Set function
     public String getFriendID() {
@@ -35,11 +35,11 @@ public class ChatListData {
         this.lastMsg = _lastMsg;
     }
 
-    public int getAvatar() {
-        return this.avatarID;
+    public String getImgURL() {
+        return this.imgURL;
     }
-    public void setAvatar(int _avatarID) {
-        this.avatarID = avatarID;
+    public void setAvatar(String _imgURL) {
+        this.imgURL = _imgURL;
     }
 
 

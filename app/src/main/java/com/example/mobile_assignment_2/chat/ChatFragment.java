@@ -108,7 +108,7 @@ public class ChatFragment extends Fragment {
                         ((HashMap<String, String>)chatArrayList.get(i)).get("ID"),
                         ((HashMap<String, String>)userArrayList.get(j)).get("username"),
                         ((HashMap<String, String>)chatArrayList.get(i)).get("lastMsg"),
-                        android.R.drawable.ic_dialog_email
+                        ((HashMap<String, String>)userArrayList.get(j)).get("imageUrl")
                     );
                 }
             }
