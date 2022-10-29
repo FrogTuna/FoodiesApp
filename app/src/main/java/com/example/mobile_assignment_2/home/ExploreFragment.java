@@ -142,6 +142,7 @@ public class ExploreFragment extends Fragment {
                                 i.putExtra("author", post.getAuthor());
                                 i.putExtra("pid", post.getPid());
                                 i.putExtra("likes", String.valueOf(post.getLikes()));
+                                i.putExtra("collects", String.valueOf(post.getCollects()));
                                 i.putStringArrayListExtra("imageURLs", post.getImageUrls());
                                 startActivity(i);
                             }
