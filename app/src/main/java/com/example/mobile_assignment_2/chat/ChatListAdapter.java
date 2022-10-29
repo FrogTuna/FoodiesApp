@@ -1,5 +1,8 @@
 package com.example.mobile_assignment_2.chat;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.message.ChatWindowActivity;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
     private ChatListData[] chatListData;
@@ -28,7 +32,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ChatListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ChatListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final ChatListData chatListItem = chatListData[position];
         holder.textViewUsername.setText(chatListData[position].getUsername());
         holder.textViewLastMsg.setText(chatListData[position].getLastMsg());
@@ -36,8 +40,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FriendListAdapter.username = "";
+                FriendListAdapter.userID = "";
                 // Redirect to user page
                 Toast.makeText(view.getContext(),"click on item: "+chatListItem.getUsername(),Toast.LENGTH_LONG).show();
+
+                // Redirect to user page
+                FriendListAdapter.username = chatListItem.getUsername();
+                FriendListAdapter.userID  = chatListData[position].getFriendID();
+                Context context = view.getContext();
+                Intent intent = new Intent(context, ChatWindowActivity.class);
+                context.startActivity(intent);
+
             }
         });
     }
