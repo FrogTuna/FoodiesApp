@@ -17,15 +17,17 @@ import android.widget.TextView;
 
 import com.example.mobile_assignment_2.add.CustomItem;
 import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
+import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-import com.example.mobile_assignment_2.add.activities.nearByActivity;
-import com.example.mobile_assignment_2.add.activities.shakeActivity;
+import com.example.mobile_assignment_2.add.activities.addByNearBy.nearByActivity;
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
+import com.example.mobile_assignment_2.chat.FriendListAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +67,7 @@ public class SocialFragment extends Fragment {
 
     private DatabaseReference chatRef, friendshipRef, reqRef, userRef;
     private ArrayList friendshipArrayList, chatArrayList, reqArrayList, userArrayList;
+    private FirebaseUser fuser;
 
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
@@ -104,14 +107,17 @@ public class SocialFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 //        searchView = (SearchView) findViewById(R.id.searchView);
-//        FirebaseUser fuser = myAuth.getCurrentUser();
         myAuth = FirebaseAuth.getInstance();
+        fuser = myAuth.getCurrentUser();
+        //userRef = FirebaseDatabase.getInstance().getReference();
         userID = myAuth.getCurrentUser().getUid();
 
         friendshipArrayList = new ArrayList();
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
         chatArrayList = new ArrayList();
+        //DatabaseReference oppositeUserRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("chats");
+
         initialFireBase();
 
         /* Search view */
@@ -215,7 +221,7 @@ public class SocialFragment extends Fragment {
 
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
-        searchView = view.findViewById(R.id.searchView);
+//        searchView = view.findViewById(R.id.searchView);
 //        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
 //
 //        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
@@ -225,8 +231,7 @@ public class SocialFragment extends Fragment {
 //                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
 //            }
 //        });
-        System.out.println("[Chat + ] " + chatArrayList);
-        System.out.println("[User + ] " + userArrayList);
+
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -419,11 +424,10 @@ public class SocialFragment extends Fragment {
                         chatsInfo.put("lastMsg", lastMsg);
                         chatArrayList.add(chatsInfo);
 
-
                     }
-                    System.out.println("[Chat - ] " + chatArrayList);
 
                 }
+
 
                 chatPagerAdapter = new ChatPagerAdapter(
                         getActivity(),
@@ -453,6 +457,7 @@ public class SocialFragment extends Fragment {
                                 }
                             }
                         }).attach();
+
             }
 
             @Override

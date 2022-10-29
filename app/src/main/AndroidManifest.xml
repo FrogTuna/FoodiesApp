@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mobile_assignment_2">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,10 +22,10 @@
             android:name=".add.activities.addBySearch.addActivity"
             android:exported="false" />
         <activity
-            android:name=".add.activities.nearByActivity"
+            android:name=".add.activities.addByNearBy.nearByActivity"
             android:exported="false" />
         <activity
-            android:name=".add.activities.shakeActivity"
+            android:name=".add.activities.addShake.shakeActivity"
             android:exported="false" />
         <activity
             android:name=".home.PostDetails"
