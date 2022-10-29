@@ -111,7 +111,7 @@ public class SocialFragment extends Fragment {
         fuser = myAuth.getCurrentUser();
         //userRef = FirebaseDatabase.getInstance().getReference();
         userID = myAuth.getCurrentUser().getUid();
-        System.out.println("Current UID:" + userID);
+
         friendshipArrayList = new ArrayList();
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
@@ -221,7 +221,7 @@ public class SocialFragment extends Fragment {
 
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
-        searchView = view.findViewById(R.id.searchView);
+//        searchView = view.findViewById(R.id.searchView);
 //        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
 //
 //        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +231,7 @@ public class SocialFragment extends Fragment {
 //                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
 //            }
 //        });
-        System.out.println("[+] friendList : " + friendshipArrayList);
+
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -402,46 +402,62 @@ public class SocialFragment extends Fragment {
                 usersInfo.put("ID", dataSnapshot.getKey());
                 usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
                 usersInfo.put("username", (String) dataSnapshot.child("username").getValue());
-                usersInfo.put("remark", (String) dataSnapshot.child("remark").getValue());
+//                usersInfo.put("remark", (String) dataSnapshot.child("remark").getValue());
                 userArrayList.add(usersInfo);
                 if(dataSnapshot.getKey().equals(userID)) {
 
-                    for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()){
+                    for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()) {
                         HashMap<String, String> friendsInfo = new HashMap<String, String>();
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
+                        HashMap<String, Object> chatsInfo = new HashMap<>();
+                        String lastMsg = "";
+                        chatsInfo.put("ID", friendsSnapshot.getKey());
+                        for(DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
+                            if(chatsSnapshot.getKey().equals("lastMessage")) {
+                                for(DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
+                                    lastMsg = (String) msgSnapshot.getValue();
+                                }
+                            }
+
+                        }
+                        chatsInfo.put("lastMsg", lastMsg);
+                        chatArrayList.add(chatsInfo);
 
                     }
+
                 }
-                //System.out.println("[+] Friend : " + friendshipArrayList);
-//                chatPagerAdapter = new ChatPagerAdapter(
-//                        getActivity(),
-//                        NUM_PAGES,
-//                        friendshipArrayList,
-//                        userArrayList,
-//                        reqArrayList,
-//                        chatArrayList
-//                );
-//                viewPager2.setAdapter(chatPagerAdapter);
-//                new TabLayoutMediator(tabLayout, viewPager2,
-//                        new TabLayoutMediator.TabConfigurationStrategy() {
-//                            @Override
-//                            public void onConfigureTab(TabLayout.Tab tab, int position) {
-//                                switch (position) {
-//                                    case 0:
-//                                        tab.setText("Chat");
-//                                        break;
-//                                    case 1:
-//                                        tab.setText("Friend");
-//                                        break;
-//                                    case 2:
-//                                        tab.setText("Request");
-//                                        break;
-//                                    default:
-//                                        break;
-//                                }
-//                            }
-//                        }).attach();
+
+
+                chatPagerAdapter = new ChatPagerAdapter(
+                        getActivity(),
+                        NUM_PAGES,
+                        friendshipArrayList,
+                        userArrayList,
+                        reqArrayList,
+                        chatArrayList
+                );
+                viewPager2.setAdapter(chatPagerAdapter);
+                new TabLayoutMediator(tabLayout, viewPager2,
+                        new TabLayoutMediator.TabConfigurationStrategy() {
+                            @Override
+                            public void onConfigureTab(TabLayout.Tab tab, int position) {
+                                switch (position) {
+                                    case 0:
+                                        tab.setText("Chat");
+                                        break;
+                                    case 1:
+                                        tab.setText("Friend");
+                                        break;
+                                    case 2:
+                                        tab.setText("Request");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }).attach();
+
             }
 
             @Override

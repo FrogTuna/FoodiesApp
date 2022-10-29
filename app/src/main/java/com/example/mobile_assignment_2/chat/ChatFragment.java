@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+///**
+// * A simple {@link Fragment} subclass.
+// * Use the {@link ChatFragment#newInstance} factory method to
+// * create an instance of this fragment.
+// */
 public class ChatFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +40,7 @@ public class ChatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList chatArrayList;
+    private ArrayList chatArrayList, userArrayList;
 //    private ArrayList friendshipArrayList, chatHistArrayList, reqArrayList, userArrayList;
 //    private static final String TAG = "Child: ";
 //    private static final String loginUsername = "Wen";  // this var is login user, and should be pass when login to chat page
@@ -49,9 +49,11 @@ public class ChatFragment extends Fragment {
 
 
 
-    public ChatFragment(ArrayList _chatArrayList) {
+    public ChatFragment(ArrayList _chatArrayList, ArrayList _userArrayList) {
         // Required empty public constructor
         chatArrayList = _chatArrayList;
+        userArrayList = _userArrayList;
+
     }
 
 //    /**
@@ -94,14 +96,25 @@ public class ChatFragment extends Fragment {
 
         ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
 
-        System.out.println("[+] chat list: " + chatArrayList);
+        System.out.println("[Chat] " + chatArrayList);
+        System.out.println("[User] " + userArrayList);
+
         for (int i = 0; i < chatArrayList.size(); i++) {
-            chatListData[i] = new ChatListData(
-                    ((HashMap<String, String>)chatArrayList.get(i)).get("name"),
-                    ((HashMap<String, String>)chatArrayList.get(i)).get("content"),
-                    android.R.drawable.ic_dialog_email
-            );
+            for(int j = 0; j < userArrayList.size(); j++) {
+                if(((HashMap<String, String>)chatArrayList.get(i)).get("ID").equals(((HashMap<String, String>)userArrayList.get(j)).get("ID"))) {
+                    System.out.println("[Check] ");
+
+                    chatListData[i] = new ChatListData(
+                        ((HashMap<String, String>)chatArrayList.get(i)).get("ID"),
+                        ((HashMap<String, String>)userArrayList.get(j)).get("username"),
+                        ((HashMap<String, String>)chatArrayList.get(i)).get("lastMsg"),
+                        android.R.drawable.ic_dialog_email
+                    );
+                }
+            }
+
         }
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.chatRecyclerView);
         ChatListAdapter chatListAdapter = new ChatListAdapter(chatListData);
 

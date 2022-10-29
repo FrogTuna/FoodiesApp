@@ -31,7 +31,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public void onBindViewHolder(ChatListAdapter.ViewHolder holder, int position) {
         final ChatListData chatListItem = chatListData[position];
         holder.textViewUsername.setText(chatListData[position].getUsername());
-        holder.textViewContent.setText(chatListData[position].getContent());
+        holder.textViewLastMsg.setText(chatListData[position].getLastMsg());
         holder.imageViewAvatar.setImageResource(chatListData[position].getAvatar());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,13 +50,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageViewAvatar;
-        public TextView textViewUsername, textViewContent;
+        public TextView textViewUsername, textViewLastMsg;
         public RelativeLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
-            this.textViewContent = (TextView) itemView.findViewById(R.id.textViewContent);
+            this.textViewLastMsg = (TextView) itemView.findViewById(R.id.textViewLastMsg);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

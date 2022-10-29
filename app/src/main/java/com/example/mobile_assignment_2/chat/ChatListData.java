@@ -2,16 +2,25 @@ package com.example.mobile_assignment_2.chat;
 
 public class ChatListData {
     private String username;
-    private String content;
+    private String friendID;
+    private String lastMsg;
     private int avatarID;
 
 
-    public ChatListData(String _username, String _content, int _avatarID) {
+    public ChatListData(String _friendID, String _username, String _lastMsg, int _avatarID) {
+        this.friendID = _friendID;
         this.username = _username;
-        this.content = _content;
+        this.lastMsg = _lastMsg;
         this.avatarID = _avatarID;
     }
     // Following is Get/Set function
+    public String getFriendID() {
+        return this.friendID;
+    }
+    public void setfriendID(String _friendID) {
+        this.friendID = friendID;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -19,11 +28,11 @@ public class ChatListData {
         this.username = _username;
     }
 
-    public String getContent() {
-        return this.content;
+    public String getLastMsg() {
+        return this.lastMsg;
     }
-    public void setRemark(String _content) {
-        this.content = _content;
+    public void setLastMsg(String _lastMsg) {
+        this.lastMsg = _lastMsg;
     }
 
     public int getAvatar() {
