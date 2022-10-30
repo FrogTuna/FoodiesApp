@@ -10,16 +10,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,13 +59,14 @@ public class ForYouFragment extends Fragment {
     ArrayList<String> friends = new ArrayList<>();
     ArrayList<String> likes = new ArrayList<>();
     ArrayList<String> collects = new ArrayList<>();
+    ArrayList<Comment> commentsList = new ArrayList<>();
     // posts for user and user's friends
     ArrayList<Post> forYouPosts = new ArrayList<>();
     ForYouPostsAdapter forYouPostsAdapter;
     RecyclerView postsRecyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
-
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     int lastViewPosition = 0;
     public ForYouFragment() {
         // Required empty public constructor
@@ -100,7 +108,7 @@ public class ForYouFragment extends Fragment {
         currentUser = mAuth.getCurrentUser();
 
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
         // Get a reference to users
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
         usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
@@ -201,6 +209,7 @@ public class ForYouFragment extends Fragment {
             RecyclerView imagesRecyclerView;
             Button likeBtn;
             Button collectBtn;
+            Button commentBtn;
             public ViewHolder(View view) {
                 super(view);
                 titleView =  (TextView) view.findViewById(R.id.post_title);
@@ -209,6 +218,7 @@ public class ForYouFragment extends Fragment {
                 imagesRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
                 likeBtn = (Button) view.findViewById(R.id.like);
                 collectBtn = (Button) view.findViewById(R.id.collect);
+                commentBtn = (Button) view.findViewById(R.id.comment);
             }
 
         }
@@ -233,11 +243,14 @@ public class ForYouFragment extends Fragment {
         public void onBindViewHolder(ForYouPostsAdapter.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
             final int[] num_likes = {posts.get(position).getLikes()};
             final int[] num_collects = {posts.get(position).getCollects()};
+            final int[] num_comments = {posts.get(position).getNumComments()};
+            HashMap<String, Comment> comments = posts.get(position).getComments();
+            String author = posts.get(position).getAuthor();
             String pid = posts.get(position).getPid();
             viewHolder.likeBtn.setText(String.valueOf(num_likes[0]));
             viewHolder.collectBtn.setText(String.valueOf(num_collects[0]));
             viewHolder.titleView.setText(posts.get(position).getTitle());
-            viewHolder.authorView.setText(posts.get(position).getAuthor());
+            viewHolder.authorView.setText(author);
             viewHolder.descpView.setText(posts.get(position).getDescription());
             ArrayList<String> imageUrls = posts.get(position).getImageUrls();
             ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext(), R.layout.for_you_posts_image_view);
@@ -245,7 +258,7 @@ public class ForYouFragment extends Fragment {
             RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
             viewHolder.imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
             viewHolder.imagesRecyclerView.setAdapter(imagesAdapter);
-
+            viewHolder.commentBtn.setText(String.valueOf(num_comments[0]));
             // if user likes, set like btn to filled heart, otherwise, to unfilled heart
             if (likes.contains(pid)) {
                 viewHolder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_solid, 0, 0, 0);
@@ -314,6 +327,88 @@ public class ForYouFragment extends Fragment {
                             }
                         });
                     }
+
+                }
+            });
+            viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    View popupCommentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_popup_window,null);
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    int height = displayMetrics.heightPixels;
+                    int width = displayMetrics.widthPixels;
+                    PopupWindow popupWindow = new PopupWindow(popupCommentView,width, height*1/2, true);
+                    popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                    LinearLayout commentsLinearLayout = popupCommentView.findViewById(R.id.commentsLinearLayout);
+                    Button sendBtn = popupCommentView.findViewById(R.id.sendCommentButton);
+                    TextView commentTextField = popupCommentView.findViewById(R.id.textFieldComment);
+                    firebaseDatabase.getReference().child("Posts").child(pid).child("comments").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            commentsList.clear();
+                            commentsLinearLayout.removeAllViews();
+                            for (DataSnapshot commentDataSnapshot : snapshot.getChildren()) {
+                                Comment comment = commentDataSnapshot.getValue(Comment.class);
+                                commentsList.add(comment);
+
+                            }
+                            for (Comment c : commentsList){
+                                View view = LayoutInflater.from(getContext()).inflate(R.layout.comment, null);
+                                TextView authorView = view.findViewById(R.id.author_name);
+                                TextView commentView = view.findViewById(R.id.comment_text);
+                                authorView.setText(c.getAuthor());
+                                commentView.setText(c.getCommentMessage());
+                                commentsLinearLayout.addView(view, 0);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    sendBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String commentText = commentTextField.getText().toString();
+                            if (!commentText.isEmpty()) {
+                                firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.e("firebase", "Error in fetching data", task.getException());
+                                        }
+                                        else {
+                                            String authorName = task.getResult().getValue(String.class);
+                                            Comment comment = new Comment(authorName, commentText, "");
+                                            DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                                            commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(getContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                                            commentTextField.setText("");
+
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+
+
 
                 }
             });

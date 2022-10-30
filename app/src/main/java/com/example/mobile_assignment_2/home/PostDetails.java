@@ -24,7 +24,9 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -266,21 +268,33 @@ public class PostDetails extends AppCompatActivity {
             public void onClick(View view) {
                 String commentText = commentTextField.getText().toString();
                 if (!commentText.isEmpty()) {
-                    Comment comment = new Comment(author, commentText, "");
-                    DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
-                    commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
-                                    commentTextField.setText("");
-                                }
-                            });
+                    firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                         @Override
+                         public void onComplete(@NonNull Task<DataSnapshot> task) {
+                             if (!task.isSuccessful()) {
+                                 Log.e("firebase", "Error in fetching data", task.getException());
+                             } else {
+                                 String authorName = task.getResult().getValue(String.class);
+                                 Comment comment = new Comment(authorName, commentText, "");
+                                 DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                                 commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                     @Override
+                                     public void onSuccess(Void unused) {
+                                         firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                             @Override
+                                             public void onSuccess(Void unused) {
+                                                 Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                                 commentTextField.setText("");
+                                             }
+                                         });
 
-                        }
-                    });
+                                     }
+                                 });
+
+                             }
+                         }
+                     });
+
 
                 }
             }
