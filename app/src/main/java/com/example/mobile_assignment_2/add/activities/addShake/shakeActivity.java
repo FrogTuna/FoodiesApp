@@ -49,6 +49,8 @@ public class shakeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addshake);
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         /* Initialize time Vars */
@@ -100,21 +102,25 @@ public class shakeActivity extends AppCompatActivity{
                 /* Update shake flag on firebase */
                 start = System.currentTimeMillis();
 
-                Log.w("AccelCurrent:",  String.valueOf(mAccel));
-
-                mDatabase.addValueEventListener(new ValueEventListener() {
+                Log.w("KeYANG",  String.valueOf(mAccel));
+                updateShakenInfo(false); // should  change to false
+                Thread thread = new Thread(new newThread());
+                thread.start();
+                mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot user : snapshot.getChildren()) {
                             // TODO: handle the post
 
-                            if(String.valueOf(user.child("hasShake").getValue()).equals("true")){
-                                updateShakenInfo(false); // should  change to false
+                            Log.w("KeYANG",  "DB changed!");
+                            if(String.valueOf(user.child("hasShaken").getValue()).equals("true")
+                              && !user.getKey().equals(userID)){
 
-                                Log.w("shake!",  "shake!");
+                                Log.w("KeYANG",  "KeYang");
+                                Intent intent = new Intent(getApplicationContext(), addFriendList.class);
+                                getShakenUsersID(intent);
 
-                                Thread thread = new Thread(new newThread());
-                                thread.start();
+
                             }
                         }
                     }
@@ -123,9 +129,9 @@ public class shakeActivity extends AppCompatActivity{
 
                     }
                 });
+
+
             }
-
-
 
 
         }
@@ -138,7 +144,7 @@ public class shakeActivity extends AppCompatActivity{
         @Override
         public void run() {
             try {
-                Thread.sleep(20 * 1000);
+                Thread.sleep(60 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -161,7 +167,7 @@ public class shakeActivity extends AppCompatActivity{
     }
     protected void updateShakenInfo(Boolean tenSeconds) {
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String key = mDatabase.child("Users").child(userID).child("hasShaken").getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         if(tenSeconds) {
@@ -171,9 +177,9 @@ public class shakeActivity extends AppCompatActivity{
         else {
             childUpdates.put("/Users/" + userID + "/" + key, true);
             mDatabase.updateChildren(childUpdates);
-            Intent intent = new Intent(this, addFriendList.class);
+//            Intent intent = new Intent(this, addFriendList.class);
             userInfosArrayList = new ArrayList();
-            getShakenUsersID(intent);
+//            getShakenUsersID(intent);
 
         }
 
