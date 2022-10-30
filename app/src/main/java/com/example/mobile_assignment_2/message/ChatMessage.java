@@ -1,21 +1,21 @@
 package com.example.mobile_assignment_2.message;
 
 
-import java.util.Comparator;
-
 public class ChatMessage{
 
     private String senderText;
     private String senderTime;
     private int senderImage;
+    private String senderImageString;
     private String role;
     private String chatID;
 
 
-    public ChatMessage(String senderText, String senderTime, int senderImage, String chatID, String role) {
+
+    public ChatMessage(String senderText, String senderTime, String senderImageString, String chatID, String role) {
         this.senderText = senderText;
         this.senderTime = senderTime;
-        this.senderImage = senderImage;
+        this.senderImageString = senderImageString;
         this.chatID = chatID;
         this.role = role;
     }
@@ -29,8 +29,8 @@ public class ChatMessage{
         return senderTime;
     }
 
-    public int getSenderImage() {
-        return senderImage;
+    public String getSenderImage() {
+        return senderImageString;
     }
 
     public String getChatID(){ return chatID; }

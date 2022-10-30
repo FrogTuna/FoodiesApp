@@ -3,13 +3,18 @@ package com.example.mobile_assignment_2.message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +23,13 @@ import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.chat.FriendListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -102,13 +110,16 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
             holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
             holderLeft.receiverTime.setText(allConversation.get(position).getSenderTime());
-            holderLeft.receiverImage.setImageResource(allConversation.get(position).getSenderImage());
+            Picasso.with(context).load(allConversation.get(position).getSenderImage()).into(holderLeft.receiverImage);
+
+
         }
         else if (allConversation.get(position).getRole().equals(fuser.getUid())){
             ViewHolderRight holderRight = (ViewHolderRight) holder;
             holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
             holderRight.senderTime.setText(allConversation.get(position).getSenderTime());
-            holderRight.senderImage.setImageResource(allConversation.get(position).getSenderImage());
+            Picasso.with(context).load(fuser.getPhotoUrl().toString()).into(holderRight.senderImage);
+
         }
 
     }
@@ -164,6 +175,31 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
             senderInfo = itemView.findViewById(R.id.chatMessageRightSendText);
             senderTime = itemView.findViewById(R.id.chatMessageRightDateAndTime);
 
+        }
+    }
+
+
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView=imageView;
+            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+        }
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL=urls[0];
+            Bitmap bimage=null;
+            try {
+                InputStream in=new java.net.URL(imageURL).openStream();
+                bimage= BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
         }
     }
 }

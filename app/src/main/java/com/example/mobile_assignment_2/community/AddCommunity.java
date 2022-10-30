@@ -66,7 +66,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     DatabaseReference communityRef;
     FirebaseAuth communityAuth;
     FirebaseUser fuser;
-    ArrayList<Uri> pickedImageUris = new ArrayList<>();
+    Uri pickedImageUri;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);
@@ -119,26 +119,78 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                 String comDes = comDescriptionView.getText().toString();
                 ArrayList<String> downloadImgUrls = new ArrayList<>();
                 String cid = communityRef.getKey();
+                Uri downloadimageUrl = null;
 
-                communityRef.setValue(new Communitypost());
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
+                StorageReference postImagesRef = storageRef.child("communityImages/" + pickedImageUri.getLastPathSegment());
+                // upload picked images
+                UploadTask uploadTask = postImagesRef.putFile(pickedImageUri);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+
+                                // retrieve the download URL of uploaded image
+                                return postImagesRef.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+
+                                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+                                communityRef.setValue(new Communitypost());
+                                Uri downloadUri = task.getResult();
+
+                                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                                        if (!task.isSuccessful()) {
+                                            Log.e("firebase", "Error in fetching data", task.getException());
+                                        } else {
+                                            String auName = task.getResult().getValue(String.class);
+                                            String uid = fuser.getUid();
+                                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri.toString(), commType, auName, comDes);
+                                            communityRef.setValue(comPost);
+                                        }
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+
+                });
+
+
+//                communityRef.setValue(new Communitypost());
 
                 // Get users information
-                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-                communityRef.setValue(new Communitypost());
-
-                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error in fetching data", task.getException());
-                        } else {
-                            String auName = task.getResult().getValue(String.class);
-                            String uid = fuser.getUid();
-                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadImgUrls, commType, auName, comDes);
-                            communityRef.setValue(comPost);
-                        }
-                    }
-                });
+//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+//                communityRef.setValue(new Communitypost());
+//
+//                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                        String downloadUri = task.getResult().toString();
+//                        if (!task.isSuccessful()) {
+//                            Log.e("firebase", "Error in fetching data", task.getException());
+//                        } else {
+//                            String auName = task.getResult().getValue(String.class);
+//                            String uid = fuser.getUid();
+//                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri, commType, auName, comDes);
+//                            communityRef.setValue(comPost);
+//                        }
+//                    }
+//                });
 //                startActivity(new Intent(AddCommunity.this, CommunityFragment.class));
             }
         });
@@ -209,7 +261,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
                     linearLayout.addView(imageView);
 
-                    pickedImageUris.add(uri);
+                    pickedImageUri = uri;
                 }
             });
 
