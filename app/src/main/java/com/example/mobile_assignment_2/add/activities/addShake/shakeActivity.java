@@ -118,9 +118,21 @@ public class shakeActivity extends AppCompatActivity{
 
                                 Log.w("KeYANG",  "KeYang");
                                 Intent intent = new Intent(getApplicationContext(), addFriendList.class);
-                                getShakenUsersID(intent);
+//                                getShakenUsersID(intent);
 
+                                String key = user.getKey();
+                                HashMap<String, String> userInfoHashMap = new HashMap<>();
+                                Log.d("selected User:" , key);
+                                userInfoHashMap.put("ID", key);
+                                userInfoHashMap.put("username", (String)user.child("username").getValue());
+                                userInfoHashMap.put("imageUrl", (String)user.child("imageUrl").getValue());
+                                userInfosArrayList = new ArrayList();
+                                userInfosArrayList.add(userInfoHashMap);
 
+                                System.out.println("[arr] " + userInfosArrayList);
+                                intent.putExtra("userInfosArrayList", userInfosArrayList);
+                                intent.putExtra("currentUser",userID);
+                                startActivity(intent);
                             }
                         }
                     }
@@ -144,7 +156,7 @@ public class shakeActivity extends AppCompatActivity{
         @Override
         public void run() {
             try {
-                Thread.sleep(60 * 1000);
+                Thread.sleep(10 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -178,7 +190,7 @@ public class shakeActivity extends AppCompatActivity{
             childUpdates.put("/Users/" + userID + "/" + key, true);
             mDatabase.updateChildren(childUpdates);
 //            Intent intent = new Intent(this, addFriendList.class);
-            userInfosArrayList = new ArrayList();
+//            userInfosArrayList = new ArrayList();
 //            getShakenUsersID(intent);
 
         }
@@ -210,11 +222,11 @@ public class shakeActivity extends AppCompatActivity{
                     intent.putExtra("userInfosArrayList", userInfosArrayList);
                     intent.putExtra("currentUser",userID);
                     startActivity(intent);
-                    try {
-                        Thread.sleep(60);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(60);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
             @Override
