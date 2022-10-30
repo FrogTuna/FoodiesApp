@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -210,6 +212,7 @@ public class ForYouFragment extends Fragment {
             Button likeBtn;
             Button collectBtn;
             Button commentBtn;
+            ImageView profileView;
             public ViewHolder(View view) {
                 super(view);
                 titleView =  (TextView) view.findViewById(R.id.post_title);
@@ -219,6 +222,7 @@ public class ForYouFragment extends Fragment {
                 likeBtn = (Button) view.findViewById(R.id.like);
                 collectBtn = (Button) view.findViewById(R.id.collect);
                 commentBtn = (Button) view.findViewById(R.id.comment);
+                profileView = (ImageView) view.findViewById(R.id.profile_image);
             }
 
         }
@@ -273,6 +277,20 @@ public class ForYouFragment extends Fragment {
                 viewHolder.collectBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.collect, 0, 0, 0);
             }
 
+            String uid = posts.get(position).getUid();
+            firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error in fetching data", task.getException());
+                    }
+                    else {
+                        String profileImageUrl = task.getResult().getValue(String.class);
+                        // Download image from URL and set to imageView
+                        Picasso.with(getContext()).load(profileImageUrl).fit().centerCrop().into(viewHolder.profileView);
+                    }
+                }
+            });
             viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -357,6 +375,11 @@ public class ForYouFragment extends Fragment {
                                 View view = LayoutInflater.from(getContext()).inflate(R.layout.comment, null);
                                 TextView authorView = view.findViewById(R.id.author_name);
                                 TextView commentView = view.findViewById(R.id.comment_text);
+                                ImageView profileView = view.findViewById(R.id.profile_image);
+
+                                String profileImageUrl = c.getAuthorProfileUrl();
+                                // Download image from URL and set to imageView
+                                Picasso.with(getContext()).load(profileImageUrl).fit().centerCrop().into(profileView);
                                 authorView.setText(c.getAuthor());
                                 commentView.setText(c.getCommentMessage());
                                 commentsLinearLayout.addView(view, 0);
@@ -382,22 +405,30 @@ public class ForYouFragment extends Fragment {
                                         }
                                         else {
                                             String authorName = task.getResult().getValue(String.class);
-                                            Comment comment = new Comment(authorName, commentText, "");
-                                            DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
-                                            commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                                 @Override
-                                                public void onSuccess(Void unused) {
-                                                    firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                    String profileImageUrl = task.getResult().getValue(String.class);
+                                                    Comment comment = new Comment(authorName, commentText, profileImageUrl);
+                                                    DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                                                    commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void unused) {
-                                                            Toast.makeText(getContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
-                                                            commentTextField.setText("");
+                                                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void unused) {
+                                                                    Toast.makeText(getContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                                                    commentTextField.setText("");
+
+                                                                }
+                                                            });
 
                                                         }
                                                     });
-
                                                 }
                                             });
+
+
 
                                         }
                                     }
