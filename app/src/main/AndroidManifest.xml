@@ -29,6 +29,9 @@
             android:name=".add.activities.addShake.shakeActivity"
             android:exported="false" />
         <activity
+            android:name=".add.activities.addFriendList"
+            android:exported="false" />
+        <activity
             android:name=".home.PostDetails"
             android:exported="false"
             android:label="@string/title_activity_post_details"
