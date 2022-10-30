@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class shakeActivity extends AppCompatActivity {
+public class shakeActivity extends AppCompatActivity{
     private SensorManager mSensorManager;
     private float mAccel;
     private float mAccelCurrent;
@@ -74,11 +74,11 @@ public class shakeActivity extends AppCompatActivity {
 
             /* Count 10s after last shaken */
 
-            if(System.currentTimeMillis() - start > TIME_ELAPSED) {
-                System.out.println("[start] " + start);
-
-                updateShakenInfo(true);
-            }
+//            if(System.currentTimeMillis() - start > TIME_ELAPSED) {
+//                System.out.println("[start] " + start);
+//
+//                updateShakenInfo(true);
+//            }
 
             float x = event.values[0];
             float y = event.values[1];
@@ -88,24 +88,44 @@ public class shakeActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
 
 //            Log.w("AccelCurrent:",  String.valueOf(mAccelCurrent));
-            Log.w("AccelCurrent:",  String.valueOf(x + " " + y + " " + z));
+//            Log.w("AccelCurrent:",  String.valueOf(x + " " + y + " " + z));
 
 
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            System.out.println("[Shake] " + mAccel);
+//            System.out.println("[Shake] " + mAccel);
             if (mAccel > 9.5) {
 
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 /* Update shake flag on firebase */
                 start = System.currentTimeMillis();
                 updateShakenInfo(false); // should  change to false
+
+                Log.w("AccelCurrent:",  String.valueOf(mAccel));
+
+                Thread thread = new Thread(new newThread());
+                thread.start();
             }
         }
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
+
+    public class newThread implements Runnable{
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(10 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.w("thread: ",  "weak up! set false");
+            updateShakenInfo(true);
+        }
+    }
+
     @Override
     protected void onResume() {
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -186,4 +206,6 @@ public class shakeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
