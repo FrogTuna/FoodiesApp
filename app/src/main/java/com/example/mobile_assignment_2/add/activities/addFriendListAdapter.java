@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,13 +32,17 @@ import java.util.Map;
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {
     public addFriendListData[] friendListData;
     public static String username;
-    public static String userID;
+//    public static String userID;
     public static String imageUrl;
     private DatabaseReference mDatabase;
+    private String currentUID;
 
-    public addFriendListAdapter(addFriendListData[] _friendListData) {
+
+    public addFriendListAdapter(addFriendListData[] _friendListData, String currentUID) {
         this.friendListData = _friendListData;
+        this.currentUID = currentUID;
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
     }
     public addFriendListData[] getAddFriendListData(){
         return friendListData;
@@ -74,11 +79,9 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
             public void onClick(View view) {
                 // Redirect to user page
 
-//                String key = mDatabase.child("Users").child(userID).child("requests").getKey();
-//                Map<String, Object> childUpdates = new HashMap<>();
-//                childUpdates.put("/Users/" + userID + "/" + key, FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                mDatabase.updateChildren(childUpdates);
-
+                Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
+                mDatabase.child("Users").child(friendListItem.getUID()).child("friends").child(currentUID).setValue("true");
+                mDatabase.child("Users").child(currentUID).child("friends").child(friendListItem.getUID()).setValue("true");
             }
         });
 

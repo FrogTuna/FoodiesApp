@@ -1,5 +1,6 @@
 package com.example.mobile_assignment_2.add.activities.addShake;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mobile_assignment_2.R;
@@ -41,12 +43,14 @@ public class shakeActivity extends AppCompatActivity {
     /* Time counter */
     private long start;
 
-    private long TIME_ELAPSED = 60 * 1000; // ms
+    private long TIME_ELAPSED = 10 * 1000; // ms
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addshake);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         /* Initialize time Vars */
         start = System.currentTimeMillis();;
 
@@ -90,7 +94,7 @@ public class shakeActivity extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
             System.out.println("[Shake] " + mAccel);
-            if (mAccel > 10) {
+            if (mAccel > 9.5) {
 
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 /* Update shake flag on firebase */
@@ -131,7 +135,6 @@ public class shakeActivity extends AppCompatActivity {
 
         }
 
-
     }
     protected void getShakenUsersID(Intent intent) {
 
@@ -142,21 +145,22 @@ public class shakeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    userInfosArrayList.clear();
                     for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                         String key = userSnapshot.getKey();
 
                         if((Boolean)userSnapshot.child("hasShaken").getValue() && (!key.equals(userID))) {
                             HashMap<String, String> userInfoHashMap = new HashMap<>();
+                            Log.d("selected User:" , key);
                             userInfoHashMap.put("ID", key);
                             userInfoHashMap.put("username", (String)userSnapshot.child("username").getValue());
                             userInfoHashMap.put("imageUrl", (String)userSnapshot.child("imageUrl").getValue());
                             userInfosArrayList.add(userInfoHashMap);
-
                         }
-
                     }
                     System.out.println("[arr] " + userInfosArrayList);
                     intent.putExtra("userInfosArrayList", userInfosArrayList);
+                    intent.putExtra("currentUser",userID);
                     startActivity(intent);
                     try {
                         Thread.sleep(60);
@@ -171,5 +175,15 @@ public class shakeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -3,6 +3,8 @@ package com.example.mobile_assignment_2.add.activities.addBySearch;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.example.mobile_assignment_2.Users;
 import com.example.mobile_assignment_2.add.activities.addFriendList;
@@ -26,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.units.qual.A;
+
 public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     ListView listView;
@@ -33,6 +38,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     SearchView editSearch;
     String[] animalNameList;
     ArrayList<friendItems> arraylist = new ArrayList<>();
+    private ArrayList userInfosArrayList;
+
 
     FirebaseAuth myAuth;
 
@@ -63,6 +70,11 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
 //        // Locate the EditText in listview_main.xml
         editSearch = (SearchView) findViewById(R.id.chat_addSearchView);
         editSearch.setOnQueryTextListener(this);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
     }
 
 
@@ -71,6 +83,9 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     @Override
     public boolean onQueryTextSubmit(String query) {
         Log.d("onQueryTextSubmit:", query);
+
+
+
         myAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = myAuth.getCurrentUser();
         // Write a message to the database
@@ -79,39 +94,75 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        ArrayList<Object> objectsList = new ArrayList<>();
+
+
+//        ArrayList<Object> objectsList = new ArrayList<>();
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean flag = false;
-                for (DataSnapshot user: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
-//                    Log.w("user:", String.valueOf(user.child("email").getValue()));
-                    if(query.equals(String.valueOf(user.child("email").getValue()))){
-//                        updateDBFriends(mDatabase,user,currentUser);
-                        flag = true;
+                String userID = currentUser.getUid();
+                Intent intent = new Intent(getApplicationContext(),addFriendList.class);
 
-//                        Log.w("111111:", user.getKey());
-//                        Log.w("111111:", (String) dataSnapshot.child("Users").child(currentUser.getUid()).
-//                                child("friends").child(user.getKey()).getValue());
-//                        Log.w("111111:", "22222");
-//                        if(friendsExist(user,user.getKey(),currentUser.getUid())){
-//                            Toast.makeText(getApplicationContext(),"You are already friends!",Toast.LENGTH_SHORT).show();
-//                            break;
-//                        }
-//                        Log.w("111111:", "33333");
+                if(dataSnapshot.exists()){
+//                    userInfosArrayList.clear();
+                    for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                        String key = userSnapshot.getKey();
+                        String email = String.valueOf(userSnapshot.child("email").getValue());
 
-                        Log.w("user:", query);
-                        Intent intent = new Intent(getApplicationContext(), addFriendList.class);
-                        intent.putExtra("objectUser",user.getKey());
-                        intent.putExtra("currentUser",currentUser.getUid());
-                        startActivity(intent);
+                        if(email.equals(query)){
+                            userInfosArrayList = new ArrayList();
+                            HashMap<String, String> userInfoHashMap = new HashMap<>();
+                            Log.d("selected User by email:" , key + " "
+                                    + (String)userSnapshot.child("username").getValue()  + " "
+                                    + (String)userSnapshot.child("imageUrl").getValue());
+                            userInfoHashMap.put("ID", key);
+                            userInfoHashMap.put("username", (String)userSnapshot.child("username").getValue());
+                            userInfoHashMap.put("imageUrl", (String)userSnapshot.child("imageUrl").getValue());
+                            userInfosArrayList.add(userInfoHashMap);
+                        }
                     }
+                    System.out.println("[arr] " + userInfosArrayList);
+                    intent.putExtra("userInfosArrayList", userInfosArrayList);
+                    intent.putExtra("currentUser",userID);
+                    startActivity(intent);
                 }
-
-                if(!flag){
-                    Toast.makeText(getApplicationContext(),"User does not exist!",Toast.LENGTH_SHORT).show();
-                }
+//
+//                for (DataSnapshot user: dataSnapshot.getChildren()) {
+//                    // TODO: handle the post
+////                    Log.w("user:", String.valueOf(user.child("email").getValue()));
+//                    if(query.equals(String.valueOf(user.child("email").getValue()))){
+////                        updateDBFriends(mDatabase,user,currentUser);
+//                        flag = true;
+//
+//                        String objectUser = user.getKey();
+//                        String curUser = currentUser.getUid();
+//
+//                        //                        friendName.setText((String)user.child("name").getValue());
+////                        friendEmail.setText((String)user.child("email").getValue());
+////                        friendDescription.setText((String)user.child("remark").getValue());
+////                        String image = (String)user.child("imageUrl").getValue();
+////                        Picasso.with(getApplicationContext()).load(image).fit().centerCrop().into(friendImageView);
+//
+//
+//
+//                        Log.d("new intent:", user.getKey() + "  " + currentUser.getUid());
+//                        Intent intent = new Intent(getApplicationContext(), addFriendList.class);
+//                        intent.putExtra("objectUser",objectUser);
+//                        intent.putExtra("currentUser",curUser);
+//                        intent.putExtra("name",String.valueOf(user.child("name").getValue()));
+//                        intent.putExtra("email",String.valueOf(user.child("email").getValue()));
+//                        intent.putExtra("remark","Description: " + String.valueOf(user.child("remark").getValue()));
+//                        intent.putExtra("imageUrl",String.valueOf(user.child("imageUrl").getValue()));
+//
+//                        startActivity(intent);
+//
+//                    }
+//                }
+//
+//                if(!flag){
+//                    Toast.makeText(getApplicationContext(),"User does not exist!",Toast.LENGTH_SHORT).show();
+//                }
 
             }
 
@@ -134,6 +185,15 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         return false;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

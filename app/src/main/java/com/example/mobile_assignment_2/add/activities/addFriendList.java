@@ -3,6 +3,7 @@ package com.example.mobile_assignment_2.add.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,9 +31,12 @@ public class addFriendList extends AppCompatActivity {
 
     private CircleImageView friendImageView;
     private TextView friendName, friendEmail, friendDescription;
+    private String currentUID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_friendslist);
 
@@ -43,6 +47,8 @@ public class addFriendList extends AppCompatActivity {
 //        friendEmail = findViewById(R.id.friend_distance);
 //        friendDescription = findViewById(R.id.post_description);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent myIntent = getIntent(); // gets the previously created intent
 //        String objectUser = myIntent.getStringExtra("objectUser"); // will return "FirstKeyValue"
 //        String currentUser= myIntent.getStringExtra("currentUser"); // will return "SecondKeyValue"
@@ -52,6 +58,8 @@ public class addFriendList extends AppCompatActivity {
 
         /* Params from "shakeActivity" */
         ArrayList<HashMap<String, String>> userInfosArrayList = (ArrayList<HashMap<String, String>>)myIntent.getSerializableExtra("userInfosArrayList");
+        currentUID = myIntent.getExtras().getString("currentUser");
+
         addFriendListData[] addfriendlistdata = new addFriendListData[userInfosArrayList.size()];
 
         for(int i = 0; i < userInfosArrayList.size(); i++) {
@@ -59,7 +67,7 @@ public class addFriendList extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.friendRecyclerView);
-        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata);
+        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata, currentUID);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -129,6 +137,16 @@ public class addFriendList extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
