@@ -11,13 +11,6 @@ public class ChatMessage{
     private String chatID;
 
 
-    public ChatMessage(String senderText, String senderTime, int senderImage, String chatID, String role) {
-        this.senderText = senderText;
-        this.senderTime = senderTime;
-        this.senderImage = senderImage;
-        this.chatID = chatID;
-        this.role = role;
-    }
 
     public ChatMessage(String senderText, String senderTime, String senderImageString, String chatID, String role) {
         this.senderText = senderText;
@@ -35,8 +28,6 @@ public class ChatMessage{
     public String getSenderTime() {
         return senderTime;
     }
-
-    public int getSendImage(){return senderImage;};
 
     public String getSenderImage() {
         return senderImageString;

@@ -24,7 +24,9 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +46,7 @@ public class PostDetails extends AppCompatActivity {
     TextView titleView;
     TextView descripView;
     TextView authorView;
+    ImageView profileView;
     LinearLayout commentsLinearLayout;
     RecyclerView imagesRecyclerView;
     Button likeBtn;
@@ -55,6 +58,7 @@ public class PostDetails extends AppCompatActivity {
     FirebaseUser currentUser;
     ArrayList<String> likes = new ArrayList<>();
     ArrayList<String> collects = new ArrayList<>();
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -69,6 +73,7 @@ public class PostDetails extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         String author = intent.getStringExtra("author");
         String description = intent.getStringExtra("description");
+        String uid = intent.getStringExtra("uid");
         ArrayList<String> imageURLs = intent.getStringArrayListExtra("imageURLs");
         ArrayList<Comment> commentsList = new ArrayList<>();
         String pid = intent.getStringExtra("pid");
@@ -80,8 +85,22 @@ public class PostDetails extends AppCompatActivity {
         commentBtn = findViewById(R.id.comment);
         sendBtn = findViewById(R.id.sendCommentButton);
         commentTextField = findViewById(R.id.textFieldComment);
+        profileView = findViewById(R.id.profile_image);
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error in fetching data", task.getException());
+                }
+                else {
+                    String profileImageUrl = task.getResult().getValue(String.class);
+                    // Download image from URL and set to imageView
+                    Picasso.with(getApplicationContext()).load(profileImageUrl).fit().centerCrop().into(profileView);
+                }
+            }
+        });
+
         firebaseDatabase.getReference().child("Posts").child(pid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,6 +127,10 @@ public class PostDetails extends AppCompatActivity {
                             View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.comment, null);
                             TextView authorView = view.findViewById(R.id.author_name);
                             TextView commentView = view.findViewById(R.id.comment_text);
+                            ImageView profileView = view.findViewById(R.id.profile_image);
+                            String profileImageUrl = c.getAuthorProfileUrl();
+                            // Download image from URL and set to imageView
+                            Picasso.with(getApplicationContext()).load(profileImageUrl).fit().centerCrop().into(profileView);
                             authorView.setText(c.getAuthor());
                             commentView.setText(c.getCommentMessage());
                             commentsLinearLayout.addView(view, 0);
@@ -266,21 +289,40 @@ public class PostDetails extends AppCompatActivity {
             public void onClick(View view) {
                 String commentText = commentTextField.getText().toString();
                 if (!commentText.isEmpty()) {
-                    Comment comment = new Comment(author, commentText, "");
-                    DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
-                    commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
-                                    commentTextField.setText("");
-                                }
-                            });
+                    firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                         @Override
+                         public void onComplete(@NonNull Task<DataSnapshot> task) {
+                             if (!task.isSuccessful()) {
+                                 Log.e("firebase", "Error in fetching data", task.getException());
+                             } else {
+                                 String authorName = task.getResult().getValue(String.class);
+                                 firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                     @Override
+                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                         String profileImageUrl = task.getResult().getValue(String.class);
+                                         Comment comment = new Comment(authorName, commentText, profileImageUrl);
+                                         DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                                         commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                             @Override
+                                             public void onSuccess(Void unused) {
+                                                 firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                     @Override
+                                                     public void onSuccess(Void unused) {
+                                                         Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                                         commentTextField.setText("");
+                                                     }
+                                                 });
 
-                        }
-                    });
+                                             }
+                                         });
+                                     }
+                                 });
+
+
+                             }
+                         }
+                     });
+
 
                 }
             }

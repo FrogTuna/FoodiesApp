@@ -25,10 +25,9 @@
         android:id="@+id/textViewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="-149dp"
-        android:layout_toLeftOf="@+id/imageViewAvatar"
+        android:layout_toRightOf="@+id/imageViewAvatar"
         android:gravity="center_vertical"
         android:textColor="@color/black"
         android:textSize="25sp" />
@@ -37,9 +36,9 @@
         android:id="@+id/textViewLastMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="-150dp"
-        android:layout_toLeftOf="@+id/imageViewAvatar"
+        android:layout_toRightOf="@+id/imageViewAvatar"
         android:gravity="center_vertical"
         android:textSize="16sp" />
 </RelativeLayout>

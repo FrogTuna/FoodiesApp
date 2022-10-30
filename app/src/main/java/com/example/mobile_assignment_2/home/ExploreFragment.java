@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -46,7 +48,7 @@ public class ExploreFragment extends Fragment {
     private RecyclerView recyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
-
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -97,7 +99,7 @@ public class ExploreFragment extends Fragment {
         ArrayList<String> friends = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
         // Get a reference to users
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
         usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
@@ -141,6 +143,7 @@ public class ExploreFragment extends Fragment {
                                 i.putExtra("description", post.getDescription());
                                 i.putExtra("author", post.getAuthor());
                                 i.putExtra("pid", post.getPid());
+                                i.putExtra("uid", post.getUid());
                                 i.putStringArrayListExtra("imageURLs", post.getImageUrls());
 
                                 startActivity(i);
@@ -178,6 +181,7 @@ public class ExploreFragment extends Fragment {
             TextView authorView;
             ImageView imageView;
             TextView num_like_View;
+            ImageView profileView;
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
@@ -186,6 +190,7 @@ public class ExploreFragment extends Fragment {
                 authorView = (TextView)  view.findViewById(R.id.author_name);
                 imageView = (ImageView) view.findViewById(R.id.post_image);
                 num_like_View = (TextView) view.findViewById(R.id.like_text);
+                profileView = (ImageView) view.findViewById(R.id.profile_image);
             }
 
 
@@ -221,10 +226,25 @@ public class ExploreFragment extends Fragment {
             viewHolder.titleView.setText(posts.get(position).getTitle());
             viewHolder.authorView.setText(posts.get(position).getAuthor());
             String imageUrl = posts.get(position).getImageUrls().get(0);
-
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
             viewHolder.num_like_View.setText(posts.get(position).getLikes()+" Likes");
+            String uid = posts.get(position).getUid();
+            firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error in fetching data", task.getException());
+                    }
+                    else {
+                        String profileImageUrl = task.getResult().getValue(String.class);
+                        // Download image from URL and set to imageView
+                        Picasso.with(getContext()).load(profileImageUrl).fit().centerCrop().into(viewHolder.profileView);
+                    }
+                }
+            });
+
+
         }
 
 
