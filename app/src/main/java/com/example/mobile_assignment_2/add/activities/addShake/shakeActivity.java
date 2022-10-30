@@ -99,13 +99,35 @@ public class shakeActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 /* Update shake flag on firebase */
                 start = System.currentTimeMillis();
-                updateShakenInfo(false); // should  change to false
 
                 Log.w("AccelCurrent:",  String.valueOf(mAccel));
 
-                Thread thread = new Thread(new newThread());
-                thread.start();
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot user : snapshot.getChildren()) {
+                            // TODO: handle the post
+
+                            if(String.valueOf(user.child("hasShake").getValue()).equals("true")){
+                                updateShakenInfo(false); // should  change to false
+
+                                Log.w("shake!",  "shake!");
+
+                                Thread thread = new Thread(new newThread());
+                                thread.start();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
+
+
+
+
         }
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -116,7 +138,7 @@ public class shakeActivity extends AppCompatActivity{
         @Override
         public void run() {
             try {
-                Thread.sleep(10 * 1000);
+                Thread.sleep(20 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
