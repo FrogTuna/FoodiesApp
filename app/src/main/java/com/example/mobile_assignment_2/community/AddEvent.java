@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,19 +15,35 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.mobile_assignment_2.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    private TextInputEditText eNameView, eLocView, ePeopleNum;
     private Button dateBtn, timeBtn, saveBtn, postBtn;
     private String format="";
+    FirebaseAuth EventAuth;
+    FirebaseUser curUser;
+    DatabaseReference eventRef;
+    private String eventName, eventDate, eventTime, eventLocation, eventPeoNum, event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_create);
+
+        EventAuth = FirebaseAuth.getInstance();
+        curUser = EventAuth.getCurrentUser();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        eventRef = firebaseDatabase.getReference("Event").push();
+
         // init Date and Time to Now
         initDatePicker();
         initTimePicker();
@@ -41,8 +58,22 @@ public class AddEvent extends AppCompatActivity {
         // saveBtn = findViewById(R.id.event_save);
         postBtn = findViewById(R.id.event_post);
 
+        // set textView
+        eNameView = findViewById(R.id.event_name);
+        eLocView = findViewById(R.id.event_location);
+        ePeopleNum = findViewById(R.id.event_people_num);
+
+
         postBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                eventName = eNameView.getText().toString();
+                eventDate = String.valueOf(dateBtn.getText());
+                eventTime = String.valueOf(timeBtn.getText());
+                eventLocation = eLocView.getText().toString();
+                eventPeoNum = ePeopleNum.getText().toString();
+                String td = eventDate.concat(eventTime);
+                Log.e("readEvent", td);
+
                 startActivity(new Intent(AddEvent.this, CommunityDetail.class));
             }
         });

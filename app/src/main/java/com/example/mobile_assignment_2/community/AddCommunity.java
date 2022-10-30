@@ -138,8 +138,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                 return postImagesRef.getDownloadUrl();
                             }
                         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-
-
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
 
