@@ -43,6 +43,7 @@ public class CommunityDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         String comName = intent.getStringExtra("communityName");
+
 //        String comImg = intent.getStringExtra("communityImg");
 
         ImageButton btn = (ImageButton)findViewById(R.id.add_event);
@@ -65,10 +66,10 @@ public class CommunityDetail extends AppCompatActivity {
         listView_event.setAdapter(customAdapter);
         ArrayList<Event> newEvents = new ArrayList<>();
 //        ArrayList<Post> com_posts = new ArrayList<>();
-        newEvents.add(new Event("aaa", "Sun Oct 23", "university", "author 1"));
-        newEvents.add(new Event("bbb", "Sun Oct 24", "home", "author 2"));
-        newEvents.add(new Event("ccc", "Sun Oct 25", "bridge", "author 3"));
-        newEvents.add(new Event("ddd", "Sun Oct 26", "acvne", "author 4"));
+        newEvents.add(new Event("123456", "1", "123456788", "ww", "Happy Friday", "Mon Oct 31", "02:45", "University", 19));
+        newEvents.add(new Event("123456", "1", "123456788", "ww", "Happy Thursday", "Mon Nov 31", "03:45", "University", 19));
+        newEvents.add(new Event("123456", "1", "123456788", "qq", "Happy Friday", "Mon Oct 31", "02:45", "University", 19));
+        newEvents.add(new Event("123456", "1", "123456788", "tt", "Happy Friday", "Mon Oct 31", "02:45", "University", 19));
 //        com_posts.add(new Post("title 1", "description 1", "author 1"));
 //        com_posts.add(new Post("title 2", "description 2", "author 2"));
 //        com_posts.add(new Post("title 3", "description 3", "author 3"));
@@ -95,10 +96,10 @@ public class CommunityDetail extends AppCompatActivity {
             TextView placeView = (TextView) convertView.findViewById(R.id.place_item);
             TextView authorView = (TextView) convertView.findViewById(R.id.event_organizer);
 
-            eventView.setText(event.getEvent_name());
-            timeView.setText(event.getEvent_time());
-            placeView.setText(event.getEvent_location());
-            authorView.setText(event.getAuthor());
+            eventView.setText(event.getEventName());
+            timeView.setText(event.getEvenTime());
+            placeView.setText(event.getEventLocation());
+            authorView.setText(event.getUserName());
             return convertView;
         }
     }

@@ -6,12 +6,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/create_com"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/community_page"
         android:layout_width="392dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -28,32 +29,31 @@
 <!--            android:backgroundTint="@color/white"-->
 <!--            style="?attr/spinnerDropDownItemStyle"-->
 <!--            android:hint="@string/com_category" />-->
+        <TextView
+            android:id="@+id/communityType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="18dp"
+            android:text="Select Community Type" />
+
         <Spinner
             android:id="@+id/com_type"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_margin="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/com_category_list" />
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/event_name"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="@string/com_category"-->
-<!--        android:layout_margin="30dp"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/com_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:hint="@string/com_name">
@@ -68,7 +68,7 @@
         android:id="@+id/com_description"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:hint="@string/com_description"
@@ -97,15 +97,15 @@
                 android:padding="4dip"
                 android:text="Add IMAGE" />
 
-            <Button
-                android:id="@+id/use_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="@color/purple_200"
-                android:padding="4dip"
-                android:text="Delete IMAGE" />
+<!--            <Button-->
+<!--                android:id="@+id/use_camera"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:backgroundTint="@color/purple_200"-->
+<!--                android:padding="4dip"-->
+<!--                android:text="Delete IMAGE" />-->
         </LinearLayout>
 
 
