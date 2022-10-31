@@ -43,6 +43,8 @@ public class shakeActivity extends AppCompatActivity{
     /* Time counter */
     private long start;
 
+    private boolean runOnce;
+
     private long TIME_ELAPSED = 10 * 1000; // ms
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,23 +108,27 @@ public class shakeActivity extends AppCompatActivity{
                 updateShakenInfo(false); // should  change to false
                 Thread thread = new Thread(new newThread());
                 thread.start();
+
+                runOnce = true;
                 mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot user : snapshot.getChildren()) {
                             // TODO: handle the post
 
-                            Log.w("KeYANG",  "DB changed!");
+//                            Log.w("KeYANG",  "DB changed!");
                             if(String.valueOf(user.child("hasShaken").getValue()).equals("true")
-                              && !user.getKey().equals(userID)){
+                              && !user.getKey().equals(userID) && runOnce){
 
-                                Log.w("KeYANG",  "KeYang");
+                                runOnce=false;
+                                Log.w("KeYANG",  "find someone shake!");
+                                Log.d("KeYANG" , String.valueOf(System.currentTimeMillis()));
                                 Intent intent = new Intent(getApplicationContext(), addFriendList.class);
 //                                getShakenUsersID(intent);
 
                                 String key = user.getKey();
                                 HashMap<String, String> userInfoHashMap = new HashMap<>();
-                                Log.d("selected User:" , key);
+                                Log.d("KeYANG" , key);
                                 userInfoHashMap.put("ID", key);
                                 userInfoHashMap.put("username", (String)user.child("username").getValue());
                                 userInfoHashMap.put("imageUrl", (String)user.child("imageUrl").getValue());
@@ -132,6 +138,8 @@ public class shakeActivity extends AppCompatActivity{
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser",userID);
+
+                                Log.w("KeYANG",  "start to redirect page");
                                 startActivity(intent);
                             }
                         }
@@ -156,7 +164,7 @@ public class shakeActivity extends AppCompatActivity{
         @Override
         public void run() {
             try {
-                Thread.sleep(10 * 1000);
+                Thread.sleep(15 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
