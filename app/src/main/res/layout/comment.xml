@@ -33,9 +33,7 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/ic_baseline_perm_identity_24"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
+                 />
 
                 <TextView
                     android:id="@+id/author_name"

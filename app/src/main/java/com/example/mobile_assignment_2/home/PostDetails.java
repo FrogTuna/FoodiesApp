@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -235,7 +236,21 @@ public class PostDetails extends AppCompatActivity {
                     firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]-1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes").orderByValue().equalTo(pid).getRef().removeValue();
+                            DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
+                            Query query = likeRef.orderByValue().equalTo(pid);
+                            query.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        dataSnapshot.getRef().removeValue();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             Toast.makeText(getApplicationContext(), "You cancelled like",Toast.LENGTH_LONG).show();
 
                         }
@@ -267,10 +282,25 @@ public class PostDetails extends AppCompatActivity {
                     firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0]).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects").orderByValue().equalTo(pid).getRef().removeValue();
+                            DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
+                            Query query = collectRef.orderByValue().equalTo(pid);
+                            query.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        dataSnapshot.getRef().removeValue();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             Toast.makeText(getApplicationContext(), "You cancelled collect",Toast.LENGTH_LONG).show();
 
                         }
+
                     });
                 }
 

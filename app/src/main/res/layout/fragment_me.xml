@@ -15,9 +15,6 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="64dp"
-        android:src="@drawable/protrait"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,18 +49,19 @@
         android:scaleY="0.5"
         android:src="@drawable/post_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/startButtonProfile" />
+        app:layout_constraintTop_toTopOf="@+id/starButtonProfile" />
 
     <ImageButton
-        android:id="@+id/startButtonProfile"
+        android:id="@+id/starButtonProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
+        android:background="@color/white"
         android:contentDescription="star button in profile"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:src="@drawable/heart_icon"
+        android:src="@drawable/star"
         app:layout_constraintStart_toEndOf="@+id/postButtonProfile"
         app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
@@ -76,8 +74,8 @@
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:src="@drawable/message_icon"
-        app:layout_constraintStart_toEndOf="@+id/startButtonProfile"
-        app:layout_constraintTop_toTopOf="@+id/startButtonProfile" />
+        app:layout_constraintStart_toEndOf="@+id/starButtonProfile"
+        app:layout_constraintTop_toTopOf="@+id/starButtonProfile" />
 
 
     <Button

@@ -41,10 +41,10 @@ public class PostAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.me_postlists,parent,false);
 //        ImageView img_icon = (ImageView) convertView.findViewById(R.id.img_icon);
-        TextView authorText = (TextView) convertView.findViewById(R.id.MyPostsList);
+        //TextView authorText = (TextView) convertView.findViewById(R.id.MyPostsList);
 //        TextView titleText = (TextView) convertView.findViewById(R.id.title_yourPosts);
 //        img_icon.setBackgroundResource(postsList.get(position).getaIcon());
-        authorText.setText(postsList.get(position).getAuthor());
+        //authorText.setText(postsList.get(position).getAuthor());
 //        titleText.setText(postsList.get(position).getTitle());
         return convertView;
     }

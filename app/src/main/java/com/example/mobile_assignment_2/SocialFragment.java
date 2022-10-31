@@ -7,6 +7,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.example.mobile_assignment_2.add.CustomItem;
 import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
 import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-import com.example.mobile_assignment_2.add.activities.addByNearBy.nearByActivity;
+
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
 import com.example.mobile_assignment_2.chat.FriendListAdapter;
 import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
@@ -154,7 +155,7 @@ public class SocialFragment extends Fragment {
         customList.add(new CustomItem("null", R.drawable.add_user));
         customList.add(new CustomItem("add", R.drawable.ic_baseline_add_24));
         customList.add(new CustomItem("Shake", R.drawable.ic_baseline_screen_rotation_24));
-        customList.add(new CustomItem("NearBy", R.drawable.ic_baseline_near_me_24));
+//        customList.add(new CustomItem("NearBy", R.drawable.ic_baseline_near_me_24));
         return customList;
     }
 
@@ -185,9 +186,6 @@ public class SocialFragment extends Fragment {
                         startActivity(intent);
                     }else if(item.getSpinnerItemName().equals("Shake")){
                         Intent intent = new Intent(getActivity(), shakeActivity.class);
-                        startActivity(intent);
-                    }else if(item.getSpinnerItemName().equals("NearBy")) {
-                        Intent intent = new Intent(getActivity(), nearByActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -424,6 +422,17 @@ public class SocialFragment extends Fragment {
                         chatsInfo.put("lastMsg", lastMsg);
                         chatArrayList.add(chatsInfo);
 
+                    }
+
+                    //Ke Yang
+                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()){
+                        HashMap<String, String> requestInfo = new HashMap<>();
+//                        requestInfo.put("ID",request.getKey());
+                        requestInfo.put("requestUserID",String.valueOf(request.child("userID").getValue()));
+                        requestInfo.put("name",String.valueOf(request.child("name").getValue()));
+                        requestInfo.put("comment", String.valueOf(request.child("comment").getValue()));
+                        requestInfo.put("avatar", String.valueOf(request.child("imageUrl").getValue()));
+                        reqArrayList.add(requestInfo);
                     }
 
                 }
