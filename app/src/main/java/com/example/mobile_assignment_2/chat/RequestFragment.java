@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RequestFragment#newInstance} factory method to
+ * Use the {@link RequestFragment#} factory method to
  * create an instance of this fragment.
  */
 public class RequestFragment extends Fragment {
@@ -71,8 +71,9 @@ public class RequestFragment extends Fragment {
         RequestListData[] requestListData = new RequestListData[reqArrayList.size()];
         for (int i = 0; i < reqArrayList.size(); i++) {
             requestListData[i] = new RequestListData(
+//                    ((HashMap<String, String>)reqArrayList.get(i)).get("ID"),
                     ((HashMap<String, String>)reqArrayList.get(i)).get("name"),
-                    ((HashMap<String, String>)reqArrayList.get(i)).get("content"),
+                    ((HashMap<String, String>)reqArrayList.get(i)).get("comment"),
                     android.R.drawable.ic_dialog_email
             );
         }

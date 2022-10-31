@@ -1,8 +1,10 @@
 package com.example.mobile_assignment_2.chat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,8 +33,18 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     public void onBindViewHolder(RequestListAdapter.ViewHolder holder, int position) {
         final RequestListData requestListItem = requestListData[position];
         holder.textViewUsername.setText(requestListData[position].getUsername());
-        holder.textViewComment.setText(requestListData[position].getComment());
+//        holder.textViewComment.setText(requestListData[position].getComment());
         holder.imageViewAvatar.setImageResource(requestListData[position].getAvatar());
+//        holder.addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("buttonClick: ", requestListData[position].getID() + " " + user);
+//                mDatabase.child("Users").child(friendListItem.getUID()).child("friends").child(currentUID).setValue("true");
+//                mDatabase.child("Users").child(currentUID).child("friends").child(friendListItem.getUID()).setValue("true");
+//            }
+//        });
+
+
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,12 +63,14 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageViewAvatar;
         public TextView textViewUsername, textViewComment;
+        public Button addBtn;
         public RelativeLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
-            this.textViewComment = (TextView) itemView.findViewById(R.id.textViewComment);
+//            this.textViewComment = (TextView) itemView.findViewById(R.id.textViewComment);
+            this.addBtn = itemView.findViewById(R.id.btnFriendAdd);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

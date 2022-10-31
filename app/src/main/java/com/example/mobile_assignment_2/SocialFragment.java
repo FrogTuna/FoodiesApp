@@ -7,6 +7,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -424,6 +425,16 @@ public class SocialFragment extends Fragment {
                         chatsInfo.put("lastMsg", lastMsg);
                         chatArrayList.add(chatsInfo);
 
+                    }
+
+                    //Ke Yang
+                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()){
+                        HashMap<String, String> requestInfo = new HashMap<>();
+//                        requestInfo.put("ID",request.getKey());
+                        requestInfo.put("name",String.valueOf(request.child("name").getValue()));
+                        requestInfo.put("comment", String.valueOf(request.child("comment").getValue()));
+                        requestInfo.put("avatar", String.valueOf(request.child("imageUrl").getValue()));
+                        reqArrayList.add(requestInfo);
                     }
 
                 }
