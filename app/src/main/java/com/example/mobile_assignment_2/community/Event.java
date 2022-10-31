@@ -1,14 +1,17 @@
 package com.example.mobile_assignment_2.community;
 
+import java.util.ArrayList;
+
 public class Event {
     private String cid, eid, uid;
     private String userName;
     private String eventName, eventDate, evenTime, eventLocation;
     private int peopleNum;
+    private ArrayList<String> peopleList;
 
     public Event(String cid, String eid, String uid,
                  String userName, String eventName, String eventDate,
-                 String evenTime, String eventLocation, int peopleNum) {
+                 String evenTime, String eventLocation, int peopleNum, ArrayList<String> peopleList) {
         this.cid = cid;
         this.eid = eid;
         this.uid = uid;
@@ -18,6 +21,7 @@ public class Event {
         this.evenTime = evenTime;
         this.eventLocation = eventLocation;
         this.peopleNum = peopleNum;
+        this.peopleList = peopleList;
     }
 
     public String getCid() {
@@ -90,5 +94,13 @@ public class Event {
 
     public void setPeopleNum(int peopleNum) {
         this.peopleNum = peopleNum;
+    }
+
+    public ArrayList<String> getPeopleList() {
+        return peopleList;
+    }
+
+    public void setPeopleList(ArrayList<String> peopleList) {
+        this.peopleList = peopleList;
     }
 }
