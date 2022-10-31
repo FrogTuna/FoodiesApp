@@ -42,6 +42,7 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     FirebaseUser currentUser;
     FirebaseAuth myAuth;
     DatabaseReference mDatabase;
+    private boolean runOne;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,38 +94,40 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
 
 
 
-
+        runOne = true;
 
 //        ArrayList<Object> objectsList = new ArrayList<>();
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean flag = false;
-                String userID = currentUser.getUid();
-                Intent intent = new Intent(getApplicationContext(),addFriendList.class);
+                if(runOne) {
+                    runOne  = false;
+                    String userID = currentUser.getUid();
+                    Intent intent = new Intent(getApplicationContext(), addFriendList.class);
 
-                if(dataSnapshot.exists()){
-//                    userInfosArrayList.clear();
-                    for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                        String key = userSnapshot.getKey();
-                        String email = String.valueOf(userSnapshot.child("email").getValue());
+                    if (dataSnapshot.exists()) {
+                        //                    userInfosArrayList.clear();
+                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                            String key = userSnapshot.getKey();
+                            String email = String.valueOf(userSnapshot.child("email").getValue());
 
-                        if(email.equals(query)){
-                            userInfosArrayList = new ArrayList();
-                            HashMap<String, String> userInfoHashMap = new HashMap<>();
-                            Log.d("selected User by email:" , key + " "
-                                    + (String)userSnapshot.child("username").getValue()  + " "
-                                    + (String)userSnapshot.child("imageUrl").getValue());
-                            userInfoHashMap.put("ID", key);
-                            userInfoHashMap.put("username", (String)userSnapshot.child("username").getValue());
-                            userInfoHashMap.put("imageUrl", (String)userSnapshot.child("imageUrl").getValue());
-                            userInfosArrayList.add(userInfoHashMap);
+                            if (email.equals(query)) {
+                                userInfosArrayList = new ArrayList();
+                                HashMap<String, String> userInfoHashMap = new HashMap<>();
+                                Log.d("selected User by email:", key + " "
+                                        + (String) userSnapshot.child("username").getValue() + " "
+                                        + (String) userSnapshot.child("imageUrl").getValue());
+                                userInfoHashMap.put("ID", key);
+                                userInfoHashMap.put("username", (String) userSnapshot.child("username").getValue());
+                                userInfoHashMap.put("imageUrl", (String) userSnapshot.child("imageUrl").getValue());
+                                userInfosArrayList.add(userInfoHashMap);
+                                System.out.println("[arr] " + userInfosArrayList);
+                                intent.putExtra("userInfosArrayList", userInfosArrayList);
+                                intent.putExtra("currentUser", userID);
+                                startActivity(intent);
+                            }
                         }
                     }
-                    System.out.println("[arr] " + userInfosArrayList);
-                    intent.putExtra("userInfosArrayList", userInfosArrayList);
-                    intent.putExtra("currentUser",userID);
-                    startActivity(intent);
                 }
 //
 //                for (DataSnapshot user: dataSnapshot.getChildren()) {
