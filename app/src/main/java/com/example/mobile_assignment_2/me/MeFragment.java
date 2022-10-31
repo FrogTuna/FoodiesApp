@@ -73,6 +73,7 @@ public class MeFragment extends Fragment {
     private String mParam2;
     FirebaseAuth myAuth;
     Button signOutBtn;
+    ImageButton collectBtn;
     ImageButton postsBtn;
     ImageView editHeadPortrait;
     TextView username;
@@ -146,7 +147,7 @@ public class MeFragment extends Fragment {
         editHeadPortrait = (ImageView) view.findViewById(R.id.headPortrait);
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
-
+        collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
 
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +169,13 @@ public class MeFragment extends Fragment {
             }
         });
 
-
+        collectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), CollectPostsActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         editHeadPortrait.setOnClickListener(new View.OnClickListener() {
