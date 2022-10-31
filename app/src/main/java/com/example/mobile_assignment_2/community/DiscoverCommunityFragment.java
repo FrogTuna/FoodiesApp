@@ -130,6 +130,7 @@ public class DiscoverCommunityFragment extends Fragment {
                             public void onClick(View view, int position) {
                                 Communitypost post = posts.get(position);
                                 Intent i = new Intent(getActivity(), CommunityDetail.class);
+                                i.putExtra("cid", post.getCid());
                                 i.putExtra("communityName", post.getCommName());
                                 Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                                 i.putExtra("imageURLs", post.getImageUrls());
