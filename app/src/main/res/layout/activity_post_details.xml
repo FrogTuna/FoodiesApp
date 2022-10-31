@@ -35,11 +35,10 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/protrait"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                />
+
                 <TextView
                     android:id="@+id/author_name"
                     android:layout_width="wrap_content"
@@ -47,6 +46,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
                     android:text="Name"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -96,7 +96,7 @@
 
                 <Button
                     android:id="@+id/like"
-                    android:layout_width="17dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
@@ -105,11 +105,11 @@
                     android:textColor="@color/black"
                     android:background="#00000000"
                     android:drawableLeft="@drawable/like"
-                    android:text="154" />
+                    android:text="" />
 
                 <Button
                     android:id="@+id/collect"
-                    android:layout_width="17dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginLeft="10dp"
@@ -120,11 +120,11 @@
                     android:textColor="@color/black"
                     android:drawableLeft="@drawable/collect"
                     android:background="#00000000"
-                    android:text="154" />
+                    android:text="" />
 
                 <Button
                     android:id="@+id/comment"
-                    android:layout_width="17dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
@@ -133,7 +133,7 @@
                     android:textColor="@color/black"
                     android:drawableLeft="@drawable/comment"
                     android:background="#00000000"
-                    android:text="154" />
+                    android:text="" />
 
             </LinearLayout>
 
