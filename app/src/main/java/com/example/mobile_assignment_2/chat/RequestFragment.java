@@ -71,10 +71,11 @@ public class RequestFragment extends Fragment {
         RequestListData[] requestListData = new RequestListData[reqArrayList.size()];
         for (int i = 0; i < reqArrayList.size(); i++) {
             requestListData[i] = new RequestListData(
-//                    ((HashMap<String, String>)reqArrayList.get(i)).get("ID"),
+                    ((HashMap<String, String>)reqArrayList.get(i)).get("requestUserID"),
                     ((HashMap<String, String>)reqArrayList.get(i)).get("name"),
                     ((HashMap<String, String>)reqArrayList.get(i)).get("comment"),
-                    android.R.drawable.ic_dialog_email
+                    ((HashMap<String, String>)reqArrayList.get(i)).get("avatar")
+                    //android.R.drawable.ic_dialog_email
             );
         }
 

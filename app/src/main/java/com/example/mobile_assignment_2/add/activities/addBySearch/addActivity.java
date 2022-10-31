@@ -39,14 +39,17 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     String[] animalNameList;
     ArrayList<friendItems> arraylist = new ArrayList<>();
     private ArrayList userInfosArrayList;
-
-
+    FirebaseUser currentUser;
     FirebaseAuth myAuth;
+    DatabaseReference mDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addbysearch_view);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        myAuth = FirebaseAuth.getInstance();
+        currentUser = myAuth.getCurrentUser();
 
         // Generate sample data
 
@@ -84,15 +87,11 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     public boolean onQueryTextSubmit(String query) {
         Log.d("onQueryTextSubmit:", query);
 
-
-
-        myAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = myAuth.getCurrentUser();
         // Write a message to the database
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("Users");
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
 

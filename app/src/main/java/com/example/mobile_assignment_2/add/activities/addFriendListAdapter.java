@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.message.ChatWindowActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -66,22 +68,30 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
         new addFriendListAdapter.DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(friendListData[position].getImgURL());
 
 //        holder.imageViewAvatar.setImageResource(friendListData[position].getImgURL());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Redirect to user page
-                Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
+//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Redirect to user page
 
-            }
-        });
+//
+//            }
+//        });
         holder.addFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to user page
-
+                //Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
                 Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
-                mDatabase.child("Users").child(friendListItem.getUID()).child("friends").child(currentUID).setValue("true");
-                mDatabase.child("Users").child(currentUID).child("friends").child(friendListItem.getUID()).setValue("true");
+                FirebaseAuth myAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = myAuth.getCurrentUser();
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
+                //mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child("comment").setValue(friendListItem.ge);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+                //mDatabase.child("Users").child(currentUID).child("request").child(friendListItem.getUID()).setValue(currentUID);
             }
         });
 
