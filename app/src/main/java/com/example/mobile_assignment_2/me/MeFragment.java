@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.authentication.login;
+import com.example.mobile_assignment_2.home.PostDetails;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -162,7 +163,8 @@ public class MeFragment extends Fragment {
         postsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fromMePageToMyPostsPageIntent(view);
+                Intent i = new Intent(getActivity(), MyPostsActivity.class);
+                startActivity(i);
             }
         });
 

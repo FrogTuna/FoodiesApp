@@ -52,7 +52,13 @@
             android:exported="false" />
         <activity
             android:name=".me.MyPostsActivity"
-            android:exported="false" />
+            android:label="My Posts"
+            android:exported="false"
+            android:theme="@style/Theme.Mobileassignment2">
+                <meta-data
+                    android:name="android.app.lib_name"
+                    android:value="" />
+        </activity>
         <activity
             android:name=".authentication.Register"
             android:exported="false" />
