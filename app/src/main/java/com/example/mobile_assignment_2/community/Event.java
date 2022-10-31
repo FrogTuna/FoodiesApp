@@ -1,28 +1,106 @@
 package com.example.mobile_assignment_2.community;
 
+import java.util.ArrayList;
+
 public class Event {
-    private String event_name, event_time, event_location, author;
+    private String cid, eid, uid;
+    private String userName;
+    private String eventName, eventDate, evenTime, eventLocation;
+    private int peopleNum;
+    private ArrayList<String> peopleList;
 
-    public Event(String event_name, String event_time, String event_location, String author) {
-        this.event_name = event_name;
-        this.event_time = event_time;
-        this.event_location = event_location;
-        this.author = author;
+    public Event(String cid, String eid, String uid,
+                 String userName, String eventName, String eventDate,
+                 String evenTime, String eventLocation, int peopleNum, ArrayList<String> peopleList) {
+        this.cid = cid;
+        this.eid = eid;
+        this.uid = uid;
+        this.userName = userName;
+        this.eventName = eventName;
+        this.eventDate = eventDate;
+        this.evenTime = evenTime;
+        this.eventLocation = eventLocation;
+        this.peopleNum = peopleNum;
+        this.peopleList = peopleList;
     }
 
-    public String getEvent_name() {
-        return event_name;
+    public String getCid() {
+        return cid;
     }
 
-    public String getEvent_location() {
-        return event_location;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getEid() {
+        return eid;
     }
 
-    public String getEvent_time() {
-        return event_time;
+    public void setEid(String eid) {
+        this.eid = eid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public String getEvenTime() {
+        return evenTime;
+    }
+
+    public void setEvenTime(String evenTime) {
+        this.evenTime = evenTime;
+    }
+
+    public String getEventLocation() {
+        return eventLocation;
+    }
+
+    public void setEventLocation(String eventLocation) {
+        this.eventLocation = eventLocation;
+    }
+
+    public int getPeopleNum() {
+        return peopleNum;
+    }
+
+    public void setPeopleNum(int peopleNum) {
+        this.peopleNum = peopleNum;
+    }
+
+    public ArrayList<String> getPeopleList() {
+        return peopleList;
+    }
+
+    public void setPeopleList(ArrayList<String> peopleList) {
+        this.peopleList = peopleList;
     }
 }

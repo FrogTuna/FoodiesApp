@@ -18,8 +18,11 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.message.ChatWindowActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,13 +34,17 @@ import java.util.Map;
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {
     public addFriendListData[] friendListData;
     public static String username;
-    public static String userID;
+//    public static String userID;
     public static String imageUrl;
     private DatabaseReference mDatabase;
+    private String currentUID;
 
-    public addFriendListAdapter(addFriendListData[] _friendListData) {
+
+    public addFriendListAdapter(addFriendListData[] _friendListData, String currentUID) {
         this.friendListData = _friendListData;
+        this.currentUID = currentUID;
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
     }
     public addFriendListData[] getAddFriendListData(){
         return friendListData;
@@ -61,24 +68,30 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
         new addFriendListAdapter.DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(friendListData[position].getImgURL());
 
 //        holder.imageViewAvatar.setImageResource(friendListData[position].getImgURL());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Redirect to user page
-                Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
+//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Redirect to user page
 
-            }
-        });
+//
+//            }
+//        });
         holder.addFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to user page
-
-//                String key = mDatabase.child("Users").child(userID).child("requests").getKey();
-//                Map<String, Object> childUpdates = new HashMap<>();
-//                childUpdates.put("/Users/" + userID + "/" + key, FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                mDatabase.updateChildren(childUpdates);
-
+                //Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
+                Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
+                FirebaseAuth myAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = myAuth.getCurrentUser();
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
+                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
+                //mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child("comment").setValue(friendListItem.ge);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+                //mDatabase.child("Users").child(currentUID).child("request").child(friendListItem.getUID()).setValue(currentUID);
             }
         });
 

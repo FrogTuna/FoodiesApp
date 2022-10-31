@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,7 @@ import com.example.mobile_assignment_2.R;
 //import com.example.mobile_assignment_2.home.ForYouFragment;
 //import com.example.mobile_assignment_2.home.Post;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,6 +45,9 @@ public class CommunityDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         String comName = intent.getStringExtra("communityName");
+        String cid = intent.getStringExtra("cid");
+//        Log.e("communityName", comName);
+
 //        String comImg = intent.getStringExtra("communityImg");
 
         ImageButton btn = (ImageButton)findViewById(R.id.add_event);
@@ -65,10 +70,13 @@ public class CommunityDetail extends AppCompatActivity {
         listView_event.setAdapter(customAdapter);
         ArrayList<Event> newEvents = new ArrayList<>();
 //        ArrayList<Post> com_posts = new ArrayList<>();
-        newEvents.add(new Event("aaa", "Sun Oct 23", "university", "author 1"));
-        newEvents.add(new Event("bbb", "Sun Oct 24", "home", "author 2"));
-        newEvents.add(new Event("ccc", "Sun Oct 25", "bridge", "author 3"));
-        newEvents.add(new Event("ddd", "Sun Oct 26", "acvne", "author 4"));
+        ArrayList<String> peoList = new ArrayList<>();
+        peoList.add("1234556");
+        peoList.add("7498231");
+        newEvents.add(new Event("123456", "1", "123456788", "ww", "Happy Friday", "Mon Oct 31", "02:45", "University", 19, peoList));
+        newEvents.add(new Event("123456", "1", "123456788", "ww", "Happy Thursday", "Mon Nov 31", "03:45", "University", 19, peoList));
+        newEvents.add(new Event("123456", "1", "123456788", "qq", "Happy Friday", "Mon Oct 31", "02:45", "University", 19, peoList));
+        newEvents.add(new Event("123456", "1", "123456788", "tt", "Happy Friday", "Mon Oct 31", "02:45", "University", 19, peoList));
 //        com_posts.add(new Post("title 1", "description 1", "author 1"));
 //        com_posts.add(new Post("title 2", "description 2", "author 2"));
 //        com_posts.add(new Post("title 3", "description 3", "author 3"));
@@ -95,10 +103,10 @@ public class CommunityDetail extends AppCompatActivity {
             TextView placeView = (TextView) convertView.findViewById(R.id.place_item);
             TextView authorView = (TextView) convertView.findViewById(R.id.event_organizer);
 
-            eventView.setText(event.getEvent_name());
-            timeView.setText(event.getEvent_time());
-            placeView.setText(event.getEvent_location());
-            authorView.setText(event.getAuthor());
+            eventView.setText(event.getEventName());
+            timeView.setText(event.getEvenTime());
+            placeView.setText(event.getEventLocation());
+            authorView.setText(event.getUserName());
             return convertView;
         }
     }

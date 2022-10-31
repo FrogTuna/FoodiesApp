@@ -1,5 +1,6 @@
 package com.example.mobile_assignment_2.add.activities.addShake;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.mobile_assignment_2.R;
@@ -27,7 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class shakeActivity extends AppCompatActivity {
+public class shakeActivity extends AppCompatActivity{
     private SensorManager mSensorManager;
     private float mAccel;
     private float mAccelCurrent;
@@ -41,12 +43,18 @@ public class shakeActivity extends AppCompatActivity {
     /* Time counter */
     private long start;
 
-    private long TIME_ELAPSED = 60 * 1000; // ms
+    private boolean runOnce;
+
+    private long TIME_ELAPSED = 10 * 1000; // ms
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addshake);
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         /* Initialize time Vars */
         start = System.currentTimeMillis();;
 
@@ -70,11 +78,11 @@ public class shakeActivity extends AppCompatActivity {
 
             /* Count 10s after last shaken */
 
-            if(System.currentTimeMillis() - start > TIME_ELAPSED) {
-                System.out.println("[start] " + start);
-
-                updateShakenInfo(true);
-            }
+//            if(System.currentTimeMillis() - start > TIME_ELAPSED) {
+//                System.out.println("[start] " + start);
+//
+//                updateShakenInfo(true);
+//            }
 
             float x = event.values[0];
             float y = event.values[1];
@@ -84,24 +92,88 @@ public class shakeActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
 
 //            Log.w("AccelCurrent:",  String.valueOf(mAccelCurrent));
-            Log.w("AccelCurrent:",  String.valueOf(x + " " + y + " " + z));
+//            Log.w("AccelCurrent:",  String.valueOf(x + " " + y + " " + z));
 
 
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            System.out.println("[Shake] " + mAccel);
-            if (mAccel > 10) {
+//            System.out.println("[Shake] " + mAccel);
+            if (mAccel > 9.5) {
 
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 /* Update shake flag on firebase */
                 start = System.currentTimeMillis();
+
+                Log.w("KeYANG",  String.valueOf(mAccel));
                 updateShakenInfo(false); // should  change to false
+                Thread thread = new Thread(new newThread());
+                thread.start();
+
+                runOnce = true;
+                mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot user : snapshot.getChildren()) {
+                            // TODO: handle the post
+
+//                            Log.w("KeYANG",  "DB changed!");
+                            if(String.valueOf(user.child("hasShaken").getValue()).equals("true")
+                              && !user.getKey().equals(userID) && runOnce){
+
+                                runOnce=false;
+                                Log.w("KeYANG",  "find someone shake!");
+                                Log.d("KeYANG" , String.valueOf(System.currentTimeMillis()));
+                                Intent intent = new Intent(getApplicationContext(), addFriendList.class);
+//                                getShakenUsersID(intent);
+
+                                String key = user.getKey();
+                                HashMap<String, String> userInfoHashMap = new HashMap<>();
+                                Log.d("KeYANG" , key);
+                                userInfoHashMap.put("ID", key);
+                                userInfoHashMap.put("username", (String)user.child("username").getValue());
+                                userInfoHashMap.put("imageUrl", (String)user.child("imageUrl").getValue());
+                                userInfosArrayList = new ArrayList();
+                                userInfosArrayList.add(userInfoHashMap);
+
+                                System.out.println("[arr] " + userInfosArrayList);
+                                intent.putExtra("userInfosArrayList", userInfosArrayList);
+                                intent.putExtra("currentUser",userID);
+
+                                Log.w("KeYANG",  "start to redirect page");
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
+
+
         }
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
+
+    public class newThread implements Runnable{
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(15 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.w("thread: ",  "weak up! set false");
+            updateShakenInfo(true);
+        }
+    }
+
     @Override
     protected void onResume() {
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -115,7 +187,7 @@ public class shakeActivity extends AppCompatActivity {
     }
     protected void updateShakenInfo(Boolean tenSeconds) {
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String key = mDatabase.child("Users").child(userID).child("hasShaken").getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         if(tenSeconds) {
@@ -125,12 +197,11 @@ public class shakeActivity extends AppCompatActivity {
         else {
             childUpdates.put("/Users/" + userID + "/" + key, true);
             mDatabase.updateChildren(childUpdates);
-            Intent intent = new Intent(this, addFriendList.class);
-            userInfosArrayList = new ArrayList();
-            getShakenUsersID(intent);
+//            Intent intent = new Intent(this, addFriendList.class);
+//            userInfosArrayList = new ArrayList();
+//            getShakenUsersID(intent);
 
         }
-
 
     }
     protected void getShakenUsersID(Intent intent) {
@@ -142,27 +213,28 @@ public class shakeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    userInfosArrayList.clear();
                     for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                         String key = userSnapshot.getKey();
 
                         if((Boolean)userSnapshot.child("hasShaken").getValue() && (!key.equals(userID))) {
                             HashMap<String, String> userInfoHashMap = new HashMap<>();
+                            Log.d("selected User:" , key);
                             userInfoHashMap.put("ID", key);
                             userInfoHashMap.put("username", (String)userSnapshot.child("username").getValue());
                             userInfoHashMap.put("imageUrl", (String)userSnapshot.child("imageUrl").getValue());
                             userInfosArrayList.add(userInfoHashMap);
-
                         }
-
                     }
                     System.out.println("[arr] " + userInfosArrayList);
                     intent.putExtra("userInfosArrayList", userInfosArrayList);
+                    intent.putExtra("currentUser",userID);
                     startActivity(intent);
-                    try {
-                        Thread.sleep(60);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(60);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
             @Override
@@ -172,4 +244,16 @@ public class shakeActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
