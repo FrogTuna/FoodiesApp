@@ -90,21 +90,17 @@ public class DiscoverCommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
 
-        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<String> communityPosts = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         // Get a reference to users
         DatabaseReference commRef = firebaseDatabase.getReference("Community");
-//        commRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
+
         commRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    String friendId = dataSnapshot.getKey();
-//                    friends.add(friendId);
-//                }
-//                DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+
                 DatabaseReference postsRef = firebaseDatabase.getReference("Community");
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -113,13 +109,7 @@ public class DiscoverCommunityFragment extends Fragment {
                             Communitypost post = dataSnapshot.getValue(Communitypost.class);
                             posts.add(post);
                         }
-                        // posts for stranger
-//                        ArrayList<Communitypost> strangerPosts = new ArrayList<>();
-//                        for (Communitypost p : posts) {
-//                            if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
-//                                strangerPosts.add(p);
-//                            }
-//                        }
+
                         recyclerView =  view.findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -147,6 +137,22 @@ public class DiscoverCommunityFragment extends Fragment {
 
                     }
                 });
+
+//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+//                usersRef.child(currentUser.getUid()).child("commLst").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        communityPosts.clear();
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
             }
 
             @Override
@@ -156,35 +162,11 @@ public class DiscoverCommunityFragment extends Fragment {
 
 
         });
-//        posts.add(new Communitypost(R.drawable.food, "commName1"));
-//        posts.add(new Communitypost(R.drawable.food2, "commName2"));
-//        posts.add(new Communitypost(R.drawable.food, "commName3"));
-//        posts.add(new Communitypost(R.drawable.food2, "commName4"));
 
-        // Inflate the layout for this fragment
-
-//        recyclerView =  view.findViewById(R.id.recyclerView);
-//        recyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        CustomAdapter customAdapter = new CustomAdapter(posts);
-//        customAdapter.setClickListener(this);
-//        recyclerView.setAdapter(customAdapter);
 
         return view;
     }
 
-//    @Override
-//    public void onClick(View view, int position) {
-//        Communitypost post = posts.get(position);
-//        Intent i = new Intent(getActivity(), CommunityDetail.class);
-//        i.putExtra("communityName", post.getCommName());
-////        i.putExtra("description", post.getDescription());
-////        i.putExtra("author", post.getAuthor());
-////        Log.i("hello", post.getTitle());
-////        Log.i("hello", post.getDescription());
-//        startActivity(i);
-//    }
 
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
@@ -222,33 +204,17 @@ public class DiscoverCommunityFragment extends Fragment {
                     public void onClick(View view) {
                         Log.d("join","yes");
                         Communitypost post = posts.get(getAdapterPosition());
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        mDatabase.child("Users").child(currentUser.getUid()).child("commLst").child(posts.get(getAdapterPosition()).getCid()).setValue("true");
                         Intent i = new Intent(getActivity(), CommunityDetail.class);
                         i.putExtra("communityName", post.getCommName());
                         Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                         i.putExtra("imageURLs", post.getImageUrls());
                         startActivity(i);
-//                        Intent i = new Intent(getActivity(), CommunityDetail.class);
-//                        startActivity(i);
-//                        BottomSheet bottomSheet = new BottomSheet();
-//                        bottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
                     }
                 });
             }
-
-//            @Override
-//            public void onClick(View view) {
-////                if(communityPostItemClickListener != null) {
-////                    communityPostItemClickListener.onClick(view, getAbsoluteAdapterPosition());
-////                }
-//                Log.d("voie","yed");
-//                switch(view.getId()) {
-//                    case R.id.join_community_button:
-//                        Log.d("join","yes");
-//                        Intent i = new Intent(getActivity(), AddCommunity.class);
-//                        startActivity(i);
-//                        break;
-//                }
-//            }
 
         }
 
@@ -279,7 +245,7 @@ public class DiscoverCommunityFragment extends Fragment {
 
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imgView);
-//            viewHolder.imgView.setBackgroundResource(posts.get(position).getCommImage());
+
 
         }
 
