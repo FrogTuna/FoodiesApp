@@ -78,6 +78,7 @@ public class ChatWindowActivity extends AppCompatActivity {
     List<String> userChatIDList = new ArrayList<String>();
     List<String> oppositeUserChatIDList = new ArrayList<String>();
     String tadeImage = "";
+    String imageUrl = "";
 
 
     @Override
@@ -94,7 +95,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         oppositeUserLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("lastMessage");
         allRef = FirebaseDatabase.getInstance().getReference();
         chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
-        oppositeUserImageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID);
+        oppositeUserImageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("imageUrl");
 
 
         //find id from xml
@@ -159,49 +160,72 @@ public class ChatWindowActivity extends AppCompatActivity {
     private void loadDatabase(){
 
 
-
-        //oppositeUser listener
-        oppositeUserRef.addValueEventListener(new ValueEventListener() {
+        oppositeUserImageRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                oppositeUserChatIDList.clear();
+            public void onDataChange(@NonNull DataSnapshot imageSnapshot) {
+                imageUrl = "";
+                //Log.d("i'm here", imageSnapshot.getValue().toString());
+                imageUrl = imageSnapshot.getValue().toString();
 
-                for(DataSnapshot snapshot1: snapshot.getChildren()){
-                    oppositeUserChatIDList.add(snapshot1.getValue().toString());
-                    //Log.d("chatIDList1", snapshot1.getValue().toString());
-                }
-
-                chatMessageRef.addValueEventListener(new ValueEventListener() {
-
+                //oppositeUser listener
+                oppositeUserRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                        oppositeUserconversation.clear();
-                        for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        oppositeUserChatIDList.clear();
 
-                            for(int i = 0; i < oppositeUserChatIDList.size(); i++){
-                                if(snapshot3.getKey().matches(oppositeUserChatIDList.get(i))){
-                                    //Log.d("chatIDList3", snapshot3.getKey());
-                                    String chatMessageRole = snapshot3.child("role").getValue().toString();
-                                    String chatMessageText = snapshot3.child("senderText").getValue().toString();
-                                    String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
-                                    String chatMessagechatID = snapshot3.child("chatID").getValue().toString();
-                                    String chatMessageImage = snapshot3.child("senderImage").getValue().toString();
-                                    ChatMessage message1 = new ChatMessage(chatMessageText, chatMessageTime, chatMessageImage, chatMessagechatID, chatMessageRole);
-                                    oppositeUserconversation.add(message1);
+                        for(DataSnapshot snapshot1: snapshot.getChildren()){
+                            oppositeUserChatIDList.add(snapshot1.getValue().toString());
+                            //Log.d("chatIDList1", snapshot1.getValue().toString());
+                        }
 
+                        chatMessageRef.addValueEventListener(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                                oppositeUserconversation.clear();
+                                for(DataSnapshot snapshot3: snapshot2.getChildren()){
+
+                                    for(int i = 0; i < oppositeUserChatIDList.size(); i++){
+                                        if(snapshot3.getKey().matches(oppositeUserChatIDList.get(i))){
+
+                                            if(snapshot3.child("role").getValue().toString().equals(fuser.getUid())){
+                                                Log.d("i'm here1", snapshot3.child("senderImage").toString());
+                                                snapshot3.child("senderImage").getRef().setValue(fuser.getPhotoUrl().toString());
+                                            }
+                                            else if(snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)){
+                                                Log.d("i'm here2", snapshot3.child("senderImage").toString());
+                                                snapshot3.child("senderImage").getRef().setValue(imageUrl);
+                                            }
+                                            //Log.d("chatIDList3", snapshot3.getKey());
+                                            String chatMessageRole = snapshot3.child("role").getValue().toString();
+                                            String chatMessageText = snapshot3.child("senderText").getValue().toString();
+                                            String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
+                                            String chatMessagechatID = snapshot3.child("chatID").getValue().toString();
+                                            String chatMessageImage = snapshot3.child("senderImage").getValue().toString();
+                                            ChatMessage message1 = new ChatMessage(chatMessageText, chatMessageTime, chatMessageImage, chatMessagechatID, chatMessageRole);
+                                            oppositeUserconversation.add(message1);
+
+                                        }
+                                    }
+
+
+                                    MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
+                                    oppositeUserRecyclerView.setAdapter(messageAdapter2);
+                                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
+                                    if(oppositeUserconversation.size()>6){
+                                        linearLayoutManager.setStackFromEnd(true);
+                                    }
+                                    oppositeUserRecyclerView.setLayoutManager(linearLayoutManager);
                                 }
                             }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-
-                            MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
-                            oppositeUserRecyclerView.setAdapter(messageAdapter2);
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            if(oppositeUserconversation.size()>6){
-                                linearLayoutManager.setStackFromEnd(true);
                             }
-                            oppositeUserRecyclerView.setLayoutManager(linearLayoutManager);
-                        }
+                        });
+
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -215,7 +239,6 @@ public class ChatWindowActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 

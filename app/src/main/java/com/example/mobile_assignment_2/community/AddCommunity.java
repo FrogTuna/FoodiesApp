@@ -1,16 +1,15 @@
 package com.example.mobile_assignment_2.community;
 
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-
-import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,7 +29,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,10 +43,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +63,11 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);
+        // add back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        // get CommunityType spinner
         comType = findViewById(R.id.com_type);
         comType.setOnItemSelectedListener(this);
 
@@ -140,8 +138,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                 return postImagesRef.getDownloadUrl();
                             }
                         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-
-
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
 
@@ -156,10 +152,26 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                         if (!task.isSuccessful()) {
                                             Log.e("firebase", "Error in fetching data", task.getException());
                                         } else {
+                                            Log.e("firebase", "Success in fetching data", task.getException());
                                             String auName = task.getResult().getValue(String.class);
                                             String uid = fuser.getUid();
                                             Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri.toString(), commType, auName, comDes);
-                                            communityRef.setValue(comPost);
+                                            communityRef.setValue(comPost).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(AddCommunity.this, "Community Added successfully",Toast.LENGTH_LONG).show();
+                                                    // clear post
+                                                    comNameView.setText("");
+                                                    comDescriptionView.setText("");
+                                                    linearLayout.removeAllViews();
+                                                }
+                                            });
+                                            AddCommunity.this.finish();
+                                            // loadFragment(new CommunityFragment());
+                                            // alertMsg();
+                                            // transAtoF();
+
+                                            // toNewPage();
                                         }
                                     }
                                 });
@@ -222,6 +234,40 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
         }
     }
+//    public void toNewPage() {
+//        Intent intent = new Intent(this, DiscoverCommunityFragment.class);
+//        startActivity(intent);
+//    }
+
+    private void loadFragment(CommunityFragment fragment) {
+        // create a FragmentManager
+        FragmentManager fm = getFragmentManager();
+        // create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        // replace the FrameLayout with new Fragment
+//        fragmentTransaction.replace(R.id.create_com, fragment);
+//        fragmentTransaction.commit(); // save the changes
+    }
+
+    private void alertMsg() {
+        // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddCommunity.this);
+
+        builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
+        AlertDialog dialog = builder.create();
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {

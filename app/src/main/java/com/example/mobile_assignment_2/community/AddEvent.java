@@ -1,5 +1,6 @@
 package com.example.mobile_assignment_2.community;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -7,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,19 +16,41 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.mobile_assignment_2.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    private TextInputEditText eNameView, eLocView, ePeopleNum;
     private Button dateBtn, timeBtn, saveBtn, postBtn;
     private String format="";
+    FirebaseAuth EventAuth;
+    FirebaseUser curUser;
+    DatabaseReference eventRef;
+    private String eventName, eventDate, eventTime, eventLocation;
+    private int eventPeoNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_create);
+
+        EventAuth = FirebaseAuth.getInstance();
+        curUser = EventAuth.getCurrentUser();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+        eventRef = firebaseDatabase.getReference("Event").push();
+
         // init Date and Time to Now
         initDatePicker();
         initTimePicker();
@@ -41,9 +65,45 @@ public class AddEvent extends AppCompatActivity {
         // saveBtn = findViewById(R.id.event_save);
         postBtn = findViewById(R.id.event_post);
 
+        // set textView
+        eNameView = findViewById(R.id.event_name);
+        eLocView = findViewById(R.id.event_location);
+        ePeopleNum = findViewById(R.id.event_people_num);
+
+
         postBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+                eventName = eNameView.getText().toString();
+                eventDate = String.valueOf(dateBtn.getText());
+                eventTime = String.valueOf(timeBtn.getText());
+                eventLocation = eLocView.getText().toString();
+                eventPeoNum = Integer.parseInt(ePeopleNum.getText().toString());
+                String eid = eventRef.getKey();
+                ArrayList<String> peoList = new ArrayList<>();
+                String cid = "111";
+                peoList.add(cid);
+
+//                String td = eventDate.concat(eventTime);
+//                Log.e("readEvent", td);
+
+                usersRef.child(curUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error in fetching data", task.getException());
+                        } else {
+                            Log.e("firebase", "Success in fetching data", task.getException());
+                            String userName = task.getResult().getValue(String.class);
+                            String uid = curUser.getUid();
+                            Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList);
+                            eventRef.setValue(event);
+                            AddEvent.this.finish();
+                        }
+                    }
+                });
+
+                // startActivity(new Intent(AddEvent.this, CommunityDetail.class));
             }
         });
 
