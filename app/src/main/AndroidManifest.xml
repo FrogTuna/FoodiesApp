@@ -22,9 +22,6 @@
             android:name=".add.activities.addBySearch.addActivity"
             android:exported="false" />
         <activity
-            android:name=".add.activities.addByNearBy.nearByActivity"
-            android:exported="false" />
-        <activity
             android:name=".add.activities.addShake.shakeActivity"
             android:exported="false" />
         <activity
