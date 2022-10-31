@@ -30,14 +30,27 @@
                 android:gravity="center_vertical"
                 android:text="Event" />
 
-            <TextView
-                android:id="@+id/date_item"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center_vertical"
-                android:text="Date1" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/date_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="date1" />
+
+                <TextView
+                    android:id="@+id/time_item"
+                    android:layout_width="158dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center_vertical"
+                    android:text="time1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,14 +66,6 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Place1" />
-
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="800m away" />
 
             </LinearLayout>
 
@@ -87,7 +92,7 @@
 
                 <TextView
                     android:id="@+id/event_organizer"
-                    android:layout_width="65dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="3dp"
@@ -98,12 +103,22 @@
 
                 <TextView
                     android:id="@+id/event_people_number"
-                    android:layout_width="160dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="30"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
-                    android:text="waiting for 5 people"
+                    android:text="people will join"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -111,10 +126,13 @@
                     android:id="@+id/join_event_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="5dp"
+                    android:background="@color/white"
+                    android:textColor="@color/orange"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Join" />
+                    android:text="JOIN"
+                    android:textStyle="bold"
+                    android:textSize="16dp"/>
 
             </LinearLayout>
 
@@ -123,7 +141,7 @@
             <!--            android:id="@+id/people_list"-->
             <!--            android:layout_width="match_parent"-->
             <!--            android:layout_height="122dp"-->
-            <!--            android:text="waiting for 5 people" />-->
+            <!--            android:text="gg for 5 people" />-->
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
