@@ -4,17 +4,21 @@ public class RequestListData {
 //    private String ID;
     private String username;
     private String comment;
-    private int avatarID;
+    private String avatarID;
+    private String userID;
 
 
-    public RequestListData( String _username, String _comment, int _avatarID) {
+    public RequestListData(String _userID, String _username, String _comment, String _avatarID) {
 
+        this.userID = _userID;
         this.username = _username;
         this.comment = _comment;
         this.avatarID = _avatarID;
     }
     // Following is Get/Set function
 
+
+    public String getUserID() {return this.userID;};
 
     public String getUsername() {
         return this.username;
@@ -30,7 +34,7 @@ public class RequestListData {
         this.comment = _comment;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return this.avatarID;
     }
     public void setAvatar(int _avatarID) {

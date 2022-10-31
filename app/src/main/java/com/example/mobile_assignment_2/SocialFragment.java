@@ -431,6 +431,7 @@ public class SocialFragment extends Fragment {
                     for (DataSnapshot request : dataSnapshot.child("requests").getChildren()){
                         HashMap<String, String> requestInfo = new HashMap<>();
 //                        requestInfo.put("ID",request.getKey());
+                        requestInfo.put("requestUserID",String.valueOf(request.child("userID").getValue()));
                         requestInfo.put("name",String.valueOf(request.child("name").getValue()));
                         requestInfo.put("comment", String.valueOf(request.child("comment").getValue()));
                         requestInfo.put("avatar", String.valueOf(request.child("imageUrl").getValue()));
