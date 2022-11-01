@@ -50,6 +50,7 @@ public class shakeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addshake);
+        setTitle("Add Friends - Shake");
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

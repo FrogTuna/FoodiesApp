@@ -8,10 +8,11 @@ public class Event {
     private String eventName, eventDate, evenTime, eventLocation;
     private int peopleNum;
     private ArrayList<String> peopleList;
+    private String status;
 
     public Event(String cid, String eid, String uid,
                  String userName, String eventName, String eventDate,
-                 String evenTime, String eventLocation, int peopleNum, ArrayList<String> peopleList) {
+                 String evenTime, String eventLocation, int peopleNum, ArrayList<String> peopleList, String status) {
         this.cid = cid;
         this.eid = eid;
         this.uid = uid;
@@ -22,7 +23,10 @@ public class Event {
         this.eventLocation = eventLocation;
         this.peopleNum = peopleNum;
         this.peopleList = peopleList;
+        this.status = status;
     }
+
+    public Event(){ }
 
     public String getCid() {
         return cid;
@@ -102,5 +106,13 @@ public class Event {
 
     public void setPeopleList(ArrayList<String> peopleList) {
         this.peopleList = peopleList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

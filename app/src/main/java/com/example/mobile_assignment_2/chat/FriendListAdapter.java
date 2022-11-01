@@ -1,5 +1,6 @@
 package com.example.mobile_assignment_2.chat;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.message.ChatWindowActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -93,6 +95,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 FirebaseAuth myAuth = FirebaseAuth.getInstance();
                 FirebaseUser firebaseUser = myAuth.getCurrentUser();
 
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+
                 Map<String,Object> update1 = new HashMap<>();
                 update1.put(friendListItem.getUID(), FieldValue.delete());
                 Map<String,Object> update2 = new HashMap<>();
@@ -100,8 +105,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
                 runOnce1 = true;
                 runOnce2 = true;
+
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query applesQuery = ref.child("Users").child(firebaseUser.getUid()).child("friends").orderByChild(friendListItem.getUID()).equalTo(friendListItem.getUID());
+
+                Query applesQuery = ref.child("Users").child(firebaseUser.getUid()).child("friends").orderByKey().equalTo(friendListItem.getUID());
                 applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -110,6 +117,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                             runOnce1=false;
                             for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                                 appleSnapshot.getRef().removeValue();
+                                Log.e("TAG", "***************** deleted successful!");
                             }
                         }
                     }
@@ -120,7 +128,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                     }
                 });
 
-                Query applesQuery2 = ref.child("Users").child(friendListItem.getUID()).child("friends").orderByChild(firebaseUser.getUid()).equalTo(firebaseUser.getUid());
+                Query applesQuery2 = ref.child("Users").child(friendListItem.getUID()).child("friends").orderByKey().equalTo(firebaseUser.getUid());
                 applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -128,6 +136,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                             runOnce2 = false;
                             for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                                 appleSnapshot.getRef().removeValue();
+                                Log.e("TAG", "***************** deleted successful!");
                             }
                         }
 

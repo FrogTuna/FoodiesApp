@@ -51,6 +51,10 @@ public class AddEvent extends AppCompatActivity {
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
         eventRef = firebaseDatabase.getReference("Event").push();
 
+        Intent intent = getIntent();
+        String comName = intent.getStringExtra("communityName");
+        String cid = intent.getStringExtra("cid");
+
         // init Date and Time to Now
         initDatePicker();
         initTimePicker();
@@ -80,8 +84,6 @@ public class AddEvent extends AppCompatActivity {
                 eventPeoNum = Integer.parseInt(ePeopleNum.getText().toString());
                 String eid = eventRef.getKey();
                 ArrayList<String> peoList = new ArrayList<>();
-                String cid = "111";
-                peoList.add(cid);
 
 //                String td = eventDate.concat(eventTime);
 //                Log.e("readEvent", td);
@@ -96,14 +98,16 @@ public class AddEvent extends AppCompatActivity {
                             Log.e("firebase", "Success in fetching data", task.getException());
                             String userName = task.getResult().getValue(String.class);
                             String uid = curUser.getUid();
-                            Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList);
+                            peoList.add(uid);
+                            String status =  "join";
+                            Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
-                            AddEvent.this.finish();
+//                            AddEvent.this.finish();
                         }
                     }
                 });
 
-                // startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+                 startActivity(new Intent(AddEvent.this, CommunityDetail.class));
             }
         });
 
