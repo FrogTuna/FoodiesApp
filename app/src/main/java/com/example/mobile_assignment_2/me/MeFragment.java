@@ -120,7 +120,8 @@ public class MeFragment extends Fragment {
         userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("imageUrl");
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        //username.setText(fuser.getDisplayName());
+
+
 
 
         if (getArguments() != null) {
@@ -138,10 +139,6 @@ public class MeFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.fragment_me, container, false);
-        loadDatabase(view);
-
-
-
 
         username = (TextView) view.findViewById(R.id.profileName);
         //username.setText(fuser.getDisplayName());
@@ -149,8 +146,9 @@ public class MeFragment extends Fragment {
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
         collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
-
-
+        Picasso.with(view.getContext()).load(fuser.getPhotoUrl().toString()).into(editHeadPortrait);
+        username.setText(fuser.getDisplayName());
+        //loadDatabase(view);
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +245,10 @@ public class MeFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
                                                     userImageRef.setValue(uri.toString());
+                                                    //username.setText(snapshot.child("name").getValue().toString());
+                                                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(uri.toString())).build();
+                                                    fuser.updateProfile(userProfileChangeRequest);
+                                                    Picasso.with(view.getContext()).load(uri.toString()).into(editHeadPortrait);
                                                 }
                                             });
                                         }
@@ -294,30 +296,6 @@ public class MeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), login.class);
         startActivity(intent);
 
-
-    }
-
-
-    public void loadDatabase(View view){
-
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                username.setText(snapshot.child("name").getValue().toString());
-                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(snapshot.child("imageUrl").getValue().toString())).build();
-                fuser.updateProfile(userProfileChangeRequest);
-                Picasso.with(view.getContext()).load(snapshot.child("imageUrl").getValue().toString()).into(editHeadPortrait);
-
-                //Log.d("snapshot", snapshot.getValue().toString());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
     }
 
