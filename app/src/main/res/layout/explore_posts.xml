@@ -75,11 +75,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                     />
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp"/>
 
                 <TextView
                     android:id="@+id/author_name"

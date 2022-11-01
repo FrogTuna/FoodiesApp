@@ -85,7 +85,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
 //            this.textViewComment = (TextView) itemView.findViewById(R.id.textViewComment);
-            this.addBtn = itemView.findViewById(R.id.btnFriendAdd);
+            this.addBtn = itemView.findViewById(R.id.btnFriendDelete);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

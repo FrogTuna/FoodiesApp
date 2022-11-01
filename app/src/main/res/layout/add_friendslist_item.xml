@@ -42,7 +42,7 @@
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/btnFriendAdd"
+        android:id="@+id/btnFriendDelete"
         android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
