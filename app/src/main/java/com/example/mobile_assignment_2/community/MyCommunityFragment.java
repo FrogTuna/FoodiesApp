@@ -87,6 +87,7 @@ public class MyCommunityFragment extends Fragment{
                 commRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        communityPosts.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Communitypost post = dataSnapshot.getValue(Communitypost.class);
                             Log.d("idddd", post.getCid());
@@ -171,8 +172,13 @@ public class MyCommunityFragment extends Fragment{
                 holder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        mDatabase.child("Users").child(currentUser.getUid()).child("commLst").child(musers.get(position).getCid()).removeValue();
                         musers.remove(position);
                         notifyDataSetChanged();
+
 
                     }
                 });

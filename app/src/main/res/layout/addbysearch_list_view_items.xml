@@ -7,7 +7,7 @@
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Animal : " />
+        android:text="recent : " />
 
     <TextView
         android:id="@+id/name"

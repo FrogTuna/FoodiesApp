@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.R;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ListViewAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter implements Filterable {
 
     // Declare Variables
 
@@ -63,6 +65,7 @@ public class ListViewAdapter extends BaseAdapter {
         }
         // Set the results into TextViews
         holder.name.setText(friendItemsList.get(position).getFriendItem());
+
         return view;
     }
 
@@ -81,5 +84,38 @@ public class ListViewAdapter extends BaseAdapter {
         }
         notifyDataSetChanged();
     }
+
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            friendItemsList.clear();
+            if (constraint == null || constraint.length() == 0) {
+                friendItemsList.addAll(arraylist);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (friendItems item : arraylist) {
+                    if (item.getFriendItem().toLowerCase().contains(filterPattern)) {
+                        friendItemsList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = friendItemsList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            arraylist.clear();
+            arraylist.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
 }

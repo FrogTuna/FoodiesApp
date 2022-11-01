@@ -147,7 +147,7 @@ public class MeFragment extends Fragment {
         collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
         username.setText(fuser.getDisplayName());
         Log.d("username", fuser.getDisplayName());
-        Picasso.with(view.getContext()).load(fuser.getPhotoUrl()).into(editHeadPortrait);
+        Picasso.with(view.getContext()).load(fuser.getPhotoUrl().toString()).into(editHeadPortrait);
 
         //loadDatabase(view);
 
