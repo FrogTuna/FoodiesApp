@@ -139,6 +139,7 @@ public class shakeActivity extends AppCompatActivity{
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser",userID);
+                                intent.putExtra("flag","shake");
 
                                 Log.w("KeYANG",  "start to redirect page");
                                 startActivity(intent);

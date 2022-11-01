@@ -31,7 +31,7 @@ public class addFriendList extends AppCompatActivity {
 
     private CircleImageView friendImageView;
     private TextView friendName, friendEmail, friendDescription;
-    private String currentUID;
+    private String currentUID,flag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class addFriendList extends AppCompatActivity {
         /* Params from "shakeActivity" */
         ArrayList<HashMap<String, String>> userInfosArrayList = (ArrayList<HashMap<String, String>>)myIntent.getSerializableExtra("userInfosArrayList");
         currentUID = myIntent.getExtras().getString("currentUser");
+        flag = myIntent.getExtras().getString("flag");
 
         addFriendListData[] addfriendlistdata = new addFriendListData[userInfosArrayList.size()];
 
@@ -67,7 +68,7 @@ public class addFriendList extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.friendRecyclerView);
-        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata, currentUID);
+        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata, currentUID,flag);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
