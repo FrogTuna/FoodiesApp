@@ -254,29 +254,32 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    Bitmap photoBitmap = null;
-                    try {
-                        photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+                    if (uri != null) {
+                        // Handle the returned Uri
+                        Bitmap photoBitmap = null;
+                        try {
+                            photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
 
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ImageView imageView = new ImageView(getContext());
-                    if(imageView.getParent() != null) {
-                        ((ViewGroup)imageView.getParent()).removeView(imageView);
-                    }
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            500,
-                            RelativeLayout.LayoutParams.MATCH_PARENT
-                    );
-                    imageView.setLayoutParams(params);
-                    imageView.setImageBitmap(photoBitmap);
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        ImageView imageView = new ImageView(getContext());
+                        if(imageView.getParent() != null) {
+                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        }
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                500,
+                                RelativeLayout.LayoutParams.MATCH_PARENT
+                        );
+                        imageView.setLayoutParams(params);
+                        imageView.setImageBitmap(photoBitmap);
 
-                    linearLayout.addView(imageView);
+                        linearLayout.addView(imageView);
 
-                    pickedImageUris.add(uri);
+                        pickedImageUris.add(uri);
+                    }
+
                 }
             });
 
