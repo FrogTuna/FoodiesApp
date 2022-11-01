@@ -6,7 +6,7 @@
     <string name="previous">previous</string>
     <string name="first_fragment_label">first_fragment_label</string>
     <string name="second_fragment_label">second_fragment_label</string>
-    <string name="title_activity_post_details">PostDetails</string>
+    <string name="title_activity_post_details">Post Details</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="comment">Enter a cmment...</string>
     <string name="create_post_title">Enter title</string>

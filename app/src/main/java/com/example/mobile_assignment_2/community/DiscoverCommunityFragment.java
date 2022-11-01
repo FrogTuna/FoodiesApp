@@ -123,7 +123,7 @@ public class DiscoverCommunityFragment extends Fragment {
                                 Intent i = new Intent(getActivity(), CommunityDetail.class);
                                 i.putExtra("cid", post.getCid());
                                 i.putExtra("communityName", post.getCommName());
-                                Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
+//                                Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                                 i.putExtra("imageURLs", post.getImageUrls());
                                 startActivity(i);
                             }
@@ -201,6 +201,7 @@ public class DiscoverCommunityFragment extends Fragment {
 
                         mDatabase.child("Users").child(currentUser.getUid()).child("commLst").child(posts.get(getAdapterPosition()).getCid()).setValue("true");
                         Intent i = new Intent(getActivity(), CommunityDetail.class);
+                        i.putExtra("cid", post.getCid());
                         i.putExtra("communityName", post.getCommName());
                         Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                         i.putExtra("imageURLs", post.getImageUrls());

@@ -50,6 +50,7 @@ public class shakeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addshake);
+        setTitle("Add Friends - Shake");
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -138,6 +139,7 @@ public class shakeActivity extends AppCompatActivity{
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser",userID);
+                                intent.putExtra("flag","shake");
 
                                 Log.w("KeYANG",  "start to redirect page");
                                 startActivity(intent);
@@ -164,7 +166,7 @@ public class shakeActivity extends AppCompatActivity{
         @Override
         public void run() {
             try {
-                Thread.sleep(15 * 1000);
+                Thread.sleep(30 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

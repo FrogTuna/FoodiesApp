@@ -36,13 +36,13 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     ListView listView;
     ListViewAdapter adapter;
     SearchView editSearch;
-    String[] animalNameList;
+    String[] recordList;
     ArrayList<friendItems> arraylist = new ArrayList<>();
     private ArrayList userInfosArrayList;
     FirebaseUser currentUser;
     FirebaseAuth myAuth;
     DatabaseReference mDatabase;
-    private boolean runOne;
+    private boolean runOnce = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,27 +51,26 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         mDatabase = FirebaseDatabase.getInstance().getReference();
         myAuth = FirebaseAuth.getInstance();
         currentUser = myAuth.getCurrentUser();
-
+        setTitle("Add Friends - Search");
         // Generate sample data
 
-//        animalNameList = new String[]{"Joyce", "Wendy", "Estella",
-//                "Christina", "Simon", "Becky", "Peter", "Leo",
-//                "Wen"};
-//
-//        // Locate the ListView in listview_main.xml
-//        listView = (ListView) findViewById(R.id.chat_addListView);
-//        for (int i = 0; i < animalNameList.length; i++) {
-//            friendItems friendItems = new friendItems(animalNameList[i]);
-//            // Binds all strings into an array
-//            arraylist.add(friendItems);
-//        }
-//        // Pass results to ListViewAdapter Class
-//        adapter = new ListViewAdapter(this, arraylist);
-//
-//        // Binds the Adapter to the ListView
-//        listView.setAdapter(adapter);
-//
-//        // Locate the EditText in listview_main.xml
+        recordList = new String[]{"leo727268082@gmail.com", "kyy2@student.unimelb.edu.au",
+                "727268082@qq.com", "zouweiran9122@gmail.com"};
+
+        // Locate the ListView in listview_main.xml
+        listView = (ListView) findViewById(R.id.chat_addListView);
+        for (int i = 0; i < recordList.length; i++) {
+            friendItems friendItems = new friendItems(recordList[i]);
+            // Binds all strings into an array
+            arraylist.add(friendItems);
+        }
+        // Pass results to ListViewAdapter Class
+        adapter = new ListViewAdapter(this, arraylist);
+
+        // Binds the Adapter to the ListView
+        listView.setAdapter(adapter);
+
+        // Locate the EditText in listview_main.xml
         editSearch = (SearchView) findViewById(R.id.chat_addSearchView);
         editSearch.setOnQueryTextListener(this);
 
@@ -88,31 +87,21 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     public boolean onQueryTextSubmit(String query) {
         Log.d("onQueryTextSubmit:", query);
 
-        // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Users");
-
-
-
-        runOne = true;
-
-//        ArrayList<Object> objectsList = new ArrayList<>();
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(runOne) {
-                    runOne  = false;
+                if(runOnce) {
+                    runOnce  = false;
                     String userID = currentUser.getUid();
                     Intent intent = new Intent(getApplicationContext(), addFriendList.class);
 
                     if (dataSnapshot.exists()) {
-                        //                    userInfosArrayList.clear();
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             String key = userSnapshot.getKey();
                             String email = String.valueOf(userSnapshot.child("email").getValue());
 
                             if (email.equals(query)) {
-                                userInfosArrayList = new ArrayList();
+                                userInfosArrayList = new ArrayList<>();
                                 HashMap<String, String> userInfoHashMap = new HashMap<>();
                                 Log.d("selected User by email:", key + " "
                                         + (String) userSnapshot.child("username").getValue() + " "
@@ -124,7 +113,11 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser", userID);
+                                intent.putExtra("flag","add");
                                 startActivity(intent);
+
+                                Log.d("debug: ", "*************** start intent");
+
                             }
                         }
                     }
