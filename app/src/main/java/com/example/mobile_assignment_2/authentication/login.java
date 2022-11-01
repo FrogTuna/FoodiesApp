@@ -31,15 +31,9 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference myReference;
 
-<<<<<<< HEAD
-    //String defaultUsername = "leo727268082@gmail.com";
-    //String defaultUsername = "kyy2@student.unimelb.edu.au";
-    String defaultUsername = "727268082@qq.com";
-=======
-   //String defaultUsername = "leo727268082@gmail.com";
-    String defaultUsername = "kyy2@student.unimelb.edu.au";
+    String defaultUsername = "leo727268082@gmail.com";
     //String defaultUsername = "727268082@qq.com";
->>>>>>> 463f94825f85a005b25b4c2a866d27c008dbe77e
+    //String defaultUsername = "kyy2@student.unimelb.edu.au";
     //String defaultUsername = "zouweiran9122@gmail.com";
     String defaultPassword = "123456789";
 

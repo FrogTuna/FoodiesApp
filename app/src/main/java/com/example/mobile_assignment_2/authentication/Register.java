@@ -36,6 +36,7 @@ public class Register extends AppCompatActivity {
     FirebaseAuth myAuth;
     DatabaseReference myReference;
     String imageUrl;
+    FirebaseUser fuser;
 
 
     @Override
@@ -114,7 +115,7 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        FirebaseUser fuser = myAuth.getCurrentUser();
+                        fuser = myAuth.getCurrentUser();
                         fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -123,9 +124,16 @@ public class Register extends AppCompatActivity {
                                 fuser.updateProfile(userProfileChangeRequest);
                                 User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg");
                                 myReference.child("Users").child(fuser.getUid()).setValue(user);
-//                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
                                 registerIntent();
                                 finish();
+//                                registerRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//
+//                                    }
+//                                });
+//                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
+
                             }
                         }). addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -123,7 +123,6 @@ public class MeFragment extends Fragment {
 
 
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -146,8 +145,10 @@ public class MeFragment extends Fragment {
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
         collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
-        Picasso.with(view.getContext()).load(fuser.getPhotoUrl().toString()).into(editHeadPortrait);
         username.setText(fuser.getDisplayName());
+        Log.d("username", fuser.getDisplayName());
+        Picasso.with(view.getContext()).load(fuser.getPhotoUrl()).into(editHeadPortrait);
+
         //loadDatabase(view);
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
