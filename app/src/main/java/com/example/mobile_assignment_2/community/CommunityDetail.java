@@ -182,7 +182,11 @@ public class CommunityDetail extends AppCompatActivity {
             viewHolder.timeView.setText(events.get(position).getEvenTime());
             viewHolder.placeView.setText(events.get(position).getEventLocation());
             viewHolder.authorView.setText(events.get(position).getUserName());
-            viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
+            int curPeoNum = peopleList.size();
+            int maxPeoNum = events.get(position).getPeopleNum();
+            int waitPeoNum = maxPeoNum-curPeoNum;
+            // viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
+            viewHolder.peoNumView.setText(String.valueOf(waitPeoNum));
 
             String uid = events.get(position).getUid();
 
