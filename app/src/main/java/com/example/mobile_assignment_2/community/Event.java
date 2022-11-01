@@ -1,18 +1,23 @@
 package com.example.mobile_assignment_2.community;
 
+import com.example.mobile_assignment_2.Comment;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Event {
     private String cid, eid, uid;
     private String userName;
     private String eventName, eventDate, evenTime, eventLocation;
     private int peopleNum;
-    private ArrayList<String> peopleList;
+    // private ArrayList<String> peopleList;
     private String status;
+
+    private HashMap<String, String> peopleList;
 
     public Event(String cid, String eid, String uid,
                  String userName, String eventName, String eventDate,
-                 String evenTime, String eventLocation, int peopleNum, ArrayList<String> peopleList, String status) {
+                 String evenTime, String eventLocation, int peopleNum, HashMap<String, String> peopleList, String status) {
         this.cid = cid;
         this.eid = eid;
         this.uid = uid;
@@ -100,19 +105,19 @@ public class Event {
         this.peopleNum = peopleNum;
     }
 
-    public ArrayList<String> getPeopleList() {
-        return peopleList;
-    }
-
-    public void setPeopleList(ArrayList<String> peopleList) {
-        this.peopleList = peopleList;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public HashMap<String, String> getPeopleList() {
+        return peopleList;
+    }
+
+    public void setPeopleList(HashMap<String, String> peopleList) {
+        this.peopleList = peopleList;
     }
 }

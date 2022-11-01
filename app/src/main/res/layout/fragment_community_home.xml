@@ -43,7 +43,9 @@
 
         <ImageView
             android:id="@+id/add_community"
-            android:layout_width="86dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="-20dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_add_24" />

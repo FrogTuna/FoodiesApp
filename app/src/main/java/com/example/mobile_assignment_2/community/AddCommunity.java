@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -335,7 +336,15 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
             });
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     //Handle the user's selection result from the dialog of system permissions
 //    private ActivityResultLauncher<String> requestPermissionLauncher =
 //            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {

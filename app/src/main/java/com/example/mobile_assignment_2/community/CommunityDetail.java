@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,17 +37,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-//import com.example.mobile_assignment_2.home.ForYouFragment;
-//import com.example.mobile_assignment_2.home.Post;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Queue;
 
 
 public class CommunityDetail extends AppCompatActivity {
@@ -115,9 +111,9 @@ public class CommunityDetail extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    Log.e("loadEvent", String.valueOf(event));
+//                    Log.e("loadEvent", String.valueOf(event));
                     eventLists.add(event);
-                    Log.e("loadEvent", String.valueOf(eventLists.size()));
+//                    Log.e("loadEvent", String.valueOf(eventLists.size()));
                 }
                 // CustomAdapter customAdapter = new CustomAdapter(getBaseContext(), eventLists);
                 // listView_event.setAdapter(customAdapter);
@@ -171,11 +167,16 @@ public class CommunityDetail extends AppCompatActivity {
         @Override
         public void onBindViewHolder(EventAdapter.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
             final int[] numPeople = {events.get(position).getPeopleNum()};
-            Log.d("events", events.get(position).getEventName());
+//            Log.d("events", events.get(position).getEventName());
             String author = events.get(position).getUserName();
             String eid = events.get(position).getEid();
-            ArrayList<String> peopleList = events.get(position).getPeopleList();
 
+            HashMap<String, String> peopleList;
+            if (events.get(position).getPeopleList() != null) {
+                peopleList = events.get(position).getPeopleList();
+            } else {
+                peopleList = new HashMap<>();
+            }
             viewHolder.nameView.setText(events.get(position).getEventName());
             viewHolder.dateView.setText(events.get(position).getEventDate());
             viewHolder.timeView.setText(events.get(position).getEvenTime());
@@ -184,130 +185,79 @@ public class CommunityDetail extends AppCompatActivity {
             viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
 
             String uid = events.get(position).getUid();
-            Log.d("events","hi");
+
             firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
                         Log.e("firebase", "Error in fetching data", task.getException());
-                    }
-                    else {
+                    } else {
                         String profileImageUrl = task.getResult().getValue(String.class);
                         // Download image from URL and set to imageView
                         Picasso.with(getBaseContext()).load(profileImageUrl).fit().centerCrop().into(viewHolder.profileView);
                     }
                 }
             });
+            if (peopleList.containsValue(curUser.getUid())) {
+                viewHolder.joinBtn.setText("LEAVE");
+            } else { // join
+                viewHolder.joinBtn.setText("JOIN");
+            }
+
             viewHolder.joinBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArrayList<String> eventJoinList = new ArrayList<>();
-                    userRef.child(curUser.getUid()).child("eventJoinList").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            eventJoinList.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                eventJoinList.add((String) dataSnapshot.getValue());
+                    if (peopleList.containsValue(curUser.getUid())) {
+                        DatabaseReference leaveEventRef = eventRef.child(eid).child("peopleList");
+                        Query query = leaveEventRef.orderByValue().equalTo(curUser.getUid());
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    dataSnapshot.getRef().removeValue();
+                                }
                             }
-                            if(!eventJoinList.contains(eid)) {
-                                viewHolder.joinBtn.setText("JOIN");
-                                firebaseDatabase.getReference().child("Users").child(curUser.getUid()).child("eventJoinList").child(events.get(position).getEid());
-                                // EventAuth.child("Users").child(curUser.getUid()).child("eventLists").child(events.get(getAdapterPosition()).getEid()).setValue("true");
-                            } else {
-                                viewHolder.joinBtn.setText("LEAVE");
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
                             }
-                        }
+                        });
+                        DatabaseReference userLeaveRef = userRef.child(curUser.getUid()).child("eventJoinList");
+                        Query query1 = userLeaveRef.orderByValue().equalTo(eid);
+                        query1.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    dataSnapshot.getRef().removeValue();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
 
-                        }
-                    });
-
-
+                    } else {
+                        DatabaseReference addEventRef = eventRef.child(eid).child("peopleList").push();
+                        addEventRef.setValue(curUser.getUid());
+                        DatabaseReference userEventRef = userRef.child(curUser.getUid()).child("eventJoinList").push();
+                        userEventRef.setValue(eid);
+                    }
                 }
             });
         }
-
         @Override
         public int getItemCount() {
-            Log.d("events", String.valueOf(events.size()));
+            // Log.d("events", String.valueOf(events.size()));
             return events.size();
         }
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
         }
-
     }
 
-
-    public class CustomAdapter extends ArrayAdapter<Event> {
-
-        public CustomAdapter(@NonNull Context context, ArrayList<Event> events) {
-            super(context, 0, events);
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Event event = getItem(position);
-
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_event, parent, false);
-            }
-            TextView eventView = (TextView) convertView.findViewById(R.id.event_name);
-            TextView dateView = (TextView) convertView.findViewById(R.id.date_item);
-            TextView timeView = (TextView) convertView.findViewById(R.id.time_item);
-            TextView placeView = (TextView) convertView.findViewById(R.id.place_item);
-            TextView authorView = (TextView) convertView.findViewById(R.id.event_organizer);
-            TextView peoNumView = (TextView)  convertView.findViewById(R.id.event_people_number);
-
-            // get event join/leave button
-            eventBtn = convertView.findViewById(R.id.join_event_btn);
-
-            eventView.setText(event.getEventName());
-            dateView.setText(event.getEventDate());
-            timeView.setText(event.getEvenTime());
-            placeView.setText(event.getEventLocation());
-
-            authorView.setText(event.getUserName());
-            peoNumView.setText(String.valueOf(event.getPeopleNum()));
-
-            //eventBtn.setTag("JOIN");
-            eventBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // String status = (String) eventBtn.getText();
-                    //String status = (String) view.getTag();
-                    String status = eventBtn.getText().toString();
-                    switch (status) {
-                        case "JOIN":
-                            eventBtn.setText("LEAVE");
-                            //view.setTag("LEAVE"); //pause
-                            break;
-                        case "LEAVE":
-                            eventBtn.setText("JOIN");
-                            //view.setTag("JOIN"); //pause
-                            break;
-                    }
-                    Log.e("button", (String) eventBtn.getText());
-                    notifyDataSetChanged();
-//                    switch(status) {
-//                        case "JOIN":
-//                            eventBtn.setText("LEAVE");
-//                            break;
-//                        case "LEAVE":
-//                            eventBtn.setText("JOIN");
-//                        default:
-//                            eventBtn.setText(status);
-//                    }
-                   // eventBtn.setText((String) view.getTag());
-
-                }
-            });
-
-            return convertView;
-        }
-    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -317,14 +267,14 @@ public class CommunityDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-//    private void setUpToolbar(View view) {
-//        Toolbar toolbar = view.findViewById(R.id.com_bar);
-//        setSupportActionBar(toolbar);
-//    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.com_select_menu, menu);
-//        return true;
-//    }
+////    private void setUpToolbar(View view) {
+////        Toolbar toolbar = view.findViewById(R.id.com_bar);
+////        setSupportActionBar(toolbar);
+////    }
+//
+////    @Override
+////    public boolean onCreateOptionsMenu(Menu menu) {
+////        getMenuInflater().inflate(R.menu.com_select_menu, menu);
+////        return true;
+////    }
 }
