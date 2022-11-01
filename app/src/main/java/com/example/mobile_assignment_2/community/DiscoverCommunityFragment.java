@@ -138,21 +138,7 @@ public class DiscoverCommunityFragment extends Fragment {
                     }
                 });
 
-//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-//                usersRef.child(currentUser.getUid()).child("commLst").addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        communityPosts.clear();
-//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
+
             }
 
             @Override
@@ -184,10 +170,16 @@ public class DiscoverCommunityFragment extends Fragment {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Communitypost post = posts.get(getAdapterPosition());
+                        String postName = post.getCommName();
+                        String postDesc = post.getComDescription();
+                        String postIngUrl = post.getImageUrls();
 
                         Bundle bundle = new Bundle();
-                        String myMessage = "Stack Overflow is cool!";  // pass this message from current fragment to bottomsheet fragment
-                        bundle.putString("message", myMessage );
+//                        String myMessage = "Stack Overflow is cool!";  // pass this message from current fragment to bottomsheet fragment
+                        bundle.putString("postName", postName );
+                        bundle.putString("postDesc", postDesc );
+                        bundle.putString("postIngUrl", postIngUrl );
 //                        Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                         BottomSheet bottomSheet = new BottomSheet();
                         bottomSheet.setArguments(bundle);

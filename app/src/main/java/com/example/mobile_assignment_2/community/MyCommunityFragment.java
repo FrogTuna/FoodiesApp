@@ -119,32 +119,7 @@ public class MyCommunityFragment extends Fragment{
 
             }
         });
-//        ArrayList<Communitypost> communityPosts = new ArrayList<>();
-//        for (String s : communityPostsUri){
-//            DatabaseReference commRef = firebaseDatabase.getReference("Community");
-//            commRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        Communitypost post = dataSnapshot.getValue(Communitypost.class);
-//                        if (post.getCid().equals(s)){
-//                            communityPosts.add(post);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//        }
-        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_my_community, container, false);
-//        CustomAdapter customAdapter = new CustomAdapter(getContext(), communityPosts);
-//        listView = view.findViewById(R.id.list);
-//        listView.setAdapter(customAdapter);
+
 
         return view;
     }
@@ -191,6 +166,7 @@ public class MyCommunityFragment extends Fragment{
                 convertView = LayoutInflater.from(mcontext).inflate(R.layout.community_leave_posts, null);
                 holder.image = convertView.findViewById(R.id.communityImg);
                 holder.title = convertView.findViewById(R.id.community_name);
+                holder.content = convertView.findViewById(R.id.community_description);
                 holder.delete = convertView.findViewById(R.id.btn_leave);
                 holder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,6 +182,7 @@ public class MyCommunityFragment extends Fragment{
             }
 
             holder.title.setText(musers.get(position).getCommName());
+            holder.content.setText(musers.get(position).getComDescription());
             String imageUrl = musers.get(position).getImageUrls();
 
             // Download image from URL and set to imageView
@@ -214,15 +191,7 @@ public class MyCommunityFragment extends Fragment{
         }
     }
 
-    // To generate an array of posts example
-//    private List<Communitypost> getcommPosts(List<Communitypost> newPosts) {
-////        ArrayList<Communitypost> newPosts = new ArrayList<>();
-//        newPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
-//        newPosts.add(new Communitypost("2", "2", "commName2", null, "type2", "user2", "comDescrip2"));
-//        newPosts.add(new Communitypost("3", "3", "commName3", null, "type3", "user3", "comDescrip3"));
-//        newPosts.add(new Communitypost("4", "4", "commName4", null, "type4", "user4", "comDescrip4"));
-//        return newPosts;
-//    }
+
 
 
 }
