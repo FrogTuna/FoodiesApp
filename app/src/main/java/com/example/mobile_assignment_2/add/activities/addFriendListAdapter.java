@@ -99,6 +99,7 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
                             if (snapshot.hasChild(friendListItem.getUID())) {
                                 Log.d("debug: ", "************* You are already friends");
                                 Toast.makeText(view.getContext(), "You are already friends", Toast.LENGTH_SHORT).show();
+                                holder.addFriendBtn.setVisibility(View.INVISIBLE);
                             }else{
                                 Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
                                 FirebaseAuth myAuth = FirebaseAuth.getInstance();
@@ -106,6 +107,9 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
                                 mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
                                 mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
                                 mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
+//                                Context context = view.getContext();
+//                                Intent intent = new Intent(context, MainActivity.class);
+//                                context.startActivity(intent);
                             }
                         }
                     }

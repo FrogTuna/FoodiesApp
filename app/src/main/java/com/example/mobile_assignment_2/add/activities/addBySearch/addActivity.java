@@ -36,7 +36,7 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     ListView listView;
     ListViewAdapter adapter;
     SearchView editSearch;
-    String[] animalNameList;
+    String[] recordList;
     ArrayList<friendItems> arraylist = new ArrayList<>();
     private ArrayList userInfosArrayList;
     FirebaseUser currentUser;
@@ -51,27 +51,26 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         mDatabase = FirebaseDatabase.getInstance().getReference();
         myAuth = FirebaseAuth.getInstance();
         currentUser = myAuth.getCurrentUser();
-
+        setTitle("Add Friends - Search");
         // Generate sample data
 
-//        animalNameList = new String[]{"Joyce", "Wendy", "Estella",
-//                "Christina", "Simon", "Becky", "Peter", "Leo",
-//                "Wen"};
-//
-//        // Locate the ListView in listview_main.xml
-//        listView = (ListView) findViewById(R.id.chat_addListView);
-//        for (int i = 0; i < animalNameList.length; i++) {
-//            friendItems friendItems = new friendItems(animalNameList[i]);
-//            // Binds all strings into an array
-//            arraylist.add(friendItems);
-//        }
-//        // Pass results to ListViewAdapter Class
-//        adapter = new ListViewAdapter(this, arraylist);
-//
-//        // Binds the Adapter to the ListView
-//        listView.setAdapter(adapter);
-//
-//        // Locate the EditText in listview_main.xml
+        recordList = new String[]{"leo727268082@gmail.com", "kyy2@student.unimelb.edu.au",
+                "727268082@qq.com", "zouweiran9122@gmail.com"};
+
+        // Locate the ListView in listview_main.xml
+        listView = (ListView) findViewById(R.id.chat_addListView);
+        for (int i = 0; i < recordList.length; i++) {
+            friendItems friendItems = new friendItems(recordList[i]);
+            // Binds all strings into an array
+            arraylist.add(friendItems);
+        }
+        // Pass results to ListViewAdapter Class
+        adapter = new ListViewAdapter(this, arraylist);
+
+        // Binds the Adapter to the ListView
+        listView.setAdapter(adapter);
+
+        // Locate the EditText in listview_main.xml
         editSearch = (SearchView) findViewById(R.id.chat_addSearchView);
         editSearch.setOnQueryTextListener(this);
 
