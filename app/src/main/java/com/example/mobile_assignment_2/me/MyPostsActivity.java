@@ -1,58 +1,129 @@
 package com.example.mobile_assignment_2.me;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobile_assignment_2.Comment;
+import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+import com.example.mobile_assignment_2.home.ExploreFragment;
+import com.example.mobile_assignment_2.home.ForYouFragment;
+import com.example.mobile_assignment_2.home.ImagesAdapter;
+import com.example.mobile_assignment_2.home.PostDetails;
+import com.example.mobile_assignment_2.home.PostItemClickListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MyPostsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    private List<Posts> postsList;
-    private Context context;
-    private PostAdapter adapter;
-    private ListView list_animal;
-    private LinearLayout ly_content;
+public class MyPostsActivity extends AppCompatActivity {
+
+    ArrayList<Post> myPosts = new ArrayList<>();
+    RecyclerView postsRecyclerView;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    MyPostsAdapter myPostsAdapter;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.me_postlists);
-        context = MyPostsActivity.this;
-        list_animal = (ListView) findViewById(R.id.MyPostsList);
-        //动态加载顶部View和底部View
-//        final LayoutInflater inflater = LayoutInflater.from(this);
-//        View headView = inflater.inflate(R.layout.view_header, null, false);
-//        View footView = inflater.inflate(R.layout.view_footer, null, false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+        postsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myPosts.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    if (post.getUid().equals(currentUser.getUid())) {
+                        myPosts.add(post);
+                    }
+                }
+                Collections.reverse(myPosts);
+                postsRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                postsRecyclerView.setHasFixedSize(true);
+                RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+                postsRecyclerView.setLayoutManager(gridLayoutManager);
+                myPostsAdapter = new MyPostsAdapter(myPosts, getApplicationContext());
+                myPostsAdapter.setClickListener(new PostItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        Post post = myPosts.get(position);
+                        Intent i = new Intent(MyPostsActivity.this, PostDetails.class);
+                        i.putExtra("title", post.getTitle());
+                        i.putExtra("description", post.getDescription());
+                        i.putExtra("author", post.getAuthor());
+                        i.putExtra("pid", post.getPid());
+                        i.putExtra("uid", post.getUid());
+                        i.putStringArrayListExtra("imageURLs", post.getImageUrls());
 
-        postsList = new LinkedList<Posts>();
-        postsList.add(new Posts("狗说", "你是狗么?"));
-        postsList.add(new Posts("牛说", "你是牛么?"));
-        postsList.add(new Posts("鸭说", "你是鸭么?"));
-        postsList.add(new Posts("鱼说", "你是鱼么?"));
-        postsList.add(new Posts("马说", "你是马么?"));
-        adapter = new PostAdapter((LinkedList<Posts>) postsList, context);
-        //添加表头和表尾需要写在setAdapter方法调用之前！！！
-//        list_animal.addHeaderView(headView);
-//        list_animal.addFooterView(footView);
+                        startActivity(i);
+                    }
+                });
+                postsRecyclerView.setAdapter(myPostsAdapter);
+            }
 
-        list_animal.setAdapter(adapter);
-        list_animal.setOnItemClickListener(this);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
+
+
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(context,"你点击了第" + position + "项",Toast.LENGTH_SHORT).show();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+
 }

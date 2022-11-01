@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.squareup.picasso.Picasso;
 
 public class BottomSheet extends BottomSheetDialogFragment {
     BottomSheetBehavior<View> bottomSheetBehavior;
@@ -19,9 +21,15 @@ public class BottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.community_popup_window, container, false);
-        String strtext = getArguments().getString("message");
-        TextView temp =  view.findViewById(R.id.comm_desc);
-        temp.setText(strtext);
+        String postName = getArguments().getString("postName");
+        TextView postNameView =  view.findViewById(R.id.comm_name);
+        postNameView.setText(postName);
+        String postDesc = getArguments().getString("postDesc");
+        TextView postDescView =  view.findViewById(R.id.comm_desc);
+        postDescView.setText(postDesc);
+        String postIngUrl = getArguments().getString("postIngUrl");
+        ImageView postImgView =  view.findViewById(R.id.postImg);
+        Picasso.with(getContext()).load(postIngUrl).fit().centerCrop().into(postImgView);
         return view;
 
     }

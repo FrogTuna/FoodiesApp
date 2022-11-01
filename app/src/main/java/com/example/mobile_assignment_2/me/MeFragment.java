@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.authentication.login;
+import com.example.mobile_assignment_2.home.PostDetails;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,6 +73,7 @@ public class MeFragment extends Fragment {
     private String mParam2;
     FirebaseAuth myAuth;
     Button signOutBtn;
+    ImageButton collectBtn;
     ImageButton postsBtn;
     ImageView editHeadPortrait;
     TextView username;
@@ -146,7 +148,7 @@ public class MeFragment extends Fragment {
         editHeadPortrait = (ImageView) view.findViewById(R.id.headPortrait);
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
-
+        collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
 
 
 
@@ -164,11 +166,18 @@ public class MeFragment extends Fragment {
         postsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fromMePageToMyPostsPageIntent(view);
+                Intent i = new Intent(getActivity(), MyPostsActivity.class);
+                startActivity(i);
             }
         });
 
-
+        collectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), CollectPostsActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         editHeadPortrait.setOnClickListener(new View.OnClickListener() {

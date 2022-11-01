@@ -1,9 +1,11 @@
 package com.example.mobile_assignment_2.community;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mobile_assignment_2.R;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -28,6 +37,8 @@ public class MyCommunityFragment extends Fragment{
     private String mParam1;
     private String mParam2;
     private ListView listView;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     public MyCommunityFragment() {
     }
@@ -54,16 +65,61 @@ public class MyCommunityFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_community, container, false);
+        ArrayList<String> communityPostsUri = new ArrayList<>();
+        ArrayList<Communitypost> communityPosts = new ArrayList<>();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        // Get a reference to users
+        DatabaseReference usrRef = firebaseDatabase.getReference("Users");
+
+        usrRef.child(currentUser.getUid()).child("commLst").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                communityPostsUri.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String postUri = dataSnapshot.getKey();
+                    Log.d("postUri", "postUri" + postUri);
+                    communityPostsUri.add(postUri);
+                }
+                DatabaseReference commRef = firebaseDatabase.getReference("Community");
+                commRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Communitypost post = dataSnapshot.getValue(Communitypost.class);
+                            Log.d("idddd", post.getCid());
+                            Log.d("commlist", "commlst length " + communityPostsUri.size());
+                            if (communityPostsUri.contains(post.getCid())){
+                                Log.d("testttttt", String.valueOf(communityPostsUri.contains(post.getCid())));
+                                communityPosts.add(post);
+                                Log.d("commlist", "commlst length" + communityPosts.size());
+                            }
+
+                        }
+//                        communityPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
+                        CustomAdapter customAdapter = new CustomAdapter(getContext(), communityPosts);
+                        listView = view.findViewById(R.id.list);
+                        listView.setAdapter(customAdapter);
+                    }
 
 
-        List<Communitypost> posts = new ArrayList<>();
-        getcommPosts(posts);
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), posts);
-        listView = view.findViewById(R.id.list);
-        listView.setAdapter(customAdapter);
-//        customAdapter.addAll(getcommPosts());
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         return view;
     }
@@ -110,6 +166,7 @@ public class MyCommunityFragment extends Fragment{
                 convertView = LayoutInflater.from(mcontext).inflate(R.layout.community_leave_posts, null);
                 holder.image = convertView.findViewById(R.id.communityImg);
                 holder.title = convertView.findViewById(R.id.community_name);
+                holder.content = convertView.findViewById(R.id.community_description);
                 holder.delete = convertView.findViewById(R.id.btn_leave);
                 holder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -124,32 +181,17 @@ public class MyCommunityFragment extends Fragment{
                 holder = (ViewHolder) convertView.getTag();
             }
 
-//            TextView titleView =  (TextView) convertView.findViewById(R.id.community_name);
-//            TextView descpView =  (TextView) convertView.findViewById(R.id.community_description);
-//            ImageView commImg =  convertView.findViewById(R.id.communityImg);
-//            Button delBtn = convertView.findViewById(R.id.btn_leave);
-
-
-
-//            titleView.setText(post.getCommName());
-//            descpView.setText(post.getDescription());
-//            commImg.setBackgroundResource(post.getCommImage());
-//            holder.image.setBackgroundResource(musers.get(position).getCommImage());
-//            holder.image.setBackgroundResource(musers.get(position).getCommImage());
             holder.title.setText(musers.get(position).getCommName());
+            holder.content.setText(musers.get(position).getComDescription());
+            String imageUrl = musers.get(position).getImageUrls();
+
+            // Download image from URL and set to imageView
+            Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(holder.image);
             return  convertView;
         }
     }
 
-    // To generate an array of posts example
-    private List<Communitypost> getcommPosts(List<Communitypost> newPosts) {
-//        ArrayList<Communitypost> newPosts = new ArrayList<>();
-        newPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
-        newPosts.add(new Communitypost("2", "2", "commName2", null, "type2", "user2", "comDescrip2"));
-        newPosts.add(new Communitypost("3", "3", "commName3", null, "type3", "user3", "comDescrip3"));
-        newPosts.add(new Communitypost("4", "4", "commName4", null, "type4", "user4", "comDescrip4"));
-        return newPosts;
-    }
+
 
 
 }
