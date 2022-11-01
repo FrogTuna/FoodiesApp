@@ -89,29 +89,28 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
                 //Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
                 //Ke YANG *********************************
                 Query databaseReference = mDatabase.child("Users").child(currentUID).child("requests");
-                runOnce  =true;
+//                runOnce  =true;
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if(runOnce) {
-                            runOnce = false;
-                            if (snapshot.hasChild(friendListItem.getUID())) {
-                                Log.d("debug: ", "************* You are already friends");
-                                Toast.makeText(view.getContext(), "You are already friends", Toast.LENGTH_SHORT).show();
-                                holder.addFriendBtn.setVisibility(View.INVISIBLE);
-                            }else{
-                                Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
-                                FirebaseAuth myAuth = FirebaseAuth.getInstance();
-                                FirebaseUser firebaseUser = myAuth.getCurrentUser();
-                                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
-                                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
-                                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
-//                                Context context = view.getContext();
-//                                Intent intent = new Intent(context, MainActivity.class);
-//                                context.startActivity(intent);
-                            }
+//                        holder.addFriendBtn.setVisibility(View.INVISIBLE);
+                        if (snapshot.hasChild(friendListItem.getUID())) {
+                            Log.d("debug: ", "************* You are already friends");
+                            Toast.makeText(view.getContext(), "You are already friends", Toast.LENGTH_SHORT).show();
+                            holder.addFriendBtn.setVisibility(View.INVISIBLE);
+                        }else{
+                            Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
+                            FirebaseAuth myAuth = FirebaseAuth.getInstance();
+                            FirebaseUser firebaseUser = myAuth.getCurrentUser();
+                            mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
+                            mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
+                            mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
+                            Context context = view.getContext();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
                         }
+
                     }
 
                     @Override
