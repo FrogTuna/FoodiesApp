@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
@@ -83,7 +85,7 @@ public class AddEvent extends AppCompatActivity {
                 eventLocation = eLocView.getText().toString();
                 eventPeoNum = Integer.parseInt(ePeopleNum.getText().toString());
                 String eid = eventRef.getKey();
-                ArrayList<String> peoList = new ArrayList<>();
+                HashMap<String, String> peoList = new HashMap<>();
 
 //                String td = eventDate.concat(eventTime);
 //                Log.e("readEvent", td);
@@ -98,7 +100,8 @@ public class AddEvent extends AppCompatActivity {
                             Log.e("firebase", "Success in fetching data", task.getException());
                             String userName = task.getResult().getValue(String.class);
                             String uid = curUser.getUid();
-                            peoList.add(uid);
+                            eventRef.child(eid).child("peopleList").getKey();
+//                            peoList.push();
                             String status =  "join";
                             Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
