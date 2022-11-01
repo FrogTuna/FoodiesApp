@@ -54,6 +54,14 @@
         <item>12:04pm</item>
         <item>12:05pm</item>
     </string-array>
+    
+    <string-array name="comTypeLists">
+        <item>Asian food</item>
+        <item>American food</item>
+        <item>Italy</item>
+        <item>Greece food</item>
+        <item>Mexican food</item>
+    </string-array>
 
 
     =======

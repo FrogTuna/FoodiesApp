@@ -79,13 +79,15 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         communityRef = firebaseDatabase.getReference("Community").push();
 
         // Create the instance of ArrayAdapter
-        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
+        //ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
+        ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
 
         // set simple layout resource file for each item of spinner
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set the ArrayAdapter (ad) data on the Spinner which binds data to spinner
         comType.setAdapter(ad);
+        comType.setOnItemSelectedListener(this);
 
         Intent intent = getIntent();
         comNameView = findViewById(R.id.community_name);
@@ -240,15 +242,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 //        startActivity(intent);
 //    }
 
-    private void loadFragment(CommunityFragment fragment) {
-        // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-//        fragmentTransaction.replace(R.id.create_com, fragment);
-//        fragmentTransaction.commit(); // save the changes
-    }
 
     private void alertMsg() {
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
