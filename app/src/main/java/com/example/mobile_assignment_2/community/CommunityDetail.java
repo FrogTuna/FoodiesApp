@@ -40,15 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-//import com.example.mobile_assignment_2.home.ForYouFragment;
-//import com.example.mobile_assignment_2.home.Post;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Queue;
 
@@ -193,8 +185,7 @@ public class CommunityDetail extends AppCompatActivity {
             viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
 
             String uid = events.get(position).getUid();
-            ArrayList<String> eidList = new ArrayList<>();
-//            Log.d("events","hi");
+
             firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -241,44 +232,18 @@ public class CommunityDetail extends AppCompatActivity {
                                     dataSnapshot.getRef().removeValue();
                                 }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
                         });
 
-                    } else { // join
-                        //eidList.add(eid);
+                    } else {
                         DatabaseReference addEventRef = eventRef.child(eid).child("peopleList").push();
                         addEventRef.setValue(curUser.getUid());
                         DatabaseReference userEventRef = userRef.child(curUser.getUid()).child("eventJoinList").push();
                         userEventRef.setValue(eid);
                     }
-
-                    ArrayList<String> eventJoinList = new ArrayList<>();
-//                    userRef.child(curUser.getUid()).child("eventJoinList").addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            eventJoinList.clear();
-//                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                                eventJoinList.add((String) dataSnapshot.getValue());
-//                            }
-//                            if (!eventJoinList.contains(eid)) {
-//                                viewHolder.joinBtn.setText("LEAVE");
-//                                firebaseDatabase.getReference().child("Users").child(curUser.getUid()).child("eventJoinList").child(events.get(position).getEid());
-//                                // EventAuth.child("Users").child(curUser.getUid()).child("eventLists").child(events.get(getAdapterPosition()).getEid()).setValue("true");
-//                            } else {
-//                                viewHolder.joinBtn.setText("JOIN");
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-
                 }
             });
         }
@@ -293,78 +258,6 @@ public class CommunityDetail extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-//    public class CustomAdapter extends ArrayAdapter<Event> {
-//
-//        public CustomAdapter(@NonNull Context context, ArrayList<Event> events) {
-//            super(context, 0, events);
-//        }
-//
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            Event event = getItem(position);
-//
-//            if (convertView == null) {
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_event, parent, false);
-//            }
-//            TextView eventView = (TextView) convertView.findViewById(R.id.event_name);
-//            TextView dateView = (TextView) convertView.findViewById(R.id.date_item);
-//            TextView timeView = (TextView) convertView.findViewById(R.id.time_item);
-//            TextView placeView = (TextView) convertView.findViewById(R.id.place_item);
-//            TextView authorView = (TextView) convertView.findViewById(R.id.event_organizer);
-//            TextView peoNumView = (TextView)  convertView.findViewById(R.id.event_people_number);
-//
-//            // get event join/leave button
-//            eventBtn = convertView.findViewById(R.id.join_event_btn);
-//
-//            eventView.setText(event.getEventName());
-//            dateView.setText(event.getEventDate());
-//            timeView.setText(event.getEvenTime());
-//            placeView.setText(event.getEventLocation());
-//
-//            authorView.setText(event.getUserName());
-//            peoNumView.setText(String.valueOf(event.getPeopleNum()));
-//
-//            //eventBtn.setTag("JOIN");
-//            eventBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    // String status = (String) eventBtn.getText();
-//                    //String status = (String) view.getTag();
-//                    String status = eventBtn.getText().toString();
-//                    switch (status) {
-//                        case "JOIN":
-//                            eventBtn.setText("LEAVE");
-//                            //view.setTag("LEAVE"); //pause
-//                            break;
-//                        case "LEAVE":
-//                            eventBtn.setText("JOIN");
-//                            //view.setTag("JOIN"); //pause
-//                            break;
-//                    }
-//                    Log.e("button", (String) eventBtn.getText());
-//                    notifyDataSetChanged();
-////                    switch(status) {
-////                        case "JOIN":
-////                            eventBtn.setText("LEAVE");
-////                            break;
-////                        case "LEAVE":
-////                            eventBtn.setText("JOIN");
-////                        default:
-////                            eventBtn.setText(status);
-////                    }
-//                   // eventBtn.setText((String) view.getTag());
-//
-//                }
-//            });
-//
-//            return convertView;
-//        }
-//    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
