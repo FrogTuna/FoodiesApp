@@ -105,6 +105,7 @@ public class DiscoverCommunityFragment extends Fragment {
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        posts.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Communitypost post = dataSnapshot.getValue(Communitypost.class);
                             posts.add(post);
