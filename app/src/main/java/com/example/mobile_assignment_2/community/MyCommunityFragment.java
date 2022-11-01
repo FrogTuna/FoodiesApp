@@ -191,6 +191,7 @@ public class MyCommunityFragment extends Fragment{
                 convertView = LayoutInflater.from(mcontext).inflate(R.layout.community_leave_posts, null);
                 holder.image = convertView.findViewById(R.id.communityImg);
                 holder.title = convertView.findViewById(R.id.community_name);
+                holder.content = convertView.findViewById(R.id.community_description);
                 holder.delete = convertView.findViewById(R.id.btn_leave);
                 holder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,6 +207,7 @@ public class MyCommunityFragment extends Fragment{
             }
 
             holder.title.setText(musers.get(position).getCommName());
+            holder.content.setText(musers.get(position).getComDescription());
             String imageUrl = musers.get(position).getImageUrls();
 
             // Download image from URL and set to imageView
