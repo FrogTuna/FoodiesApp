@@ -113,13 +113,20 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
                                     Toast.makeText(view.getContext(), "send add request successful!", Toast.LENGTH_SHORT).show();
                                 }
                                 holder.addFriendBtn.setVisibility(View.INVISIBLE);
+                                Context context = view.getContext();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                context.startActivity(intent);
                             }
 
                             if (flag.equals("shake")) {
-                                FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("friends").child(friendListItem.getUID()).setValue(friendListItem.getUID());
-                                FirebaseDatabase.getInstance().getReference("Users").child(friendListItem.getUID()).child("friends").child(firebaseUser.getUid()).setValue(firebaseUser.getUid());
-                                Toast.makeText(view.getContext(), "add successful!", Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase.getInstance().getReference("Users").child(currentUID).child("requests").child(friendListItem.getUID()).removeValue();
+                                FirebaseDatabase.getInstance().getReference("Users").child(currentUID).child("friends").child(friendListItem.getUID()).setValue(friendListItem.getUID());
+                                FirebaseDatabase.getInstance().getReference("Users").child(friendListItem.getUID()).child("friends").child(currentUID).setValue(currentUID);
+                                Toast.makeText(view.getContext(), "add successful! You are already friends", Toast.LENGTH_SHORT).show();
                                 holder.addFriendBtn.setVisibility(View.INVISIBLE);
+                                Context context = view.getContext();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                context.startActivity(intent);
                             }
                         }
 //
