@@ -40,6 +40,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ChatListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final ChatListData chatListItem = chatListData[position];
+//        Log.d("debug: ", "****************"+chatListData[position].get);
         holder.textViewUsername.setText(chatListData[position].getUsername());
         holder.textViewLastMsg.setText(chatListData[position].getLastMsg());
         new DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(chatListData[position].getImgURL());
