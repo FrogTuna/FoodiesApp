@@ -1,9 +1,6 @@
 package com.example.mobile_assignment_2.community;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +20,6 @@ import android.widget.Spinner;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -48,19 +44,23 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/***
+ *
+ *
+ */
 public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;
     private Spinner comType;
-    String[] comType_list = { "Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
+    String[] comType_list = {"Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
     private Button imageBtn;
-    private Button cameraBtn;
     private Button postBtn;
     LinearLayout linearLayout;
     DatabaseReference communityRef;
     FirebaseAuth communityAuth;
     FirebaseUser fuser;
     Uri pickedImageUri;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);
@@ -100,7 +100,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         Log.i("hello", descrip);
         linearLayout = (LinearLayout) findViewById(R.id.imageLinearLayout);
         imageBtn = findViewById(R.id.choose_image);
-//        imageBtn.setOnClickListener(this);
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,7 +161,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                             communityRef.setValue(comPost).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(AddCommunity.this, "Community Added successfully",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(AddCommunity.this, "Community Added successfully", Toast.LENGTH_LONG).show();
                                                     // clear post
                                                     comNameView.setText("");
                                                     comDescriptionView.setText("");
@@ -170,11 +169,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                                 }
                                             });
                                             AddCommunity.this.finish();
-                                            // loadFragment(new CommunityFragment());
-                                            // alertMsg();
-                                            // transAtoF();
-
-                                            // toNewPage();
                                         }
                                     }
                                 });
@@ -185,39 +179,9 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
                 });
 
-
-//                communityRef.setValue(new Communitypost());
-
-                // Get users information
-//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-//                communityRef.setValue(new Communitypost());
-//
-//                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                        String downloadUri = task.getResult().toString();
-//                        if (!task.isSuccessful()) {
-//                            Log.e("firebase", "Error in fetching data", task.getException());
-//                        } else {
-//                            String auName = task.getResult().getValue(String.class);
-//                            String uid = fuser.getUid();
-//                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri, commType, auName, comDes);
-//                            communityRef.setValue(comPost);
-//                        }
-//                    }
-//                });
-//                startActivity(new Intent(AddCommunity.this, CommunityFragment.class));
             }
         });
     }
-//        imageBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//
-//            }
-//        });
 
     @Override
     public void onClick(View view) {
@@ -225,26 +189,11 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.imageButton:
                 galleryActivityResultLauncher.launch("image/*");
                 break;
-//            case R.id.cameraButton:
-//                if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    // Request permission from user
-//                    requestPermissionLauncher.launch(
-//                            Manifest.permission.CAMERA);
-//                } else { // permission is already granted
-//                    openCamera();
-//                }
-
         }
     }
-//    public void toNewPage() {
-//        Intent intent = new Intent(this, DiscoverCommunityFragment.class);
-//        startActivity(intent);
-//    }
 
 
     private void alertMsg() {
-        // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(AddCommunity.this);
 
         builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
@@ -258,16 +207,13 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
         AlertDialog dialog = builder.create();
     }
 
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(),
-                        comType_list[position],
-                        Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), comType_list[position], Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -275,60 +221,31 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    ActivityResultLauncher<String> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
-                @Override
-                public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    Bitmap photoBitmap = null;
-                    try {
-                        photoBitmap = MediaStore.Images.Media.getBitmap(AddCommunity.this.getContentResolver(),uri);
+    ActivityResultLauncher<String> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+        @Override
+        public void onActivityResult(Uri uri) {
+            // Handle the returned Uri
+            Bitmap photoBitmap = null;
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(AddCommunity.this.getContentResolver(), uri);
 
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ImageView imageView = new ImageView(AddCommunity.this);
-                    if(imageView.getParent() != null) {
-                        ((ViewGroup)imageView.getParent()).removeView(imageView);
-                    }
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            500,
-                            RelativeLayout.LayoutParams.MATCH_PARENT
-                    );
-                    imageView.setLayoutParams(params);
-                    imageView.setImageBitmap(photoBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageView imageView = new ImageView(AddCommunity.this);
+            if (imageView.getParent() != null) {
+                ((ViewGroup) imageView.getParent()).removeView(imageView);
+            }
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500, RelativeLayout.LayoutParams.MATCH_PARENT);
+            imageView.setLayoutParams(params);
+            imageView.setImageBitmap(photoBitmap);
 
-                    linearLayout.addView(imageView);
+            linearLayout.addView(imageView);
 
-                    pickedImageUri = uri;
-                }
-            });
+            pickedImageUri = uri;
+        }
+    });
 
-    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                        ImageView imageView = new ImageView(AddCommunity.this);
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
-                        }
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                                500,
-                                RelativeLayout.LayoutParams.MATCH_PARENT
-                        );
-                        imageView.setLayoutParams(params);
-                        imageView.setImageBitmap(bitmap);
-
-                        linearLayout.addView(imageView);
-
-                    }
-                }
-            });
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -338,28 +255,4 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         }
         return super.onOptionsItemSelected(item);
     }
-    //Handle the user's selection result from the dialog of system permissions
-//    private ActivityResultLauncher<String> requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    openCamera();
-//                } else {
-//                    Toast.makeText(AddCommunity.this, "Permission denied", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.choose_image:
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//                break;
-//            case R.id.use_camera:
-//
-//                    openCamera();
-//
-//
-//        }
-//    }
 }
