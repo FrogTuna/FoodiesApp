@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+
 import org.checkerframework.checker.units.qual.A;
 
 public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
@@ -77,6 +79,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        Toast.makeText(getApplicationContext(), "Please input username or email",Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -99,8 +103,9 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             String key = userSnapshot.getKey();
                             String email = String.valueOf(userSnapshot.child("email").getValue());
+                            String userName = String.valueOf(userSnapshot.child("username").getValue());
 
-                            if (email.equals(query)) {
+                            if (email.equals(query) || userName.equals(query)) {
                                 userInfosArrayList = new ArrayList<>();
                                 HashMap<String, String> userInfoHashMap = new HashMap<>();
                                 Log.d("selected User by email:", key + " "
@@ -117,7 +122,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                                 startActivity(intent);
 
                                 Log.d("debug: ", "*************** start intent");
-
                             }
                         }
                     }
@@ -187,6 +191,7 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                 this.finish();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

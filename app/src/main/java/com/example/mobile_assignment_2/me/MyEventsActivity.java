@@ -59,6 +59,7 @@ public class MyEventsActivity extends AppCompatActivity  {
         eventLists = new ArrayList<>();
         EventAuth = FirebaseAuth.getInstance();
         curUser = EventAuth.getCurrentUser();
+        setTitle("Events");
 
         eventRef = FirebaseDatabase.getInstance().getReference("Event");
         userRef = FirebaseDatabase.getInstance().getReference("Users");
