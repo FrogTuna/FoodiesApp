@@ -29,7 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
+/**
+ * @author: Ke YANG
+ * @description: The activity of add friends by shaking
+ */
 public class shakeActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
     private float mAccel;
