@@ -13,9 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Wentao Xie
+ * @description: The Pop up window include community name, description, and post images
  */
 public class BottomSheet extends BottomSheetDialogFragment {
     BottomSheetBehavior<View> bottomSheetBehavior;
