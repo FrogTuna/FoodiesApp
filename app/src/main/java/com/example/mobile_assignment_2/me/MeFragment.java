@@ -115,7 +115,7 @@ public class MeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActivity().setTitle("Me");
         myAuth = FirebaseAuth.getInstance();
         fuser = myAuth.getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());

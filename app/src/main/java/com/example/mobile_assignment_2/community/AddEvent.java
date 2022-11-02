@@ -109,12 +109,22 @@ public class AddEvent extends AppCompatActivity {
                             String status =  "join";
                             Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
+
+                            DatabaseReference eventAddRef = FirebaseDatabase.getInstance().getReference("Event");
+                            DatabaseReference userAddRef = FirebaseDatabase.getInstance().getReference("Users");
+
+                            DatabaseReference addEventRef = eventAddRef.child(eid).child("peopleList").push();
+                            addEventRef.setValue(curUser.getUid());
+                            DatabaseReference userEventRef = userAddRef.child(curUser.getUid()).child("eventJoinList").push();
+                            userEventRef.setValue(eid);
 //                            AddEvent.this.finish();
                         }
                     }
                 });
-
-                 startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+                Intent i = new Intent(AddEvent.this, CommunityDetail.class);
+                i.putExtra("cid", cid);
+                i.putExtra("communityName", comName);
+                startActivity(i);
             }
         });
 
@@ -134,7 +144,9 @@ public class AddEvent extends AppCompatActivity {
 //                break;
 //        }
 //    }
+    public void pageRedirect() {
 
+    }
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
