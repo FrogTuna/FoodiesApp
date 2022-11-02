@@ -93,8 +93,8 @@ public class CommunityDetail extends AppCompatActivity {
                 startActivity(i);
             }
         });
-       // comNameView = findViewById(R.id.communityName);
-        //comNameView.setText(comName);
+        comNameView = findViewById(R.id.communityName);
+        comNameView.setText(comName);
 
         //listView_event = findViewById(R.id.event_list);
         ArrayList<String> peoList = new ArrayList<>();
