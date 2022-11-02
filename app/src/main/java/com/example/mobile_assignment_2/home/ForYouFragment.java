@@ -314,7 +314,7 @@ public class ForYouFragment extends Fragment {
                             public void onSuccess(Void unused) {
                                 DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
                                 Query query = likeRef.orderByValue().equalTo(pid);
-                                query.addValueEventListener(new ValueEventListener() {
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -358,7 +358,7 @@ public class ForYouFragment extends Fragment {
                             public void onSuccess(Void unused) {
                                 DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
                                 Query query = collectRef.orderByValue().equalTo(pid);
-                                query.addValueEventListener(new ValueEventListener() {
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
