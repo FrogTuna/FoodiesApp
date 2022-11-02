@@ -3,6 +3,11 @@ package com.example.mobile_assignment_2;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class Post {
     private String title, description, author, uid, pid;
     private int likes, collects, numComments;

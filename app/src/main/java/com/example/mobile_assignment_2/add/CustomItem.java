@@ -1,5 +1,10 @@
 package com.example.mobile_assignment_2.add;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class CustomItem {
 
     private String spinnerItemName;

@@ -25,8 +25,12 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class Register extends AppCompatActivity {
-
 
     EditText username;
     EditText password;

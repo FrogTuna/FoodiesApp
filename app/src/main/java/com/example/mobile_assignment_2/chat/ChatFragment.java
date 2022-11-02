@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
-///**
-// * A simple {@link Fragment} subclass.
-// * Use the {@link ChatFragment#newInstance} factory method to
-// * create an instance of this fragment.
-// */
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class ChatFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

@@ -29,9 +29,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link DiscoverCommunityFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class DiscoverCommunityFragment extends Fragment {
     private ArrayList<Communitypost> posts = new ArrayList<>();

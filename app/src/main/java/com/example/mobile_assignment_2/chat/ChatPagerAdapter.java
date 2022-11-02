@@ -8,7 +8,11 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class ChatPagerAdapter extends FragmentStateAdapter {
     //    getItem method gives the fragment with respect to the position,
 //    getCount method gives total number of fragments present and

@@ -15,10 +15,11 @@ import com.example.mobile_assignment_2.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RequestFragment#} factory method to
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class RequestFragment extends Fragment {
 

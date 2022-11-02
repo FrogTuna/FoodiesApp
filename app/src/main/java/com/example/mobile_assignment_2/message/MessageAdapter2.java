@@ -26,6 +26,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 

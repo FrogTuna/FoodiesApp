@@ -2,6 +2,11 @@ package com.example.mobile_assignment_2;
 
 import java.util.ArrayList;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class Users {
     private String email, imageUrl, name, password, remark, userID, username;
     private ArrayList<String> friends;

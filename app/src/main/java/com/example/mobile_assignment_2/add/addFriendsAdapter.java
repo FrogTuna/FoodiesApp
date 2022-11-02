@@ -15,6 +15,11 @@ import com.example.mobile_assignment_2.R;
 
 import java.util.ArrayList;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class addFriendsAdapter extends ArrayAdapter {
     public addFriendsAdapter(@NonNull Context context, ArrayList<CustomItem> customItemList) {
         super(context, 0, customItemList);

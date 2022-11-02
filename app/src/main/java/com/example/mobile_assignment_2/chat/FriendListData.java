@@ -1,6 +1,10 @@
 package com.example.mobile_assignment_2.chat;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class FriendListData {
     private String UID;
     private String username;

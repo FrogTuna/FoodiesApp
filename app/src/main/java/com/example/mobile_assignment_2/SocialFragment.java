@@ -34,12 +34,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * A simple {@link Fragment} subclass.
- * <p>
- * <p>
- * Use the {@link SocialFragment#} factory method to
- * <p>
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class SocialFragment extends Fragment {
 

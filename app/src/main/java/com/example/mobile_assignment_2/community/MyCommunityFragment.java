@@ -30,7 +30,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MyCommunityFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";

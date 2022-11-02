@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class PlaceholderContent {
 

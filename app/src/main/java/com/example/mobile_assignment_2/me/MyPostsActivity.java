@@ -26,6 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MyPostsActivity extends AppCompatActivity {
 
     ArrayList<Post> myPosts = new ArrayList<>();

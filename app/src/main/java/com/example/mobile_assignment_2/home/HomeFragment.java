@@ -17,9 +17,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class HomeFragment extends Fragment {
 

@@ -25,7 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ListView listView;
@@ -39,8 +43,10 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     DatabaseReference mDatabase;
     private boolean runOnce = true;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addbysearch_view);
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -132,8 +138,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
 
     @Override
     public boolean onQueryTextChange(String newText) {
-//        String text = newText;
-//        adapter.filter(text);
         return false;
     }
 
@@ -144,7 +148,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                 this.finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

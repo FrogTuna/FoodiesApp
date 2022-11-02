@@ -22,6 +22,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private ArrayList<Post> posts = new ArrayList<Post>();

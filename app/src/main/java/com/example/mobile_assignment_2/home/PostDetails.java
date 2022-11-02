@@ -36,7 +36,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class PostDetails extends AppCompatActivity {
     TextView titleView;
     TextView descripView;

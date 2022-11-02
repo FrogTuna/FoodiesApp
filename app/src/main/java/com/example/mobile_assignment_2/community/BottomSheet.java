@@ -12,6 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class BottomSheet extends BottomSheetDialogFragment {
     BottomSheetBehavior<View> bottomSheetBehavior;
 

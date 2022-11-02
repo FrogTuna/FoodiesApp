@@ -33,6 +33,11 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class ChatWindowActivity extends AppCompatActivity {
 
     public ArrayList<ChatMessage> userConversation = new ArrayList<>();

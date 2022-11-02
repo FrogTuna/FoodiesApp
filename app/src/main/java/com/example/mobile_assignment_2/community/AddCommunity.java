@@ -44,6 +44,11 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;

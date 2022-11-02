@@ -41,12 +41,10 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
-
-
 public class MeFragment extends Fragment {
 
 

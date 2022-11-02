@@ -34,6 +34,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MyEventsActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;

@@ -17,6 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class addFriendList extends AppCompatActivity {
 
     private String currentUID, flag;

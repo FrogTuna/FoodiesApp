@@ -21,6 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class login extends AppCompatActivity implements View.OnClickListener {
 
     EditText email;

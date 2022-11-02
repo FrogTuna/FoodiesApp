@@ -2,6 +2,11 @@ package com.example.mobile_assignment_2.community;
 
 import java.util.HashMap;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class Event {
     private String cid, eid, uid;
     private String userName;

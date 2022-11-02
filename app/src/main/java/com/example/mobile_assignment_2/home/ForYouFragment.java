@@ -42,9 +42,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ForYouFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
  */
 public class ForYouFragment extends Fragment {
 

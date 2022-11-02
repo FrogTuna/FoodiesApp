@@ -33,6 +33,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {
     public addFriendListData[] friendListData;
     public static String username;

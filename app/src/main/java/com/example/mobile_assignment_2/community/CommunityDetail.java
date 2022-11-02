@@ -34,7 +34,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class CommunityDetail extends AppCompatActivity {
 
     private TextView comNameView;

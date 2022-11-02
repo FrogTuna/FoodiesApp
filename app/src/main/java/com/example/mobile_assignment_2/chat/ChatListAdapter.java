@@ -22,6 +22,11 @@ import com.example.mobile_assignment_2.message.ChatWindowActivity;
 
 import java.io.InputStream;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
     private ChatListData[] chatListData;
 

@@ -1,6 +1,10 @@
 package com.example.mobile_assignment_2.community;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class Communitypost {
     // fruitImage to store the resource id if post image
     // private int commImage;

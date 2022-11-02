@@ -17,6 +17,11 @@ import com.example.mobile_assignment_2.post.AddFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class MainActivity extends AppCompatActivity {
 
     public ActivityMainBinding binding;

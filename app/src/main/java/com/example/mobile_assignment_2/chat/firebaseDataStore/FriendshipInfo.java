@@ -2,6 +2,11 @@ package com.example.mobile_assignment_2.chat.firebaseDataStore;
 
 import java.io.Serializable;
 
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class FriendshipInfo implements Serializable {
     /* User1 is the client currently use the app */
     public String User1, User2, Index;

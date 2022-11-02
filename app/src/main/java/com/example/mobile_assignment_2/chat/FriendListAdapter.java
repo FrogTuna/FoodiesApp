@@ -35,7 +35,11 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * @author:
+ * @date: 2022/11/2 22:13
+ * @description:
+ */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     public FriendListData[] friendListData;
     public static String username;
