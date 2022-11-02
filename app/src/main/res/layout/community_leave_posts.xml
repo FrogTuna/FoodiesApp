@@ -40,14 +40,16 @@
 
                 <TextView
                     android:id="@+id/community_name"
-                    android:layout_width="223dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:gravity="center_vertical"
                     android:text="TextView"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/community_description"
-                    android:layout_width="228dp"
+                    android:layout_width="match_parent"
                     android:layout_height="37dp"
                     android:text="TextView" />
             </LinearLayout>
@@ -62,8 +64,9 @@
 <!--                android:textStyle="bold" />-->
             <Button
                 android:id="@+id/btn_leave"
-                android:layout_width="136dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dip"
                 android:text="LEAVE"
                 android:textColor="@android:color/white"
