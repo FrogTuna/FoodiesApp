@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Wentao Xie
+ * @description: Define community Fragment to display Discover and My Community page.
+ * Define the click function to redirect.
  */
 public class MyCommunityFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";

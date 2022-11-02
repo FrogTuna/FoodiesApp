@@ -45,9 +45,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu & Wentao Xie
+ * @description: Create a new community through community type selection, communityName input, description input and image upload,
+ * Click post button to upload the above information to firebase and jump back to the community Discover Page.
  */
 public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private TextInputEditText comNameView;
@@ -82,16 +82,10 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
         // Create the instance of ArrayAdapter
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
-        // ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
-
-        // set simple layout resource file for each item of spinner
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Set the ArrayAdapter (ad) data on the Spinner which binds data to spinner
         comType.setAdapter(ad);
         comType.setOnItemSelectedListener(this);
 
-        Intent intent = getIntent();
         comNameView = findViewById(R.id.community_name);
         comDescriptionView = findViewById(R.id.com_desc);
 
@@ -102,7 +96,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         Log.i("hello", descrip);
         linearLayout = (LinearLayout) findViewById(R.id.imageLinearLayout);
         imageBtn = findViewById(R.id.choose_image);
-//        imageBtn.setOnClickListener(this);
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,11 +165,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                                 }
                                             });
                                             AddCommunity.this.finish();
-                                            // loadFragment(new CommunityFragment());
-                                            // alertMsg();
-                                            // transAtoF();
-
-                                            // toNewPage();
                                         }
                                     }
                                 });
@@ -187,39 +175,9 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
                 });
 
-
-//                communityRef.setValue(new Communitypost());
-
-                // Get users information
-//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-//                communityRef.setValue(new Communitypost());
-//
-//                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                        String downloadUri = task.getResult().toString();
-//                        if (!task.isSuccessful()) {
-//                            Log.e("firebase", "Error in fetching data", task.getException());
-//                        } else {
-//                            String auName = task.getResult().getValue(String.class);
-//                            String uid = fuser.getUid();
-//                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri, commType, auName, comDes);
-//                            communityRef.setValue(comPost);
-//                        }
-//                    }
-//                });
-//                startActivity(new Intent(AddCommunity.this, CommunityFragment.class));
             }
         });
     }
-//        imageBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//
-//            }
-//        });
 
     @Override
     public void onClick(View view) {
@@ -227,41 +185,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.imageButton:
                 galleryActivityResultLauncher.launch("image/*");
                 break;
-//            case R.id.cameraButton:
-//                if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    // Request permission from user
-//                    requestPermissionLauncher.launch(
-//                            Manifest.permission.CAMERA);
-//                } else { // permission is already granted
-//                    openCamera();
-//                }
-
         }
-    }
-//    public void toNewPage() {
-//        Intent intent = new Intent(this, DiscoverCommunityFragment.class);
-//        startActivity(intent);
-//    }
-
-
-    private void alertMsg() {
-        // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddCommunity.this);
-
-        builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-            }
-        });
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-            }
-        });
-
-        // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
-        AlertDialog dialog = builder.create();
     }
 
 
