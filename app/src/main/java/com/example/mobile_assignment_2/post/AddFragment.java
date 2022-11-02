@@ -5,6 +5,7 @@ import static androidx.core.content.ContextCompat.getExternalFilesDirs;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -153,8 +154,18 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 String title = titleView.getText().toString();
                 String descrip = descripView.getText().toString();
                 ArrayList<String> downloadimageUrls = new ArrayList<>();
-
-                if (!title.isEmpty() && !descrip.isEmpty()) {
+                if (pickedImageUris.size()==0) {
+                    Toast.makeText(getContext(), "Please add an image", Toast.LENGTH_SHORT).show();
+                } else if (title.isEmpty()) {
+                    Toast.makeText(getContext(), "Please enter a title", Toast.LENGTH_SHORT).show();
+                } else if (descrip.isEmpty() ) {
+                    Toast.makeText(getContext(), "Please enter a description", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Showing progress dialog when uploading post
+                    ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("Uploading post...");
+                    progressDialog.show();
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
                     // upload all picked images and download their Url, then upload post with post infor and these image Urls
@@ -204,6 +215,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                             databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
+                                                                    progressDialog.dismiss();
                                                                     Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
                                                                     // clear post
                                                                     titleView.setText("");
@@ -227,7 +239,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         });
                     }
                 }
-
 
 
 
