@@ -83,9 +83,7 @@ public class CommunityFragment extends Fragment implements View.OnClickListener{
 
 
 
-            public class ViewPagerAdapter extends FragmentStateAdapter {
-
-
+    public class ViewPagerAdapter extends FragmentStateAdapter {
         public ViewPagerAdapter(Fragment fm) {
             super(fm);
 

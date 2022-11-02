@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -99,21 +98,16 @@ public class MyCommunityFragment extends Fragment{
                             }
 
                         }
-//                        communityPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
                         CustomAdapter customAdapter = new CustomAdapter(getContext(), communityPosts);
                         listView = view.findViewById(R.id.list);
                         listView.setAdapter(customAdapter);
                     }
-
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -133,7 +127,6 @@ public class MyCommunityFragment extends Fragment{
         public CustomAdapter(Context context, List<Communitypost> users) {
             musers = users;
             mcontext = context;
-//            super(context, 0, users);
         }
 
         @Override
@@ -161,7 +154,6 @@ public class MyCommunityFragment extends Fragment{
 
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-//            Communitypost post = getItem(position);
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = LayoutInflater.from(mcontext).inflate(R.layout.community_leave_posts, null);

@@ -13,10 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -90,9 +87,6 @@ public class AddEvent extends AppCompatActivity {
                 eventPeoNum = Integer.parseInt(ePeopleNum.getText().toString());
                 String eid = eventRef.getKey();
                 HashMap<String, String> peoList = new HashMap<>();
-
-//                String td = eventDate.concat(eventTime);
-//                Log.e("readEvent", td);
 
                 usersRef.child(curUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override

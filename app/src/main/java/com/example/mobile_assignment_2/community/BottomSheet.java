@@ -2,7 +2,6 @@ package com.example.mobile_assignment_2.community;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;

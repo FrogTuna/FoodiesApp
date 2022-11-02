@@ -1,12 +1,8 @@
 package com.example.mobile_assignment_2.chat;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
 import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
 
 

@@ -10,7 +10,6 @@ public class Event {
     private String userName;
     private String eventName, eventDate, evenTime, eventLocation;
     private int peopleNum;
-    // private ArrayList<String> peopleList;
     private String status;
 
     private HashMap<String, String> peopleList;

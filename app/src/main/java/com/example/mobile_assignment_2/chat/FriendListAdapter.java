@@ -1,6 +1,5 @@
 package com.example.mobile_assignment_2.chat;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.message.ChatWindowActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -66,14 +64,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         final FriendListData friendListItem = friendListData[position];
 
         holder.textViewUsername.setText(friendListData[position].getUsername());
-//        holder.textViewRemark.setText(friendListData[position].getRemark());
         new DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(friendListData[position].getImgURL());
 
-//        holder.imageViewAvatar.setImageResource(friendListData[position].getImgURL());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                System.out.println("[+] catch : " + friendListData[position].getUID());
                 username = "";
                 userID = "";
                 imageUrl = "";
@@ -173,8 +168,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.delete = itemView.findViewById(R.id.btnFriendDelete);
-//            this.textViewRemark = (TextView) itemView.findViewById(R.id.textViewRemark);
-
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

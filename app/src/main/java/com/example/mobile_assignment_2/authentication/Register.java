@@ -44,7 +44,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
         username = findViewById(R.id.registerUsername);
         email = findViewById(R.id.registerEmail);
         password = findViewById(R.id.registerPassword);
@@ -52,7 +51,6 @@ public class Register extends AppCompatActivity {
         back = findViewById(R.id.registerBack);
         myReference = FirebaseDatabase.getInstance().getReference();
         myAuth = FirebaseAuth.getInstance();
-
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -126,14 +124,6 @@ public class Register extends AppCompatActivity {
                                 myReference.child("Users").child(fuser.getUid()).setValue(user);
                                 registerIntent();
                                 finish();
-//                                registerRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//
-//                                    }
-//                                });
-//                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
-
                             }
                         }). addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -1,13 +1,9 @@
 package com.example.mobile_assignment_2.message;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,9 +42,6 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     //constructor
     public MessageAdapter2(Context context, ArrayList<ChatMessage> conversationRight){
-
-
-
         this.context = context;
         this.allConversation = conversationRight;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -69,7 +59,6 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if(allConversation.get(position).getRole().equals(fuser.getUid())) {
             return LAYOUT_RIGHT;
         }
-
         return 0;
     }
 
@@ -79,10 +68,8 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //This is where you inflate the layout (Giving a loop to our view)
-
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
-
 
         if(viewType == 0){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_left,parent,false);
@@ -104,7 +91,7 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         //assigning values to the views we created in the recycler_view_row layout file
-//      //based on the position of the recycler views
+        //based on the position of the recycler views
 
         if(allConversation.get(position).getRole().equals(FriendListAdapter.userID)){
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;

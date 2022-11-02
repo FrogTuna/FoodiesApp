@@ -2,8 +2,6 @@ package com.example.mobile_assignment_2.community;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,7 +44,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class AddCommunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private TextInputEditText comNameView;
@@ -80,7 +77,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
         // Create the instance of ArrayAdapter
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
-        // ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
 
         // set simple layout resource file for each item of spinner
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -88,8 +84,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         // Set the ArrayAdapter (ad) data on the Spinner which binds data to spinner
         comType.setAdapter(ad);
         comType.setOnItemSelectedListener(this);
-
-        Intent intent = getIntent();
         comNameView = findViewById(R.id.community_name);
         comDescriptionView = findViewById(R.id.com_desc);
 
@@ -100,7 +94,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         Log.i("hello", descrip);
         linearLayout = (LinearLayout) findViewById(R.id.imageLinearLayout);
         imageBtn = findViewById(R.id.choose_image);
-//        imageBtn.setOnClickListener(this);
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,9 +111,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                 String commType = comType.getSelectedItem().toString();
                 String comName = comNameView.getText().toString();
                 String comDes = comDescriptionView.getText().toString();
-                ArrayList<String> downloadImgUrls = new ArrayList<>();
                 String cid = communityRef.getKey();
-                Uri downloadimageUrl = null;
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
@@ -170,11 +161,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                                 }
                                             });
                                             AddCommunity.this.finish();
-                                            // loadFragment(new CommunityFragment());
-                                            // alertMsg();
-                                            // transAtoF();
-
-                                            // toNewPage();
                                         }
                                     }
                                 });
@@ -185,39 +171,9 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
                 });
 
-
-//                communityRef.setValue(new Communitypost());
-
-                // Get users information
-//                DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-//                communityRef.setValue(new Communitypost());
-//
-//                usersRef.child(fuser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                        String downloadUri = task.getResult().toString();
-//                        if (!task.isSuccessful()) {
-//                            Log.e("firebase", "Error in fetching data", task.getException());
-//                        } else {
-//                            String auName = task.getResult().getValue(String.class);
-//                            String uid = fuser.getUid();
-//                            Communitypost comPost = new Communitypost(cid, uid, comName, downloadUri, commType, auName, comDes);
-//                            communityRef.setValue(comPost);
-//                        }
-//                    }
-//                });
-//                startActivity(new Intent(AddCommunity.this, CommunityFragment.class));
             }
         });
     }
-//        imageBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//
-//            }
-//        });
 
     @Override
     public void onClick(View view) {
@@ -225,22 +181,9 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.imageButton:
                 galleryActivityResultLauncher.launch("image/*");
                 break;
-//            case R.id.cameraButton:
-//                if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    // Request permission from user
-//                    requestPermissionLauncher.launch(
-//                            Manifest.permission.CAMERA);
-//                } else { // permission is already granted
-//                    openCamera();
-//                }
 
         }
     }
-//    public void toNewPage() {
-//        Intent intent = new Intent(this, DiscoverCommunityFragment.class);
-//        startActivity(intent);
-//    }
 
 
     private void alertMsg() {
@@ -338,28 +281,4 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         }
         return super.onOptionsItemSelected(item);
     }
-    //Handle the user's selection result from the dialog of system permissions
-//    private ActivityResultLauncher<String> requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    openCamera();
-//                } else {
-//                    Toast.makeText(AddCommunity.this, "Permission denied", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.choose_image:
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//                break;
-//            case R.id.use_camera:
-//
-//                    openCamera();
-//
-//
-//        }
-//    }
 }

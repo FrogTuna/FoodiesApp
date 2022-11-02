@@ -1,10 +1,5 @@
 package com.example.mobile_assignment_2.authentication;
 
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
     public String userID, username, email, password, imageUrl;

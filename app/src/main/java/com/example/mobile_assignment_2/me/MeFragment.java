@@ -138,8 +138,6 @@ public class MeFragment extends Fragment {
         Log.d("username", fuser.getDisplayName());
         Picasso.with(view.getContext()).load(fuser.getPhotoUrl().toString()).into(editHeadPortrait);
 
-        //loadDatabase(view);
-
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,8 +145,6 @@ public class MeFragment extends Fragment {
                 signOut(view);
             }
         });
-
-
 
 
         postsBtn.setOnClickListener(new View.OnClickListener() {

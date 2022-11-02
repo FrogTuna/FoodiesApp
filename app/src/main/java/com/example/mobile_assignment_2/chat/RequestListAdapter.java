@@ -41,9 +41,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     public void onBindViewHolder(RequestListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final RequestListData requestListItem = requestListData[position];
         holder.textViewUsername.setText(requestListData[position].getUsername());
-//        holder.textViewComment.setText(requestListData[position].getComment());
         Picasso.with(holder.itemView.getContext()).load(requestListData[position].getAvatar()).into(holder.imageViewAvatar);
-        //holder.imageViewAvatar.setImageResource(requestListData[position].getAvatar());
         holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +82,6 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
-//            this.textViewComment = (TextView) itemView.findViewById(R.id.textViewComment);
             this.addBtn = itemView.findViewById(R.id.btnFriendDelete);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }

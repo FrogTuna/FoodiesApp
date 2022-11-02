@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.mobile_assignment_2.R;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +42,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(resource, viewGroup, false);
-
 
         return new ImagesAdapter.ViewHolder(view);
     }

@@ -18,7 +18,6 @@ import java.util.Locale;
 public class ListViewAdapter extends BaseAdapter implements Filterable {
 
     // Declare Variables
-
     Context mContext;
     LayoutInflater inflater;
     private List<friendItems> friendItemsList = null;
@@ -67,22 +66,6 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         holder.name.setText(friendItemsList.get(position).getFriendItem());
 
         return view;
-    }
-
-    // Filter Class
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        friendItemsList.clear();
-        if (charText.length() == 0) {
-            friendItemsList.addAll(arraylist);
-        } else {
-            for (friendItems wp : arraylist) {
-                if (wp.getFriendItem().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    friendItemsList.add(wp);
-                }
-            }
-        }
-        notifyDataSetChanged();
     }
 
 

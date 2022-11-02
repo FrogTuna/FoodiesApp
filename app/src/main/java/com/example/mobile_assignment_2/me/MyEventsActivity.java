@@ -36,7 +36,6 @@ import java.util.HashMap;
 
 public class MyEventsActivity extends AppCompatActivity  {
 
-    private TextView comNameView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     FirebaseAuth EventAuth;
@@ -87,13 +86,11 @@ public class MyEventsActivity extends AppCompatActivity  {
                     Log.d("loadEvent", String.valueOf(eventLists.size()));
                 }
                 Collections.reverse(eventLists);
-
                 eventRecyclerView.setHasFixedSize(true);
                 RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
                 eventRecyclerView.setLayoutManager(linearLayoutManager);
                 MyEventAdapter eventAdapter = new MyEventAdapter(eventLists);
                 eventRecyclerView.setAdapter(eventAdapter);
-
             }
 
             @Override
@@ -155,7 +152,6 @@ public class MyEventsActivity extends AppCompatActivity  {
             int curPeoNum = peopleList.size();
             int maxPeoNum = events.get(position).getPeopleNum();
             int waitPeoNum = maxPeoNum-curPeoNum;
-            // viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
             viewHolder.peoNumView.setText(String.valueOf(waitPeoNum));
 
             String uid = events.get(position).getUid();

@@ -31,8 +31,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference myReference;
 
-    String defaultUsername = "leo727268082@gmail.com";
-    //String defaultUsername = "727268082@qq.com";
+    //String defaultUsername = "leo727268082@gmail.com";
+    String defaultUsername = "727268082@qq.com";
     //String defaultUsername = "695578606@qq.com";
     //String defaultUsername = "kyy2@student.unimelb.edu.au";
     //String defaultUsername = "zouweiran9122@gmail.com";
@@ -149,8 +149,6 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()){
             case R.id.loginButton:
                 loginUser2();
-                //loginUser();
-                //mainIntent();
                 break;
             case R.id.registerInLogin:
                 loginIntent();

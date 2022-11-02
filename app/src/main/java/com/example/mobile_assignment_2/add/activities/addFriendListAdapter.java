@@ -66,29 +66,13 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
     @Override
     public void onBindViewHolder(addFriendListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final addFriendListData friendListItem = friendListData[position];
-
         holder.textViewUsername.setText(friendListData[position].getUsername());
-
-//        holder.textViewRemark.setText(friendListData[position].getRemark());
         new addFriendListAdapter.DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(friendListData[position].getImgURL());
-
-//        holder.imageViewAvatar.setImageResource(friendListData[position].getImgURL());
-//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Redirect to user page
-
-//
-//            }
-//        });
-
 
         holder.addFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to user page
-                //Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
-                //Ke YANG *********************************
                 Query databaseReference = mDatabase.child("Users");
                 runOnce  =true;
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -129,8 +113,6 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
                                 context.startActivity(intent);
                             }
                         }
-//
-
                     }
 
                     @Override
@@ -138,19 +120,6 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
 
                     }
                 });
-                //Ke YANG ***********************************
-
-//                Log.d("buttonClick: ", friendListItem.getUID() + " " + currentUID);
-//                FirebaseAuth myAuth = FirebaseAuth.getInstance();
-//                FirebaseUser firebaseUser = myAuth.getCurrentUser();
-//                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("name").setValue(firebaseUser.getDisplayName());
-//                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("imageUrl").setValue(firebaseUser.getPhotoUrl().toString());
-//                mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child(currentUID).child("userID").setValue(currentUID);
-                //mDatabase.child("Users").child(friendListItem.getUID()).child("requests").child("comment").setValue(friendListItem.ge);
-//                Context context = view.getContext();
-//                Intent intent = new Intent(context, MainActivity.class);
-//                context.startActivity(intent);
-                //mDatabase.child("Users").child(currentUID).child("request").child(friendListItem.getUID()).setValue(currentUID);
             }
         });
 
@@ -172,7 +141,6 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.addFriendBtn = (Button) itemView.findViewById(R.id.btnFriendDelete);
-//            this.textViewRemark = (TextView) itemView.findViewById(R.id.textViewRemark);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

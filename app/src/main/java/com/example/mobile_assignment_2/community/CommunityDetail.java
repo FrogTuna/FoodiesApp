@@ -1,33 +1,23 @@
 package com.example.mobile_assignment_2.community;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,14 +32,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Queue;
 
 
 public class CommunityDetail extends AppCompatActivity {
 
     private TextView comNameView;
-    private View imgView;
-    private ListView listView_event, listView_com;
 //    private ArrayList<Event> eventList;
     String comName, cid;
     FirebaseAuth EventAuth;
@@ -57,8 +44,6 @@ public class CommunityDetail extends AppCompatActivity {
     DatabaseReference eventRef;
     DatabaseReference userRef;
     private ArrayList<Event> eventLists = new ArrayList<>();
-    private Button eventBtn;
-    EventAdapter eventAdapter;
 
     RecyclerView eventRecyclerView;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -96,13 +81,10 @@ public class CommunityDetail extends AppCompatActivity {
         comNameView = findViewById(R.id.communityName);
         comNameView.setText(comName);
 
-        //listView_event = findViewById(R.id.event_list);
         ArrayList<String> peoList = new ArrayList<>();
 
         // get the layout and event list
-
         eventRecyclerView = (RecyclerView) findViewById(R.id.event_list);
-
 
         eventRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -116,10 +98,7 @@ public class CommunityDetail extends AppCompatActivity {
                         eventLists.add(event);
                     }
                     Log.d("loadEvent", String.valueOf(eventLists.size()));
-//                    Log.e("loadEvent", String.valueOf(eventLists.size()));
                 }
-                // CustomAdapter customAdapter = new CustomAdapter(getBaseContext(), eventLists);
-                // listView_event.setAdapter(customAdapter);
 
 
                 eventRecyclerView.setHasFixedSize(true);
@@ -170,7 +149,6 @@ public class CommunityDetail extends AppCompatActivity {
         @Override
         public void onBindViewHolder(EventAdapter.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
             final int[] numPeople = {events.get(position).getPeopleNum()};
-//            Log.d("events", events.get(position).getEventName());
             String author = events.get(position).getUserName();
             String eid = events.get(position).getEid();
 
@@ -188,7 +166,6 @@ public class CommunityDetail extends AppCompatActivity {
             int curPeoNum = peopleList.size();
             int maxPeoNum = events.get(position).getPeopleNum();
             int waitPeoNum = maxPeoNum-curPeoNum;
-            // viewHolder.peoNumView.setText(String.valueOf(events.get(position).getPeopleNum()));
             viewHolder.peoNumView.setText(String.valueOf(waitPeoNum));
 
             String uid = events.get(position).getUid();
@@ -256,7 +233,6 @@ public class CommunityDetail extends AppCompatActivity {
         }
         @Override
         public int getItemCount() {
-            // Log.d("events", String.valueOf(events.size()));
             return events.size();
         }
         @Override
@@ -274,14 +250,4 @@ public class CommunityDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-////    private void setUpToolbar(View view) {
-////        Toolbar toolbar = view.findViewById(R.id.com_bar);
-////        setSupportActionBar(toolbar);
-////    }
-//
-////    @Override
-////    public boolean onCreateOptionsMenu(Menu menu) {
-////        getMenuInflater().inflate(R.menu.com_select_menu, menu);
-////        return true;
-////    }
 }

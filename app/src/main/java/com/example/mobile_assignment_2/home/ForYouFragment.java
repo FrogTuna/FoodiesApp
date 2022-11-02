@@ -1,7 +1,5 @@
 package com.example.mobile_assignment_2.home;
 
-import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 

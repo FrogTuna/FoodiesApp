@@ -79,12 +79,6 @@ public class shakeActivity extends AppCompatActivity{
 
             /* Count 10s after last shaken */
 
-//            if(System.currentTimeMillis() - start > TIME_ELAPSED) {
-//                System.out.println("[start] " + start);
-//
-//                updateShakenInfo(true);
-//            }
-
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -92,13 +86,8 @@ public class shakeActivity extends AppCompatActivity{
             mAccelLast = mAccelCurrent;
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
 
-//            Log.w("AccelCurrent:",  String.valueOf(mAccelCurrent));
-//            Log.w("AccelCurrent:",  String.valueOf(x + " " + y + " " + z));
-
-
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-//            System.out.println("[Shake] " + mAccel);
             if (mAccel > 9.5) {
 
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
@@ -117,7 +106,6 @@ public class shakeActivity extends AppCompatActivity{
                         for (DataSnapshot user : snapshot.getChildren()) {
                             // TODO: handle the post
 
-//                            Log.w("KeYANG",  "DB changed!");
                             if(String.valueOf(user.child("hasShaken").getValue()).equals("true")
                               && !user.getKey().equals(userID) && runOnce){
 
@@ -125,7 +113,6 @@ public class shakeActivity extends AppCompatActivity{
                                 Log.w("KeYANG",  "find someone shake!");
                                 Log.d("KeYANG" , String.valueOf(System.currentTimeMillis()));
                                 Intent intent = new Intent(getApplicationContext(), addFriendList.class);
-//                                getShakenUsersID(intent);
 
                                 String key = user.getKey();
                                 HashMap<String, String> userInfoHashMap = new HashMap<>();
@@ -189,7 +176,6 @@ public class shakeActivity extends AppCompatActivity{
     }
     protected void updateShakenInfo(Boolean tenSeconds) {
 
-//        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String key = mDatabase.child("Users").child(userID).child("hasShaken").getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         if(tenSeconds) {
@@ -199,9 +185,6 @@ public class shakeActivity extends AppCompatActivity{
         else {
             childUpdates.put("/Users/" + userID + "/" + key, true);
             mDatabase.updateChildren(childUpdates);
-//            Intent intent = new Intent(this, addFriendList.class);
-//            userInfosArrayList = new ArrayList();
-//            getShakenUsersID(intent);
 
         }
 
@@ -232,11 +215,7 @@ public class shakeActivity extends AppCompatActivity{
                     intent.putExtra("userInfosArrayList", userInfosArrayList);
                     intent.putExtra("currentUser",userID);
                     startActivity(intent);
-//                    try {
-//                        Thread.sleep(60);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+
                 }
             }
             @Override

@@ -5,7 +5,6 @@ public class ChatMessage{
 
     private String senderText;
     private String senderTime;
-    private int senderImage;
     private String senderImageString;
     private String role;
     private String chatID;

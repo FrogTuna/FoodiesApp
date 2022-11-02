@@ -3,7 +3,6 @@ package com.example.mobile_assignment_2.add.activities;
 public class addFriendListData {
     private String UID;
     private String username;
-    private String remark;
     private String imgURL;
 
 
@@ -11,7 +10,6 @@ public class addFriendListData {
     public addFriendListData(String _UID, String _username, String _imgURL) {
         this.UID = _UID;
         this.username = _username;
-//        this.remark = _remark;
         this.imgURL = _imgURL;
     }
 
@@ -22,14 +20,6 @@ public class addFriendListData {
     public void setUsername(String _username) {
         this.username = _username;
     }
-
-//    public String getRemark() {
-//        return this.remark;
-//    }
-//    public void setRemark(String _remark) {
-//        this.remark = _remark;
-//    }
-
     public String getImgURL() {
         return this.imgURL;
     }

@@ -42,7 +42,6 @@ public class DiscoverCommunityFragment extends Fragment {
     private RecyclerView recyclerView;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
-//    int position;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -123,7 +122,6 @@ public class DiscoverCommunityFragment extends Fragment {
                                 Intent i = new Intent(getActivity(), CommunityDetail.class);
                                 i.putExtra("cid", post.getCid());
                                 i.putExtra("communityName", post.getCommName());
-//                                Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                                 i.putExtra("imageURLs", post.getImageUrls());
                                 startActivity(i);
                             }
@@ -177,11 +175,9 @@ public class DiscoverCommunityFragment extends Fragment {
                         String postIngUrl = post.getImageUrls();
 
                         Bundle bundle = new Bundle();
-//                        String myMessage = "Stack Overflow is cool!";  // pass this message from current fragment to bottomsheet fragment
                         bundle.putString("postName", postName );
                         bundle.putString("postDesc", postDesc );
                         bundle.putString("postIngUrl", postIngUrl );
-//                        Log.d("msgonclick", "this is an on click!!!!!!!!!!!!!!!");
                         BottomSheet bottomSheet = new BottomSheet();
                         bottomSheet.setArguments(bundle);
                         bottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
