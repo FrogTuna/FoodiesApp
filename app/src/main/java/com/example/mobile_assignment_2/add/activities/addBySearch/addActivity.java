@@ -26,9 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG
+ * @description: The activity of adding friends by searching username or email
  */
 public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 

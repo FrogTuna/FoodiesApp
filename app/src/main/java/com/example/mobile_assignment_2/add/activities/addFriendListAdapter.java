@@ -35,8 +35,7 @@ import java.io.InputStream;
 
 /**
  * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @description: Fill out the friends list
  */
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {
     public addFriendListData[] friendListData;

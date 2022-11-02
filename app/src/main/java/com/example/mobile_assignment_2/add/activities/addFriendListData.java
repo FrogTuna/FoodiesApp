@@ -2,8 +2,7 @@ package com.example.mobile_assignment_2.add.activities;
 
 /**
  * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @description: The data frame of friends list
  */
 public class addFriendListData {
     private String UID;
