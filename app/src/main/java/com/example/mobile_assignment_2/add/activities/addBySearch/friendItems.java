@@ -1,9 +1,8 @@
 package com.example.mobile_assignment_2.add.activities.addBySearch;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG
+ * @description: Show the recent record of search view
  */
 public class friendItems {
     String friendItem;

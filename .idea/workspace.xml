@@ -14,6 +14,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="6b7e760f-087d-48c6-a08c-5ffce4aef351" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
@@ -33,13 +34,31 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/post/AddFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/post/AddFragment.java" afterDir="false" />
+=======
+    <list default="true" id="63c5d276-be25-45b0-9285-9eac42c294b1" name="Changes" comment="add class comment">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/CustomItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/CustomItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/ListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/ListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/addActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/addActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/friendItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/friendItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addShake/shakeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addShake/shakeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/addFriendsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/addFriendsAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MeFragment.java" afterDir="false" />
+>>>>>>> 9a6cf567b6a88c3ea4d6705f2b9b47c70a123bbc
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\zouwe\.android\avd\Pixel_5_API_33_13.avd]" />
+=======
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\admin\.android\avd\Pixel_5_API_30.avd]" />
+>>>>>>> 9a6cf567b6a88c3ea4d6705f2b9b47c70a123bbc
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -185,5 +204,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Event button on me" />
+    <MESSAGE value="clean deprecated code" />
+    <MESSAGE value="tidy code" />
+    <MESSAGE value="add class command" />
+    <MESSAGE value="add class comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="add class comment" />
   </component>
 </project>

@@ -3,9 +3,10 @@ package com.example.mobile_assignment_2.community;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu
+ * @description: Define the Event Object
+ * Including cid(community ID), eid(Event ID), uid(User ID), userName, eventName, eventDate, eventTime, eventLocation
+ * peopleNum and status(button status, join or leave), peopleList(People who joined this event).
  */
 public class Event {
     private String cid, eid, uid;

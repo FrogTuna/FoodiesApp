@@ -1,9 +1,9 @@
 package com.example.mobile_assignment_2.chat;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This class store the attributes of each request, and also defines the getter and setter methods
  */
 public class RequestListData {
     //    private String ID;

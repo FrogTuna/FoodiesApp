@@ -1,9 +1,8 @@
 package com.example.mobile_assignment_2.add;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG
+ * @description: The data frame of adding friends button
  */
 public class CustomItem {
 

@@ -16,9 +16,8 @@ import com.example.mobile_assignment_2.R;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG
+ * @description: Set the add friends button
  */
 public class addFriendsAdapter extends ArrayAdapter {
     public addFriendsAdapter(@NonNull Context context, ArrayList<CustomItem> customItemList) {

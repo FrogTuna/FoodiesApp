@@ -29,9 +29,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu
+ * @description: Create new Event through text input including EventName, Location, People Number, date and time select.
+ * Click post to connect to firebase and redirect to CommunityDetail page.
  */
 public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
