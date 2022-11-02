@@ -29,16 +29,16 @@ import com.google.firebase.database.DatabaseReference;
  */
 public class login extends AppCompatActivity implements View.OnClickListener {
 
+
+
+    //fields
     EditText email;
     EditText password;
     Button loginBtn;
     TextView registerInLogin;
     FirebaseAuth myAuth;
-
-    private DatabaseReference myReference;
-
-    //String defaultUsername = "leo727268082@gmail.com";
-    String defaultUsername = "727268082@qq.com";
+    String defaultUsername = "leo727268082@gmail.com";
+    //String defaultUsername = "727268082@qq.com";
     //String defaultUsername = "695578606@qq.com";
     //String defaultUsername = "kyy2@student.unimelb.edu.au";
     //String defaultUsername = "zouweiran9122@gmail.com";
@@ -50,6 +50,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        //xml id
         email = findViewById(R.id.loginUsername);
         password = findViewById(R.id.loginPassword);
         loginBtn = findViewById(R.id.loginButton);
@@ -60,12 +62,13 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    //link to register page
+    //from login to register page
     public void loginIntent() {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 
+    //from login to home page
     public void mainIntent() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -78,6 +81,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
+    //login
     private void loginUser() {
 
         String emailString = email.getText().toString();
@@ -115,6 +119,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+
+    //login
     private void loginUser2() {
         myAuth.signInWithEmailAndPassword(defaultUsername, defaultPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -137,6 +143,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
+
+    //page switcher
     @Override
     public void onClick(View view) {
 

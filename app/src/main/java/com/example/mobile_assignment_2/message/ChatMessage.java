@@ -7,6 +7,8 @@ package com.example.mobile_assignment_2.message;
  */
 public class ChatMessage {
 
+
+    //fields
     private String senderText;
     private String senderTime;
     private String senderImageString;
@@ -14,6 +16,8 @@ public class ChatMessage {
     private String chatID;
 
 
+
+    //constructor
     public ChatMessage(String senderText, String senderTime, String senderImageString, String chatID, String role) {
         this.senderText = senderText;
         this.senderTime = senderTime;
@@ -23,6 +27,8 @@ public class ChatMessage {
     }
 
 
+
+    //getter
     public String getSenderText() {
         return senderText;
     }

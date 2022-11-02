@@ -40,6 +40,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ChatWindowActivity extends AppCompatActivity {
 
+
+    //fields
     public ArrayList<ChatMessage> userConversation = new ArrayList<>();
     public ArrayList<ChatMessage> oppositeUserconversation = new ArrayList<>();
     AppCompatImageView backIcon;
@@ -52,6 +54,8 @@ public class ChatWindowActivity extends AppCompatActivity {
     DatabaseReference userLastMessageRef;
     DatabaseReference oppositeUserLastMessageRef;
     DatabaseReference oppositeUserImageRef;
+    DatabaseReference userLastMessageHasReadRef;
+    DatabaseReference oppositeUserLastMessageHasReadRef;
     FirebaseAuth myAuth;
     ImageView chatSendButton;
     EditText chatInputBar;
@@ -73,9 +77,12 @@ public class ChatWindowActivity extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
         fuser = myAuth.getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("chats");
+        //useHasRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child()
         oppositeUserRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("chats");
         userLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("lastMessage");
+        userLastMessageHasReadRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("hasRead");
         oppositeUserLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("lastMessage");
+        oppositeUserLastMessageHasReadRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("hasRead");
         allRef = FirebaseDatabase.getInstance().getReference();
         chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
         oppositeUserImageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("imageUrl");
@@ -93,7 +100,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         oppositeUserAvatar = findViewById(R.id.chatWindowLeftUserImage);
 
 
-        //methods
+        //load data first if there's existing message in firebase
         loadDatabase();
 
 
@@ -102,10 +109,13 @@ public class ChatWindowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                //cannot be empty
                 if (chatInputBar.length() == 0) {
 
                     Snackbar.make(chatSendButton, "input text could not be empty", Snackbar.LENGTH_SHORT).show();
 
+                //send message to firebase and display on the chat window
                 } else {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
@@ -117,6 +127,8 @@ public class ChatWindowActivity extends AppCompatActivity {
                     DatabaseReference oppositeFuserChatRef = oppositeUserRef.push();
                     DatabaseReference userLastMessageRef2 = userLastMessageRef.push();
                     DatabaseReference oppositeUserLastMessageRef2 = oppositeUserLastMessageRef.push();
+                    userLastMessageHasReadRef.setValue("true");
+                    oppositeUserLastMessageHasReadRef.setValue("false");
                     fuserFriendChatRef.setValue(chatID);
                     oppositeFuserChatRef.setValue(chatID);
                     userLastMessageRef2.setValue(chatInputBar.getText().toString());
@@ -135,6 +147,7 @@ public class ChatWindowActivity extends AppCompatActivity {
     private void loadDatabase() {
 
 
+        //opposite user in chat listener (firebase)
         oppositeUserImageRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot imageSnapshot) {
@@ -147,7 +160,8 @@ public class ChatWindowActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         oppositeUserChatIDList.clear();
 
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        //Log.d("chatIDList1", snapshot.getValue().toString());
+                        for(DataSnapshot snapshot1: snapshot.getChildren()){
                             oppositeUserChatIDList.add(snapshot1.getValue().toString());
                         }
 
@@ -161,11 +175,12 @@ public class ChatWindowActivity extends AppCompatActivity {
                                     for (int i = 0; i < oppositeUserChatIDList.size(); i++) {
                                         if (snapshot3.getKey().matches(oppositeUserChatIDList.get(i))) {
 
-                                            if (snapshot3.child("role").getValue().toString().equals(fuser.getUid())) {
-                                                Log.d("i'm here1", snapshot3.child("senderImage").toString());
+                                            if(snapshot3.child("role").getValue().toString().equals(fuser.getUid())){
+                                                //Log.d("i'm here1", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(fuser.getPhotoUrl().toString());
-                                            } else if (snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)) {
-                                                Log.d("i'm here2", snapshot3.child("senderImage").toString());
+                                            }
+                                            else if(snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)){
+                                                //Log.d("i'm here2", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(imageUrl);
                                             }
                                             String chatMessageRole = snapshot3.child("role").getValue().toString();
@@ -213,7 +228,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         });
 
 
-        //my listener
+        //current user in chat listener (firebase)
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -268,6 +283,7 @@ public class ChatWindowActivity extends AppCompatActivity {
     }
 
 
+    //back to home page
     private void backSocialFragmentIntent(AppCompatImageView imageView) {
 
         imageView.setOnClickListener(new View.OnClickListener() {

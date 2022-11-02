@@ -15,10 +15,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.message.ChatWindowActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
@@ -48,12 +55,33 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.textViewUsername.setText(chatListData[position].getUsername());
         holder.textViewLastMsg.setText(chatListData[position].getLastMsg());
         new DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(chatListData[position].getImgURL());
+        //Log.d("new message is coming1", chatListData[position]);
+
+        if(chatListData[position].getHasRead().equals("false")){
+            Log.d("new message is coming2", chatListData[position].getHasRead());
+            holder.newMessageCircle.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.newMessageCircle.setVisibility(View.INVISIBLE);
+        }
+
+
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //holder.newMessageCircle.getDrawable().clearColorFilter();
+
                 FriendListAdapter.username = "";
                 FriendListAdapter.userID = "";
                 // Redirect to user page
+                Toast.makeText(view.getContext(),"click on item: "+chatListItem.getUsername(),Toast.LENGTH_LONG).show();
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser fuser = firebaseAuth.getCurrentUser();
+                // Redirect to user page
+                FriendListAdapter.username = chatListItem.getUsername();
+                FriendListAdapter.userID  = chatListData[position].getFriendID();
+                FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("hasRead").setValue("true");
+                holder.newMessageCircle.setVisibility(view.INVISIBLE);
                 Toast.makeText(view.getContext(), "click on item: " + chatListItem.getUsername(), Toast.LENGTH_LONG).show();
 
                 // Redirect to user page
@@ -77,13 +105,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public ImageView imageViewAvatar;
         public TextView textViewUsername, textViewLastMsg;
         public RelativeLayout relativeLayout;
-
+        public ImageView newMessageCircle;
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.textViewLastMsg = (TextView) itemView.findViewById(R.id.textViewLastMsg);
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
+            this.newMessageCircle = (ImageView) itemView.findViewById(R.id.newMessageCircle);
+            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }
 

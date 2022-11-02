@@ -64,10 +64,12 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+
+    //This is where you inflate the layout (Giving a loop to our view)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        //This is where you inflate the layout (Giving a loop to our view)
+
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
 
@@ -83,13 +85,11 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-
+    //assigning values to the views we created in the recycler_view_row layout file
+    //based on the position of the recycler views
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-
-        //assigning values to the views we created in the recycler_view_row layout file
-        //based on the position of the recycler views
 
         if (allConversation.get(position).getRole().equals(FriendListAdapter.userID)) {
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
@@ -158,30 +158,4 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
-            }
-            return bimage;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 }

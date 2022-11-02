@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class Register extends AppCompatActivity {
 
+
     EditText username;
     EditText password;
     EditText email;
@@ -48,6 +49,9 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
+
+        //find id from xml
         username = findViewById(R.id.registerUsername);
         email = findViewById(R.id.registerEmail);
         password = findViewById(R.id.registerPassword);
@@ -56,6 +60,8 @@ public class Register extends AppCompatActivity {
         myReference = FirebaseDatabase.getInstance().getReference();
         myAuth = FirebaseAuth.getInstance();
 
+
+        //button listener (create a user)
         registerBtn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -66,6 +72,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        //back to login page
         back.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -93,16 +100,19 @@ public class Register extends AppCompatActivity {
         String passwordString = password.getText().toString();
 
 
+        //username
         if (TextUtils.isEmpty(usernameString)) {
 
             username.setError("username cannot be empty");
             username.requestFocus();
 
+        //email
         } else if (TextUtils.isEmpty(emailString)) {
 
             email.setError("Email cannot be empty");
             email.requestFocus();
 
+        //password
         } else if (TextUtils.isEmpty(passwordString)) {
 
             password.setError("Password cannot be empty");
@@ -110,6 +120,7 @@ public class Register extends AppCompatActivity {
 
         } else {
 
+            //set up user's information and update into firebase (required verify user's email)
             myAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

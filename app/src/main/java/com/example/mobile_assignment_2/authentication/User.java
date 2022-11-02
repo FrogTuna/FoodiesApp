@@ -7,8 +7,10 @@ package com.example.mobile_assignment_2.authentication;
  */
 public class User {
 
+    //fields
     public String userID, username, email, password, imageUrl;
 
+    //constructor
     public User(String userID, String username, String email, String password, String imageUrl) {
 
         this.userID = userID;
@@ -20,6 +22,7 @@ public class User {
     }
 
 
+    //getter
     public String getUserID() {
         return userID;
     }

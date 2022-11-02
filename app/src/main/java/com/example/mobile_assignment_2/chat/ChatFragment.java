@@ -89,12 +89,13 @@ public class ChatFragment extends Fragment {
             for (int j = 0; j < userArrayList.size(); j++) {
                 if (((HashMap<String, String>) chatArrayList.get(i)).get("ID").equals(((HashMap<String, String>) userArrayList.get(j)).get("ID"))) {
                     System.out.println("[Check] ");
-
+                    //Log.d("new message is coming", ((HashMap<String, String>)userArrayList.get(j)).get("hasRead"));
                     chatListData[i] = new ChatListData(
-                            ((HashMap<String, String>) chatArrayList.get(i)).get("ID"),
-                            ((HashMap<String, String>) userArrayList.get(j)).get("username"),
-                            ((HashMap<String, String>) chatArrayList.get(i)).get("lastMsg"),
-                            ((HashMap<String, String>) userArrayList.get(j)).get("imageUrl")
+                        ((HashMap<String, String>)chatArrayList.get(i)).get("ID"),
+                        ((HashMap<String, String>)userArrayList.get(j)).get("username"),
+                        ((HashMap<String, String>)chatArrayList.get(i)).get("lastMsg"),
+                        ((HashMap<String, String>)userArrayList.get(j)).get("imageUrl"),
+                            ((HashMap<String, String>)chatArrayList.get(i)).get("hasRead")
                     );
                 }
             }
