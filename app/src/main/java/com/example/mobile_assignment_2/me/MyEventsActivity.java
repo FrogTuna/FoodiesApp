@@ -35,9 +35,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu
+ * @description: Give the list about events that user joined.
+ * Information include EventName, eventDate, eventTime, location, eventAuthor and people Number.
  */
 public class MyEventsActivity extends AppCompatActivity {
 

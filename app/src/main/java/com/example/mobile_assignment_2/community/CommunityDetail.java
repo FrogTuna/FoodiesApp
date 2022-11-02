@@ -35,9 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu
+ * @description: Give the event lists Class,
+ * List the information about eventName, eventDate, eventTime, eventLocation, eventAuthor, eventPeople Number
+ * Give the join and leave button to click to join and leave the event for current user.
+ * Provide a plus button to redirect to event create page.
  */
 public class CommunityDetail extends AppCompatActivity {
 

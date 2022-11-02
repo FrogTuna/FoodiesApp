@@ -29,9 +29,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Wentao Xie
+ * @description: Lists the information about all community.
+ * Click join button to join and redirect to community Detail page.
+ * Click img in each community, pop up the information about this community, including name, description and name.
+ * Click plus button redirect to create community page.
+ * Click My Community redirect to My Community page.
  */
 public class DiscoverCommunityFragment extends Fragment {
     private ArrayList<Communitypost> posts = new ArrayList<>();
