@@ -15,7 +15,6 @@ import android.view.View;
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.home.PostDetails;
-import com.example.mobile_assignment_2.home.PostItemClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: My collects screen displaying user collected posts
  */
 public class CollectPostsActivity extends AppCompatActivity {
 
@@ -85,21 +83,6 @@ public class CollectPostsActivity extends AppCompatActivity {
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
                         postsRecyclerView.setLayoutManager(gridLayoutManager);
                         myPostsAdapter = new MyPostsAdapter(collectPosts, getApplicationContext());
-                        myPostsAdapter.setClickListener(new PostItemClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
-                                Post post = collectPosts.get(position);
-                                Intent i = new Intent(CollectPostsActivity.this, PostDetails.class);
-                                i.putExtra("title", post.getTitle());
-                                i.putExtra("description", post.getDescription());
-                                i.putExtra("author", post.getAuthor());
-                                i.putExtra("pid", post.getPid());
-                                i.putExtra("uid", post.getUid());
-                                i.putStringArrayListExtra("imageURLs", post.getImageUrls());
-
-                                startActivity(i);
-                            }
-                        });
                         postsRecyclerView.setAdapter(myPostsAdapter);
                     }
 

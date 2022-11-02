@@ -23,9 +23,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This adapter connects RequestListData and RequestFragment, which also defines the actions
+ * of each view.
  */
 public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder> {
     private RequestListData[] requestListData;

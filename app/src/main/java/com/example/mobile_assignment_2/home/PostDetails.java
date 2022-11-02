@@ -37,9 +37,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Post Details screen displaying the details of post tapped on "Explore" tab
+ * on Home screen. The user can like, cancel like, collect, cancel collect and comment on posts.
  */
 public class PostDetails extends AppCompatActivity {
     TextView titleView;

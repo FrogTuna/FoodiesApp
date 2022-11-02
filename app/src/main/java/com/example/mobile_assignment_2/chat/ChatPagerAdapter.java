@@ -9,9 +9,9 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This file connect SocialFragment and each pager items.
  */
 public class ChatPagerAdapter extends FragmentStateAdapter {
     //    getItem method gives the fragment with respect to the position,
