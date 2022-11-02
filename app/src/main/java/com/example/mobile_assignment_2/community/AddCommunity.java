@@ -79,8 +79,8 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         communityRef = firebaseDatabase.getReference("Community").push();
 
         // Create the instance of ArrayAdapter
-        //ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
-        ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
+        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
+        // ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
 
         // set simple layout resource file for each item of spinner
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -112,7 +112,10 @@ public class CommunityDetail extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
 //                    Log.e("loadEvent", String.valueOf(event));
-                    eventLists.add(event);
+                    if (event.getCid().equals(cid)) {
+                        eventLists.add(event);
+                    }
+                    Log.d("loadEvent", String.valueOf(eventLists.size()));
 //                    Log.e("loadEvent", String.valueOf(eventLists.size()));
                 }
                 // CustomAdapter customAdapter = new CustomAdapter(getBaseContext(), eventLists);
@@ -229,7 +232,7 @@ public class CommunityDetail extends AppCompatActivity {
                         });
                         DatabaseReference userLeaveRef = userRef.child(curUser.getUid()).child("eventJoinList");
                         Query query1 = userLeaveRef.orderByValue().equalTo(eid);
-                        query1.addValueEventListener(new ValueEventListener() {
+                        query1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
