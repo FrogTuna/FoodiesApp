@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.InputStream;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @description: Fill out the friends list
  */
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {

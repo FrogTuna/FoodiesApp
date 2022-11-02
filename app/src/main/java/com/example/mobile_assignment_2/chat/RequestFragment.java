@@ -17,9 +17,10 @@ import java.util.HashMap;
 
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This files provide the overview of the request page, which contains requests from
+ * another users
  */
 public class RequestFragment extends Fragment {
 

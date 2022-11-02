@@ -30,9 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.InputStream;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This file connects the ChatFragment and ChatListData, when clicking the button of list
+ * data, the chat window will show up, and user can chat with their friends
  */
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
     private ChatListData[] chatListData;

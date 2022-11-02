@@ -1,9 +1,10 @@
 package com.example.mobile_assignment_2.chat;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This class stores the attributes of each friend, and defines the getter and setter
+ * methods
  */
 public class FriendListData {
     private String UID;

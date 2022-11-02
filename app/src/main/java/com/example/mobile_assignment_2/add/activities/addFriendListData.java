@@ -1,7 +1,7 @@
 package com.example.mobile_assignment_2.add.activities;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @description: The data frame of friends list
  */
 public class addFriendListData {

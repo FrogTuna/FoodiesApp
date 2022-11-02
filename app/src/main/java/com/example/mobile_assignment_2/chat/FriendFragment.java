@@ -17,9 +17,10 @@ import java.util.HashMap;
 
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This file consists of friend page inside the pager, and contains multiple friends'
+ * information
  */
 public class FriendFragment extends Fragment {
 
