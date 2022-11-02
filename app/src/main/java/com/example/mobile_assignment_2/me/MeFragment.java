@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.authentication.login;
+import com.example.mobile_assignment_2.community.Event;
 import com.example.mobile_assignment_2.home.PostDetails;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -75,6 +76,7 @@ public class MeFragment extends Fragment {
     Button signOutBtn;
     ImageButton collectBtn;
     ImageButton postsBtn;
+    ImageButton eventBtn;
     ImageView editHeadPortrait;
     TextView username;
     DatabaseReference userRef;
@@ -145,6 +147,7 @@ public class MeFragment extends Fragment {
         postsBtn = (ImageButton) view.findViewById(R.id.postButtonProfile);
         signOutBtn = (Button) view.findViewById(R.id.SignOut);
         collectBtn = (ImageButton) view.findViewById(R.id.starButtonProfile);
+        eventBtn = (ImageButton) view.findViewById(R.id.eventButtonProfile);
         username.setText(fuser.getDisplayName());
         Log.d("username", fuser.getDisplayName());
         Picasso.with(view.getContext()).load(fuser.getPhotoUrl().toString()).into(editHeadPortrait);
@@ -174,6 +177,14 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), CollectPostsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        eventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), EventsActivity.class);
                 startActivity(i);
             }
         });
