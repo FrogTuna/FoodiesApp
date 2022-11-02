@@ -32,7 +32,7 @@ public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private TextInputEditText eNameView, eLocView, ePeopleNum;
-    private Button dateBtn, timeBtn, saveBtn, postBtn;
+    private Button dateBtn, timeBtn, postBtn;
     private String format="";
     FirebaseAuth EventAuth;
     FirebaseUser curUser;
@@ -99,7 +99,6 @@ public class AddEvent extends AppCompatActivity {
                             String userName = task.getResult().getValue(String.class);
                             String uid = curUser.getUid();
                             eventRef.child(eid).child("peopleList").getKey();
-//                            peoList.push();
                             String status =  "join";
                             Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
@@ -111,7 +110,6 @@ public class AddEvent extends AppCompatActivity {
                             addEventRef.setValue(curUser.getUid());
                             DatabaseReference userEventRef = userAddRef.child(curUser.getUid()).child("eventJoinList").push();
                             userEventRef.setValue(eid);
-//                            AddEvent.this.finish();
                         }
                     }
                 });
@@ -126,23 +124,6 @@ public class AddEvent extends AppCompatActivity {
 
     }
 
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.event_save:
-//                // do your code
-//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
-//                break;
-//            case R.id.event_post:
-//                // do your code
-//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-    public void pageRedirect() {
-
-    }
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -213,43 +194,32 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private String getMonthFormat(int month) {
-        if(month == 1) {
-            return "JAN";
+        switch (month) {
+            case 2:
+                return "FEB";
+            case 3:
+                return "MAR";
+            case 4:
+                return "APR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SEP";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            case 12:
+                return "DEC";
+            default:
+                return "JAN";
         }
-        if(month == 2) {
-            return "FEB";
-        }
-        if(month == 3) {
-            return "MAR";
-        }
-        if(month == 4) {
-            return "APR";
-        }
-        if(month == 5) {
-            return "MAY";
-        }
-        if(month == 6) {
-            return "JUN";
-        }
-        if(month == 7) {
-            return "JUL";
-        }
-        if(month == 8) {
-            return "AUG";
-        }
-        if(month == 9) {
-            return "SEP";
-        }
-        if(month == 10) {
-            return "OCT";
-        }
-        if(month == 11) {
-            return "NOV";
-        }
-        if(month == 12) {
-            return "DEC";
-        }
-        return "JAN";
     }
 
     public void openDatePicker(View view) {
