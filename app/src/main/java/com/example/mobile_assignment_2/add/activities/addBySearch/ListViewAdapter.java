@@ -16,9 +16,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG
+ * @description: Fill out the recent record of search view
  */
 public class ListViewAdapter extends BaseAdapter implements Filterable {
 

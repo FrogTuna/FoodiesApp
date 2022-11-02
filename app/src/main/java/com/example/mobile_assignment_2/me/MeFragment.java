@@ -41,9 +41,8 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Ke YANG, Weiran Zou, Yicong Li, Yujia Zhu
+ * @description: The profile or me fragment
  */
 public class MeFragment extends Fragment {
 
