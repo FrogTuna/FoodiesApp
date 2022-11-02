@@ -1,6 +1,7 @@
 package com.example.mobile_assignment_2.post;
 
 import static androidx.core.content.ContextCompat.checkSelfPermission;
+import static androidx.core.content.ContextCompat.getExternalFilesDirs;
 
 import android.Manifest;
 import android.app.Activity;
@@ -21,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,10 +58,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -200,7 +209,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                                     titleView.setText("");
                                                                     descripView.setText("");
                                                                     linearLayout.removeAllViews();
-
+                                                                    pickedImageUris.clear();
                                                                 }
                                                             });
                                                         }
@@ -225,7 +234,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }});
         return view;
     }
-    private static final int CAMERA_REQUEST_CODE = 100;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -283,6 +292,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+
+
     ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -303,6 +314,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         imageView.setImageBitmap(bitmap);
 
                         linearLayout.addView(imageView);
+                        String imagePath = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap, "camera", null);
+                        Uri imageUri = Uri.parse(imagePath);
+                        pickedImageUris.add(imageUri);
 
                     }
                 }

@@ -155,6 +155,7 @@ public class PostDetails extends AppCompatActivity {
                             String likedPid = (String) dataSnapshot.getValue();
                             likes.add(likedPid);
                         }
+                        Log.d("likes", String.valueOf(likes.size()));
                         // if user likes, set like btn to filled heart, otherwise, to unfilled heart
                         if (likes.contains(pid)) {
                             likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_solid, 0, 0, 0);
@@ -226,24 +227,32 @@ public class PostDetails extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             // push to user's likes
                             DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes").push();
-                            userLikesRef.setValue(pid);
-                            Toast.makeText(getApplicationContext(), "You liked this post",Toast.LENGTH_LONG).show();
+                            Log.d("likes", userLikesRef.getKey());
+                            userLikesRef.setValue(pid).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                    Toast.makeText(getApplicationContext(), "You liked this post",Toast.LENGTH_LONG).show();
+                                }
+                            });
+
 
                         }
                     });
                 } else {
-
+                    Log.d("likes", "false");
                     firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]-1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
                             Query query = likeRef.orderByValue().equalTo(pid);
-                            query.addValueEventListener(new ValueEventListener() {
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        dataSnapshot.getRef().removeValue();
+                                            dataSnapshot.getRef().removeValue();
                                     }
+                                    Toast.makeText(getApplicationContext(), "You cancelled like",Toast.LENGTH_LONG).show();
                                 }
 
                                 @Override
@@ -251,7 +260,8 @@ public class PostDetails extends AppCompatActivity {
 
                                 }
                             });
-                            Toast.makeText(getApplicationContext(), "You cancelled like",Toast.LENGTH_LONG).show();
+
+
 
                         }
                     });
@@ -284,7 +294,7 @@ public class PostDetails extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
                             Query query = collectRef.orderByValue().equalTo(pid);
-                            query.addValueEventListener(new ValueEventListener() {
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
