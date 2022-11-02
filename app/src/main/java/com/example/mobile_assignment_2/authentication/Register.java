@@ -26,9 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yicong Li
+ * @description: allow user to register a account in our app (required email verification)
  */
 public class Register extends AppCompatActivity {
 

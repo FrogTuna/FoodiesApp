@@ -1,9 +1,8 @@
 package com.example.mobile_assignment_2.authentication;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yicong Li
+ * @description: User class
  */
 public class User {
 

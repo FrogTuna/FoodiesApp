@@ -27,9 +27,8 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yicong Li
+ * @description: encapsulate the messages of between two users and display on chat window in order
  */
 public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
