@@ -1,8 +1,5 @@
 package com.example.mobile_assignment_2.community;
 
-import com.example.mobile_assignment_2.Comment;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Event {
@@ -10,7 +7,6 @@ public class Event {
     private String userName;
     private String eventName, eventDate, evenTime, eventLocation;
     private int peopleNum;
-    // private ArrayList<String> peopleList;
     private String status;
 
     private HashMap<String, String> peopleList;
@@ -31,7 +27,8 @@ public class Event {
         this.status = status;
     }
 
-    public Event(){ }
+    public Event() {
+    }
 
     public String getCid() {
         return cid;

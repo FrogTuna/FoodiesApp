@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder>{
+public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder> {
     private RequestListData[] requestListData;
 
     public RequestListAdapter(RequestListData[] _requestListData) {
@@ -32,7 +32,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     @Override
     public RequestListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View requestListItem= layoutInflater.inflate(R.layout.request_list_item, parent, false);
+        View requestListItem = layoutInflater.inflate(R.layout.request_list_item, parent, false);
         RequestListAdapter.ViewHolder viewHolder = new RequestListAdapter.ViewHolder(requestListItem);
         return viewHolder;
     }
@@ -41,9 +41,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     public void onBindViewHolder(RequestListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final RequestListData requestListItem = requestListData[position];
         holder.textViewUsername.setText(requestListData[position].getUsername());
-//        holder.textViewComment.setText(requestListData[position].getComment());
         Picasso.with(holder.itemView.getContext()).load(requestListData[position].getAvatar()).into(holder.imageViewAvatar);
-        //holder.imageViewAvatar.setImageResource(requestListData[position].getAvatar());
         holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +62,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             @Override
             public void onClick(View view) {
                 // Redirect to user page
-                Toast.makeText(view.getContext(),"click on item: "+requestListItem.getUsername(),Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "click on item: " + requestListItem.getUsername(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -80,13 +78,13 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         public TextView textViewUsername, textViewComment;
         public Button addBtn;
         public RelativeLayout relativeLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
-//            this.textViewComment = (TextView) itemView.findViewById(R.id.textViewComment);
             this.addBtn = itemView.findViewById(R.id.btnFriendDelete);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
 }

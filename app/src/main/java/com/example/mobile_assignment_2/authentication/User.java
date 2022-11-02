@@ -1,15 +1,12 @@
 package com.example.mobile_assignment_2.authentication;
 
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
+    //fields
     public String userID, username, email, password, imageUrl;
 
-    public User(String userID, String username, String email, String password, String imageUrl){
+    //constructor
+    public User(String userID, String username, String email, String password, String imageUrl) {
 
         this.userID = userID;
         this.username = username;
@@ -20,19 +17,20 @@ public class User {
     }
 
 
-    public String getUserID(){
-        return  userID;
+    //getter
+    public String getUserID() {
+        return userID;
     }
 
-    public String getName(){
+    public String getName() {
         return username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getImageUrl(){
+    public String getImageUrl() {
         return imageUrl;
     }
 

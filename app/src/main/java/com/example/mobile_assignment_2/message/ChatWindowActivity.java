@@ -1,22 +1,13 @@
 package com.example.mobile_assignment_2.message;
 
-import static com.google.firebase.firestore.model.Values.isInteger;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,36 +16,27 @@ import android.widget.TextView;
 
 import com.example.mobile_assignment_2.MainActivity;
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.SocialFragment;
-//import com.example.mobile_assignment_2.databinding.ActivityChatBinding;
 import com.example.mobile_assignment_2.chat.FriendListAdapter;
-import com.example.mobile_assignment_2.chat.FriendListData;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.protobuf.StringValue;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatWindowActivity extends AppCompatActivity {
 
+
+    //fields
     public ArrayList<ChatMessage> userConversation = new ArrayList<>();
     public ArrayList<ChatMessage> oppositeUserconversation = new ArrayList<>();
     AppCompatImageView backIcon;
@@ -66,7 +48,6 @@ public class ChatWindowActivity extends AppCompatActivity {
     DatabaseReference chatMessageRef;
     DatabaseReference userLastMessageRef;
     DatabaseReference oppositeUserLastMessageRef;
-    DatabaseReference userImageRef;
     DatabaseReference oppositeUserImageRef;
     DatabaseReference userLastMessageHasReadRef;
     DatabaseReference oppositeUserLastMessageHasReadRef;
@@ -79,7 +60,6 @@ public class ChatWindowActivity extends AppCompatActivity {
     CircleImageView oppositeUserAvatar;
     List<String> userChatIDList = new ArrayList<String>();
     List<String> oppositeUserChatIDList = new ArrayList<String>();
-    String tadeImage = "";
     String imageUrl = "";
 
 
@@ -107,7 +87,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         backIcon = findViewById(R.id.chatWindowBackIcon);
         oppositeHeadingInChat = findViewById(R.id.oppositeHeadingInChat);
         oppositeHeadingInChat.setText(FriendListAdapter.username);
-        userRecyclerView =  findViewById(R.id.chatWindowRecycleView);
+        userRecyclerView = findViewById(R.id.chatWindowRecycleView);
         oppositeUserRecyclerView = findViewById(R.id.chatWindowRecycleView);
         chatSendButton = findViewById(R.id.chatSendButton);
         chatInputBar = findViewById(R.id.chatInputBar);
@@ -115,12 +95,7 @@ public class ChatWindowActivity extends AppCompatActivity {
         oppositeUserAvatar = findViewById(R.id.chatWindowLeftUserImage);
 
 
-
-
-
-
-
-        //methods
+        //load data first if there's existing message in firebase
         loadDatabase();
 
 
@@ -129,16 +104,19 @@ public class ChatWindowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(chatInputBar.length()==0){
 
-                    Snackbar.make(chatSendButton,"input text could not be empty", Snackbar.LENGTH_SHORT).show();
+                //cannot be empty
+                if (chatInputBar.length() == 0) {
 
-                }else{
+                    Snackbar.make(chatSendButton, "input text could not be empty", Snackbar.LENGTH_SHORT).show();
+
+                //send message to firebase and display on the chat window
+                } else {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
                     DatabaseReference chatMessageRef = allRef.child("chatMessage").push();
                     String chatID = chatMessageRef.getKey();
-                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date), fuser.getPhotoUrl().toString(), chatID, fuser.getUid());
+                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(), formatter.format(date), fuser.getPhotoUrl().toString(), chatID, fuser.getUid());
                     chatMessageRef.setValue(message);
                     DatabaseReference fuserFriendChatRef = userRef.push();
                     DatabaseReference oppositeFuserChatRef = oppositeUserRef.push();
@@ -152,24 +130,23 @@ public class ChatWindowActivity extends AppCompatActivity {
                     oppositeUserLastMessageRef2.setValue(chatInputBar.getText().toString());
                     chatInputBar.clearFocus();
                     chatInputBar.setText("");
-                    Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(chatSendButton, "text has been sent it", Snackbar.LENGTH_SHORT).show();
 
                 }
             }
         });
-
         backSocialFragmentIntent(backIcon);
 
     }
 
-    private void loadDatabase(){
+    private void loadDatabase() {
 
 
+        //opposite user in chat listener (firebase)
         oppositeUserImageRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot imageSnapshot) {
                 imageUrl = "";
-
                 imageUrl = imageSnapshot.getValue().toString();
 
                 //oppositeUser listener
@@ -188,10 +165,10 @@ public class ChatWindowActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot2) {
                                 oppositeUserconversation.clear();
-                                for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
 
-                                    for(int i = 0; i < oppositeUserChatIDList.size(); i++){
-                                        if(snapshot3.getKey().matches(oppositeUserChatIDList.get(i))){
+                                    for (int i = 0; i < oppositeUserChatIDList.size(); i++) {
+                                        if (snapshot3.getKey().matches(oppositeUserChatIDList.get(i))) {
 
                                             if(snapshot3.child("role").getValue().toString().equals(fuser.getUid())){
                                                 //Log.d("i'm here1", snapshot3.child("senderImage").toString());
@@ -201,7 +178,6 @@ public class ChatWindowActivity extends AppCompatActivity {
                                                 //Log.d("i'm here2", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(imageUrl);
                                             }
-                                            //Log.d("chatIDList3", snapshot3.getKey());
                                             String chatMessageRole = snapshot3.child("role").getValue().toString();
                                             String chatMessageText = snapshot3.child("senderText").getValue().toString();
                                             String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
@@ -217,12 +193,13 @@ public class ChatWindowActivity extends AppCompatActivity {
                                     MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
                                     oppositeUserRecyclerView.setAdapter(messageAdapter2);
                                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                                    if(oppositeUserconversation.size()>6){
+                                    if (oppositeUserconversation.size() > 6) {
                                         linearLayoutManager.setStackFromEnd(true);
                                     }
                                     oppositeUserRecyclerView.setLayoutManager(linearLayoutManager);
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -246,16 +223,14 @@ public class ChatWindowActivity extends AppCompatActivity {
         });
 
 
-
-        //my listener
+        //current user in chat listener (firebase)
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userChatIDList.clear();
 
-                for(DataSnapshot snapshot1: snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     userChatIDList.add(snapshot1.getValue().toString());
-                    //Log.d("chatIDList1", snapshot1.getValue().toString());
                 }
 
                 chatMessageRef.addValueEventListener(new ValueEventListener() {
@@ -263,11 +238,10 @@ public class ChatWindowActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot2) {
                         userConversation.clear();
-                        for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                        for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
 
-                            for(int i = 0; i < userChatIDList.size(); i++){
-                                if(snapshot3.getKey().matches(userChatIDList.get(i))){
-                                    //Log.d("chatIDList3", snapshot3.getKey());
+                            for (int i = 0; i < userChatIDList.size(); i++) {
+                                if (snapshot3.getKey().matches(userChatIDList.get(i))) {
                                     String chatMessageRole = snapshot3.child("role").getValue().toString();
                                     String chatMessageText = snapshot3.child("senderText").getValue().toString();
                                     String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
@@ -282,12 +256,13 @@ public class ChatWindowActivity extends AppCompatActivity {
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, userConversation);
                             userRecyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            if(userConversation.size()>6){
+                            if (userConversation.size() > 6) {
                                 linearLayoutManager.setStackFromEnd(true);
                             }
                             userRecyclerView.setLayoutManager(linearLayoutManager);
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -303,10 +278,8 @@ public class ChatWindowActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    private void backSocialFragmentIntent(AppCompatImageView imageView){
+    //back to home page
+    private void backSocialFragmentIntent(AppCompatImageView imageView) {
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

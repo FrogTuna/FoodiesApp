@@ -7,7 +7,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.mobile_assignment_2.add.CustomItem;
 import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
 import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
-import com.example.mobile_assignment_2.chat.FriendListAdapter;
-import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -41,10 +36,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
-
-
+ * <p>
+ * <p>
  * Use the {@link SocialFragment#} factory method to
-
+ * <p>
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
@@ -76,6 +71,7 @@ public class SocialFragment extends Fragment {
     private static final String TAG = "Child: ";
     public static  HashMap<String, String> outsideFriendInfo;
     ImageView newMessageCircle;
+
 
 
     public SocialFragment() {
@@ -119,36 +115,7 @@ public class SocialFragment extends Fragment {
         userArrayList = new ArrayList();
         reqArrayList = new ArrayList();
         chatArrayList = new ArrayList();
-        //DatabaseReference oppositeUserRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("chats");
-
         initialFireBase();
-
-        /* Search view */
-//        1. determine page
-//        2. search based on different array
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//
-//                if(list.contains(query)){
-//                    adapter.getFilter().filter(query);
-//                }else{
-//                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
-//                }
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                //    adapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-
-
-
-
-
     }
 
 
@@ -157,7 +124,6 @@ public class SocialFragment extends Fragment {
         customList.add(new CustomItem("null", R.drawable.add_user));
         customList.add(new CustomItem("add", R.drawable.ic_baseline_add_24));
         customList.add(new CustomItem("Shake", R.drawable.ic_baseline_screen_rotation_24));
-//        customList.add(new CustomItem("NearBy", R.drawable.ic_baseline_near_me_24));
         return customList;
     }
 
@@ -166,28 +132,25 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view  = inflater.inflate(R.layout.fragment_social, container, false);
-
-
-        TextView logo = view.findViewById(R.id.logoInSocial);
-
+        View view = inflater.inflate(R.layout.fragment_social, container, false);
         customSpinner = view.findViewById(R.id.customIconSpinner);
         customList=getCustomList();
         newMessageCircle = view.findViewById(R.id.newMessageCircle);
-        addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(),customList);
-        if(customSpinner!=null) {
+        customList = getCustomList();
+        addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(), customList);
+        if (customSpinner != null) {
             customSpinner.setAdapter(adapter);
-            customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     CustomItem item = (CustomItem) adapterView.getSelectedItem();
                     Log.d(TAG, "selected:" + item.getSpinnerItemName());
 
-                    if(item.getSpinnerItemName().equals("add")){
+                    if (item.getSpinnerItemName().equals("add")) {
                         Intent intent = new Intent(getActivity(), addActivity.class);
                         startActivity(intent);
-                    }else if(item.getSpinnerItemName().equals("Shake")){
+                    } else if (item.getSpinnerItemName().equals("Shake")) {
                         Intent intent = new Intent(getActivity(), shakeActivity.class);
                         startActivity(intent);
                     }
@@ -200,39 +163,8 @@ public class SocialFragment extends Fragment {
             });
         }
 
-
-
-//        ChatListData[] chatListData = new ChatListData[chatArrayList.size()];
-//
-//        System.out.println("[+] chat list: " + chatArrayList);
-//        for (int i = 0; i < chatArrayList.size(); i++) {
-//            chatListData[i] = new ChatListData(
-//                    ((HashMap<String, String>)chatArrayList.get(i)).get("name"),
-//                    ((HashMap<String, String>)chatArrayList.get(i)).get("content"),
-//                    android.R.drawable.ic_dialog_email
-//            );
-//        }
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.chatRecyclerView);
-//        ChatListAdapter chatListAdapter = new ChatListAdapter(chatListData);
-//
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(chatListAdapter);
-//        return view;
-
         viewPager2 = view.findViewById(R.id.viewPager2);
         tabLayout = view.findViewById(R.id.tabLayout);
-//        searchView = view.findViewById(R.id.searchView);
-//        addFriendsBtn = view.findViewById(R.id.addFriendsButton);
-//
-//        addFriendsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Redirect to add friend page
-//                Toast.makeText(view.getContext(),"Jump to add friend page: ",Toast.LENGTH_LONG).show();
-//            }
-//        });
-
         chatPagerAdapter = new ChatPagerAdapter(
                 getActivity(),
                 NUM_PAGES,
@@ -265,7 +197,7 @@ public class SocialFragment extends Fragment {
         return view;
     }
 
-//    @Override
+    //    @Override
     public void onBackPressed() {
         if (viewPager2.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
@@ -276,123 +208,10 @@ public class SocialFragment extends Fragment {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
         }
     }
-    private void initialFireBase(){
+
+    private void initialFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        friendshipRef = firebaseDatabase.getReference("Friendship"); // get the location URL https://foodies-27bb7-default-rtdb.firebaseio.com
-//        chatRef = firebaseDatabase.getReference("Chat");
-//        reqRef = firebaseDatabase.getReference("Request");
         userRef = firebaseDatabase.getReference("Users");
-//        friendshipRef.keepSynced(true);
-
-//        chatRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-//
-//                    HashMap<String, String> chatInfo = new HashMap<String, String>();
-//                    chatInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
-//                    chatInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
-//                    chatArrayList.add(chatInfo);
-//
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so displayed the changed comment.
-//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so remove it.
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed position, use the key to determine if we are
-//                // displaying this comment and if so move it.
-//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-//            }
-//
-//        });
-//        friendshipRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-//                    friendshipArrayList.add(dataSnapshot.child("User2").getValue(String.class));
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so displayed the changed comment.
-//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so remove it.
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed position, use the key to determine if we are
-//                // displaying this comment and if so move it.
-//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-//            }
-//
-//        });
-
-
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
@@ -403,11 +222,10 @@ public class SocialFragment extends Fragment {
                 usersInfo.put("ID", dataSnapshot.getKey());
                 usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
                 usersInfo.put("username", (String) dataSnapshot.child("username").getValue());
-//                usersInfo.put("remark", (String) dataSnapshot.child("remark").getValue());
                 userArrayList.add(usersInfo);
-                if(dataSnapshot.getKey().equals(userID)) {
+                if (dataSnapshot.getKey().equals(userID)) {
 
-                    for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()) {
+                    for (DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()) {
                         HashMap<String, String> friendsInfo = new HashMap<String, String>();
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
@@ -415,11 +233,10 @@ public class SocialFragment extends Fragment {
                         String hasRead = "";
                         String lastMsg = "";
                         chatsInfo.put("ID", friendsSnapshot.getKey());
-                        for(DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
-                            Log.d("chatSnapshot",chatsSnapshot.getKey());
 
-                            if(chatsSnapshot.getKey().equals("lastMessage")) {
-                                for(DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
+                        for (DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
+                            if (chatsSnapshot.getKey().equals("lastMessage")) {
+                                for (DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
                                     lastMsg = (String) msgSnapshot.getValue();
 
                                 }
@@ -429,7 +246,6 @@ public class SocialFragment extends Fragment {
                                 Log.d("hasRead",hasRead);
                             }
 
-
                         }
                         chatsInfo.put("lastMsg", lastMsg);
                         chatsInfo.put("hasRead", hasRead);
@@ -437,19 +253,16 @@ public class SocialFragment extends Fragment {
 
                     }
 
-                    //Ke Yang
-                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()){
+                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()) {
                         HashMap<String, String> requestInfo = new HashMap<>();
-//                        requestInfo.put("ID",request.getKey());
-                        requestInfo.put("requestUserID",String.valueOf(request.child("userID").getValue()));
-                        requestInfo.put("name",String.valueOf(request.child("name").getValue()));
+                        requestInfo.put("requestUserID", String.valueOf(request.child("userID").getValue()));
+                        requestInfo.put("name", String.valueOf(request.child("name").getValue()));
                         requestInfo.put("comment", String.valueOf(request.child("comment").getValue()));
                         requestInfo.put("avatar", String.valueOf(request.child("imageUrl").getValue()));
                         reqArrayList.add(requestInfo);
                     }
 
                 }
-
 
                 chatPagerAdapter = new ChatPagerAdapter(
                         getActivity(),
@@ -485,25 +298,11 @@ public class SocialFragment extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-
-                // ...
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
             }
 
             @Override
@@ -512,10 +311,6 @@ public class SocialFragment extends Fragment {
 
                 // A comment has changed position, use the key to determine if we are
                 // displaying this comment and if so move it.
-                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-                String friendshipKey = dataSnapshot.getKey();
-
-                // ...
             }
 
             @Override
@@ -523,96 +318,6 @@ public class SocialFragment extends Fragment {
                 Log.w(TAG, "postComments:onCancelled", databaseError.toException());
             }
         });
-//        reqRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-//                if(dataSnapshot.child("User1").getValue().equals(loginUsername)) {
-//
-//                    HashMap<String, String> reqInfo = new HashMap<String, String>();
-//                    reqInfo.put("name", dataSnapshot.child("User2").getValue(String.class));
-//                    reqInfo.put("content", dataSnapshot.child("Content").getValue(String.class));
-//                    reqArrayList.add(reqInfo);
-//
-//                }
-//                chatPagerAdapter = new ChatPagerAdapter(
-//                        getActivity(),
-//                        NUM_PAGES,
-//                        friendshipArrayList,
-//                        userArrayList,
-//                        reqArrayList,
-//                        chatArrayList
-//                );
-//                viewPager2.setAdapter(chatPagerAdapter);
-//                new TabLayoutMediator(tabLayout, viewPager2,
-//                        new TabLayoutMediator.TabConfigurationStrategy() {
-//                            @Override
-//                            public void onConfigureTab(TabLayout.Tab tab, int position) {
-//                                switch (position) {
-//                                    case 0:
-//                                        tab.setText("Chat");
-//                                        break;
-//                                    case 1:
-//                                        tab.setText("Friend");
-//                                        break;
-//                                    case 2:
-//                                        tab.setText("Request");
-//                                        break;
-//                                    default:
-//                                        break;
-//                                }
-//                            }
-//                        }).attach();
-//
-//            }
-//
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so displayed the changed comment.
-//                FriendshipInfo newFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so remove it.
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-//                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-//
-//                // A comment has changed position, use the key to determine if we are
-//                // displaying this comment and if so move it.
-//                FriendshipInfo movedFriendshipInfo = dataSnapshot.getValue(FriendshipInfo.class);
-//                String friendshipKey = dataSnapshot.getKey();
-//
-//                // ...
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-//            }
-//
-//
-//        });
-
     }
 
-    public void searchUsername() {
-
-    }
 }

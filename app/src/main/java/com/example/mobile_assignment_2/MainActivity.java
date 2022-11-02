@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mobile_assignment_2.authentication.login;
-import com.example.mobile_assignment_2.SocialFragment;
 import com.example.mobile_assignment_2.community.CommunityFragment;
 import com.example.mobile_assignment_2.databinding.ActivityMainBinding;
 import com.example.mobile_assignment_2.home.HomeFragment;
@@ -32,31 +31,33 @@ public class MainActivity extends AppCompatActivity {
         navigation();
 
     }
+
     @Override
     public void onBackPressed() {
         return;
     }
+
     protected void onStart() {
 
         super.onStart();
 
         FirebaseUser user = myAuth.getCurrentUser();
-        if(user == null){
+        if (user == null) {
             startActivity(new Intent(MainActivity.this, login.class));
         }
     }
 
 
     //navigation bar - replace navigation items by id
-    public void navigation(){
+    public void navigation() {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item ->{
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
                     break;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MeFragment());
                     break;
 
+
             }
 
             return true;
@@ -83,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     //replace navigation items by id
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout,fragment);
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
 
     }

@@ -1,9 +1,6 @@
 package com.example.mobile_assignment_2.community;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +20,6 @@ import android.widget.Spinner;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -52,7 +48,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;
     private Spinner comType;
-    String[] comType_list = { "Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
+    String[] comType_list = {"Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
     private Button imageBtn;
     private Button cameraBtn;
     private Button postBtn;
@@ -61,6 +57,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     FirebaseAuth communityAuth;
     FirebaseUser fuser;
     Uri pickedImageUri;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);
@@ -80,12 +77,14 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
         // Create the instance of ArrayAdapter
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comType_list);
+        // ArrayAdapter ad = ArrayAdapter.createFromResource(this, R.array.comTypeLists, android.R.layout.simple_spinner_item);
 
         // set simple layout resource file for each item of spinner
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set the ArrayAdapter (ad) data on the Spinner which binds data to spinner
         comType.setAdapter(ad);
+        comType.setOnItemSelectedListener(this);
 
         Intent intent = getIntent();
         comNameView = findViewById(R.id.community_name);
@@ -160,7 +159,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
                                             communityRef.setValue(comPost).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(AddCommunity.this, "Community Added successfully",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(AddCommunity.this, "Community Added successfully", Toast.LENGTH_LONG).show();
                                                     // clear post
                                                     comNameView.setText("");
                                                     comDescriptionView.setText("");
@@ -240,15 +239,6 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 //        startActivity(intent);
 //    }
 
-    private void loadFragment(CommunityFragment fragment) {
-        // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-//        fragmentTransaction.replace(R.id.create_com, fragment);
-//        fragmentTransaction.commit(); // save the changes
-    }
 
     private void alertMsg() {
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
@@ -272,9 +262,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(),
-                        comType_list[position],
-                        Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), comType_list[position], Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -282,60 +270,31 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    ActivityResultLauncher<String> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
-                @Override
-                public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    Bitmap photoBitmap = null;
-                    try {
-                        photoBitmap = MediaStore.Images.Media.getBitmap(AddCommunity.this.getContentResolver(),uri);
+    ActivityResultLauncher<String> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+        @Override
+        public void onActivityResult(Uri uri) {
+            // Handle the returned Uri
+            Bitmap photoBitmap = null;
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(AddCommunity.this.getContentResolver(), uri);
 
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ImageView imageView = new ImageView(AddCommunity.this);
-                    if(imageView.getParent() != null) {
-                        ((ViewGroup)imageView.getParent()).removeView(imageView);
-                    }
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            500,
-                            RelativeLayout.LayoutParams.MATCH_PARENT
-                    );
-                    imageView.setLayoutParams(params);
-                    imageView.setImageBitmap(photoBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageView imageView = new ImageView(AddCommunity.this);
+            if (imageView.getParent() != null) {
+                ((ViewGroup) imageView.getParent()).removeView(imageView);
+            }
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500, RelativeLayout.LayoutParams.MATCH_PARENT);
+            imageView.setLayoutParams(params);
+            imageView.setImageBitmap(photoBitmap);
 
-                    linearLayout.addView(imageView);
+            linearLayout.addView(imageView);
 
-                    pickedImageUri = uri;
-                }
-            });
+            pickedImageUri = uri;
+        }
+    });
 
-    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                        ImageView imageView = new ImageView(AddCommunity.this);
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
-                        }
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                                500,
-                                RelativeLayout.LayoutParams.MATCH_PARENT
-                        );
-                        imageView.setLayoutParams(params);
-                        imageView.setImageBitmap(bitmap);
-
-                        linearLayout.addView(imageView);
-
-                    }
-                }
-            });
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -345,28 +304,4 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
         }
         return super.onOptionsItemSelected(item);
     }
-    //Handle the user's selection result from the dialog of system permissions
-//    private ActivityResultLauncher<String> requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                if (isGranted) {
-//                    openCamera();
-//                } else {
-//                    Toast.makeText(AddCommunity.this, "Permission denied", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.choose_image:
-//                Log.i("choose image", "aaaaaaaaaaaaaaaaaaaa");
-//                galleryActivityResultLauncher.launch("image/*");
-//                break;
-//            case R.id.use_camera:
-//
-//                    openCamera();
-//
-//
-//        }
-//    }
 }

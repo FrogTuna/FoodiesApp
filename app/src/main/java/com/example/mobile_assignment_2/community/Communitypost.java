@@ -1,6 +1,5 @@
 package com.example.mobile_assignment_2.community;
 
-import java.util.ArrayList;
 
 public class Communitypost {
     // fruitImage to store the resource id if post image
@@ -48,14 +47,6 @@ public class Communitypost {
     public void setImageUrls(String imageUrls) {
         this.imageUrls = imageUrls;
     }
-
-//    public int getCommImage() {
-//        return commImage;
-//    }
-//
-//    public void setCommImage(int commImage) {
-//        this.commImage = commImage;
-//    }
 
     public String getCommName() {
         return commName;

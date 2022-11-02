@@ -4,7 +4,7 @@ import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,9 +16,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -30,27 +27,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.example.mobile_assignment_2.Post;
-import com.example.mobile_assignment_2.authentication.User;
-import com.google.android.gms.common.internal.Constants;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -59,7 +50,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -144,12 +134,21 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 String title = titleView.getText().toString();
                 String descrip = descripView.getText().toString();
                 ArrayList<String> downloadimageUrls = new ArrayList<>();
-
-                if (!title.isEmpty() && !descrip.isEmpty()) {
+                if (pickedImageUris.size() == 0) {
+                    Toast.makeText(getContext(), "Please add an image", Toast.LENGTH_SHORT).show();
+                } else if (title.isEmpty()) {
+                    Toast.makeText(getContext(), "Please enter a title", Toast.LENGTH_SHORT).show();
+                } else if (descrip.isEmpty()) {
+                    Toast.makeText(getContext(), "Please enter a description", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Showing progress dialog when uploading post
+                    ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("Uploading post...");
+                    progressDialog.show();
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
                     // upload all picked images and download their Url, then upload post with post infor and these image Urls
-                    for (Uri imageUri: pickedImageUris) {
+                    for (Uri imageUri : pickedImageUris) {
                         StorageReference postImagesRef = storageRef.child("postImages/" + imageUri.getLastPathSegment());
                         // upload picked images
                         UploadTask uploadTask = postImagesRef.putFile(imageUri);
@@ -184,8 +183,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                                         if (!task.isSuccessful()) {
                                                             Log.e("firebase", "Error in fetching data", task.getException());
-                                                        }
-                                                        else {
+                                                        } else {
                                                             String author = task.getResult().getValue(String.class);
 
                                                             DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
@@ -195,12 +193,13 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                             databaseReference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
-                                                                    Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(getContext(), "Post Added successfully", Toast.LENGTH_LONG).show();
                                                                     // clear post
                                                                     titleView.setText("");
                                                                     descripView.setText("");
                                                                     linearLayout.removeAllViews();
-
+                                                                    pickedImageUris.clear();
                                                                 }
                                                             });
                                                         }
@@ -220,12 +219,11 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }
 
 
-
-
-                }});
+            }
+        });
         return view;
     }
-    private static final int CAMERA_REQUEST_CODE = 100;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -245,7 +243,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void openCamera(){
+    private void openCamera() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraActivityResultLauncher.launch(intent);
     }
@@ -258,15 +256,14 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         // Handle the returned Uri
                         Bitmap photoBitmap = null;
                         try {
-                            photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+                            photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
 
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                         ImageView imageView = new ImageView(getContext());
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        if (imageView.getParent() != null) {
+                            ((ViewGroup) imageView.getParent()).removeView(imageView);
                         }
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                                 500,
@@ -283,6 +280,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
+
     ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -290,10 +288,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                         ImageView imageView = new ImageView(getContext());
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        if (imageView.getParent() != null) {
+                            ((ViewGroup) imageView.getParent()).removeView(imageView);
                         }
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                                 500,
@@ -303,6 +301,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         imageView.setImageBitmap(bitmap);
 
                         linearLayout.addView(imageView);
+                        String imagePath = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap, "camera", null);
+                        Uri imageUri = Uri.parse(imagePath);
+                        pickedImageUris.add(imageUri);
 
                     }
                 }

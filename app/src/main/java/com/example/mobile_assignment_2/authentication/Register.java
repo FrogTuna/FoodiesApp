@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Register extends AppCompatActivity {
 
 
+    //fields
     EditText username;
     EditText password;
     EditText email;
@@ -45,6 +46,8 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
+
+        //find id from xml
         username = findViewById(R.id.registerUsername);
         email = findViewById(R.id.registerEmail);
         password = findViewById(R.id.registerPassword);
@@ -54,8 +57,8 @@ public class Register extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
 
 
+        //button listener (create a user)
         registerBtn.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View view) {
@@ -64,7 +67,8 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener(){
+        //back to login page
+        back.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -73,10 +77,10 @@ public class Register extends AppCompatActivity {
         });
 
 
-
     }
+
     //link to login page
-    public void registerIntent(){
+    public void registerIntent() {
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
     }
@@ -91,58 +95,52 @@ public class Register extends AppCompatActivity {
         String passwordString = password.getText().toString();
 
 
-        if(TextUtils.isEmpty(usernameString)){
+        //username
+        if (TextUtils.isEmpty(usernameString)) {
 
             username.setError("username cannot be empty");
             username.requestFocus();
 
-        }
-        else if(TextUtils.isEmpty(emailString)){
+        //email
+        } else if (TextUtils.isEmpty(emailString)) {
 
             email.setError("Email cannot be empty");
             email.requestFocus();
 
-        }
-        else if(TextUtils.isEmpty(passwordString)){
+        //password
+        } else if (TextUtils.isEmpty(passwordString)) {
 
             password.setError("Password cannot be empty");
             password.requestFocus();
 
-        }else{
+        } else {
 
-            myAuth.createUserWithEmailAndPassword(emailString,passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            //set up user's information and update into firebase (required verify user's email)
+            myAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         fuser = myAuth.getCurrentUser();
                         fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(registerBtn, "Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
                                 UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameString).setPhotoUri(Uri.parse("https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg")).build();
                                 fuser.updateProfile(userProfileChangeRequest);
                                 User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg");
                                 myReference.child("Users").child(fuser.getUid()).setValue(user);
                                 registerIntent();
                                 finish();
-//                                registerRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//
-//                                    }
-//                                });
-//                                DatabaseReference friendRef = myReference.child("users").child(fuser.getUid()).child("friendList").push();
-
                             }
-                        }). addOnFailureListener(new OnFailureListener() {
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 System.out.println("OnFailure: Email not sent" + e.getMessage());
                             }
                         });
-                    }else{
-                        Snackbar.make(registerBtn,"failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(registerBtn, "failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });

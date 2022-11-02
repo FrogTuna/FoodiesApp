@@ -65,18 +65,18 @@
         app:layout_constraintStart_toEndOf="@+id/postButtonProfile"
         app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
+
     <ImageButton
-        android:id="@+id/communityButtonProfile"
+        android:id="@+id/eventButtonProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="4dp"
         android:contentDescription="message button in profile"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:src="@drawable/message_icon"
+        android:src="@drawable/event"
         app:layout_constraintStart_toEndOf="@+id/starButtonProfile"
         app:layout_constraintTop_toTopOf="@+id/starButtonProfile" />
-
 
     <Button
         android:id="@+id/SignOut"
@@ -90,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/communityButtonProfile"
+        app:layout_constraintTop_toBottomOf="@+id/eventButtonProfile"
         app:layout_constraintVertical_bias="0.155" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

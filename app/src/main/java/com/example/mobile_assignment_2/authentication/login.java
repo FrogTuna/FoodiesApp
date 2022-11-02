@@ -23,16 +23,17 @@ import com.google.firebase.database.DatabaseReference;
 
 public class login extends AppCompatActivity implements View.OnClickListener {
 
+
+
+    //fields
     EditText email;
     EditText password;
     Button loginBtn;
     TextView registerInLogin;
     FirebaseAuth myAuth;
-
-    private DatabaseReference myReference;
-
     String defaultUsername = "leo727268082@gmail.com";
     //String defaultUsername = "727268082@qq.com";
+    //String defaultUsername = "695578606@qq.com";
     //String defaultUsername = "kyy2@student.unimelb.edu.au";
     //String defaultUsername = "zouweiran9122@gmail.com";
     String defaultPassword = "123456789";
@@ -43,6 +44,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        //xml id
         email = findViewById(R.id.loginUsername);
         password = findViewById(R.id.loginPassword);
         loginBtn = findViewById(R.id.loginButton);
@@ -53,16 +56,14 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
-
-
-    //link to register page
-    public void loginIntent(){
+    //from login to register page
+    public void loginIntent() {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 
-    public void mainIntent(){
+    //from login to home page
+    public void mainIntent() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -74,65 +75,62 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void loginUser(){
+    //login
+    private void loginUser() {
 
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
 
 
-        if(TextUtils.isEmpty(emailString)){
+        if (TextUtils.isEmpty(emailString)) {
 
             email.setError("Email cannot be empty");
             email.requestFocus();
-        }
-        else if(TextUtils.isEmpty(passwordString)){
+        } else if (TextUtils.isEmpty(passwordString)) {
 
             password.setError("Password cannot be empty");
             password.requestFocus();
-        }
-        else{
+        } else {
 
             myAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         FirebaseUser user = myAuth.getCurrentUser();
-                        if(user.isEmailVerified()){
-                            Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
+                        if (user.isEmailVerified()) {
+                            Snackbar.make(loginBtn, "User login successfully", Snackbar.LENGTH_SHORT).show();
                             mainIntent();
                             finish();
+                        } else {
+                            Snackbar.make(loginBtn, "Email address has not been verified", Snackbar.LENGTH_SHORT).show();
                         }
-                        else{
-                            Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Snackbar.make(loginBtn,"Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(loginBtn, "Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
         }
     }
 
-    private void loginUser2(){
+
+    //login
+    private void loginUser2() {
         myAuth.signInWithEmailAndPassword(defaultUsername, defaultPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser user = myAuth.getCurrentUser();
-                    if(user.isEmailVerified()){
-                        Snackbar.make(loginBtn,"User login successfully", Snackbar.LENGTH_SHORT).show();
+                    if (user.isEmailVerified()) {
+                        Snackbar.make(loginBtn, "User login successfully", Snackbar.LENGTH_SHORT).show();
                         mainIntent();
                         finish();
+                    } else {
+                        Snackbar.make(loginBtn, "Email address has not been verified", Snackbar.LENGTH_SHORT).show();
                     }
-                    else{
-                        Snackbar.make(loginBtn,"Email address has not been verified", Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Snackbar.make(loginBtn,"Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(loginBtn, "Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -140,16 +138,13 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
 
 
-
-
+    //page switcher
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.loginButton:
                 loginUser2();
-                //loginUser();
-                //mainIntent();
                 break;
             case R.id.registerInLogin:
                 loginIntent();

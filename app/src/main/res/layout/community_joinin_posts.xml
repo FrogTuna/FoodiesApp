@@ -31,12 +31,16 @@
             android:id="@+id/communityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="TextView"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
 
         <ImageButton
             android:id="@+id/join_community_button"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:backgroundTint="#00FFFFFF"

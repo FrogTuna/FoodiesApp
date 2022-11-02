@@ -39,7 +39,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public ChatListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View chatListItem= layoutInflater.inflate(R.layout.chat_list_item, parent, false);
+        View chatListItem = layoutInflater.inflate(R.layout.chat_list_item, parent, false);
         ChatListAdapter.ViewHolder viewHolder = new ChatListAdapter.ViewHolder(chatListItem);
         return viewHolder;
     }
@@ -47,7 +47,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ChatListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final ChatListData chatListItem = chatListData[position];
-//        Log.d("debug: ", "****************"+chatListData[position].get);
         holder.textViewUsername.setText(chatListData[position].getUsername());
         holder.textViewLastMsg.setText(chatListData[position].getLastMsg());
         new DownloadImageFromInternet((ImageView) holder.imageViewAvatar).execute(chatListData[position].getImgURL());
@@ -78,6 +77,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 FriendListAdapter.userID  = chatListData[position].getFriendID();
                 FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("hasRead").setValue("true");
                 holder.newMessageCircle.setVisibility(view.INVISIBLE);
+                Toast.makeText(view.getContext(), "click on item: " + chatListItem.getUsername(), Toast.LENGTH_LONG).show();
+
+                // Redirect to user page
+                FriendListAdapter.username = chatListItem.getUsername();
+                FriendListAdapter.userID = chatListData[position].getFriendID();
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ChatWindowActivity.class);
                 context.startActivity(intent);
@@ -109,22 +113,25 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
+
         public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView=imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+            this.imageView = imageView;
+            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
         }
+
         protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
+            String imageURL = urls[0];
+            Bitmap bimage = null;
             try {
-                InputStream in=new java.net.URL(imageURL).openStream();
-                bimage= BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error Message", e.getMessage());
                 e.printStackTrace();
             }
             return bimage;
         }
+
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }

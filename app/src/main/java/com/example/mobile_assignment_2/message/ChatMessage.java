@@ -1,17 +1,19 @@
 package com.example.mobile_assignment_2.message;
 
 
-public class ChatMessage{
+public class ChatMessage {
 
+
+    //fields
     private String senderText;
     private String senderTime;
-    private int senderImage;
     private String senderImageString;
     private String role;
     private String chatID;
 
 
 
+    //constructor
     public ChatMessage(String senderText, String senderTime, String senderImageString, String chatID, String role) {
         this.senderText = senderText;
         this.senderTime = senderTime;
@@ -21,6 +23,8 @@ public class ChatMessage{
     }
 
 
+
+    //getter
     public String getSenderText() {
         return senderText;
     }
@@ -33,11 +37,13 @@ public class ChatMessage{
         return senderImageString;
     }
 
-    public String getChatID(){ return chatID; }
+    public String getChatID() {
+        return chatID;
+    }
 
-    public String getRole(){ return role; }
-
-
+    public String getRole() {
+        return role;
+    }
 
 
 }

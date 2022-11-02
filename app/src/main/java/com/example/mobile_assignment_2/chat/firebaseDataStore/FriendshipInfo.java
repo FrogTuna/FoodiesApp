@@ -11,7 +11,7 @@ public class FriendshipInfo implements Serializable {
 
     }
 
-    public FriendshipInfo(String User1, String User2, String Index){
+    public FriendshipInfo(String User1, String User2, String Index) {
         this.User1 = User1;
         this.User2 = User2;
         this.Index = Index;

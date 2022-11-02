@@ -1,4 +1,5 @@
 package com.example.mobile_assignment_2.community;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyCommunityFragment extends Fragment{
+public class MyCommunityFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -92,19 +92,17 @@ public class MyCommunityFragment extends Fragment{
                             Communitypost post = dataSnapshot.getValue(Communitypost.class);
                             Log.d("idddd", post.getCid());
                             Log.d("commlist", "commlst length " + communityPostsUri.size());
-                            if (communityPostsUri.contains(post.getCid())){
+                            if (communityPostsUri.contains(post.getCid())) {
                                 Log.d("testttttt", String.valueOf(communityPostsUri.contains(post.getCid())));
                                 communityPosts.add(post);
                                 Log.d("commlist", "commlst length" + communityPosts.size());
                             }
 
                         }
-//                        communityPosts.add(new Communitypost("1", "1", "commName1", null, "type1", "user1", "comDescrip1"));
                         CustomAdapter customAdapter = new CustomAdapter(getContext(), communityPosts);
                         listView = view.findViewById(R.id.list);
                         listView.setAdapter(customAdapter);
                     }
-
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -112,8 +110,6 @@ public class MyCommunityFragment extends Fragment{
                     }
                 });
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -133,7 +129,6 @@ public class MyCommunityFragment extends Fragment{
         public CustomAdapter(Context context, List<Communitypost> users) {
             musers = users;
             mcontext = context;
-//            super(context, 0, users);
         }
 
         @Override
@@ -161,7 +156,6 @@ public class MyCommunityFragment extends Fragment{
 
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-//            Communitypost post = getItem(position);
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = LayoutInflater.from(mcontext).inflate(R.layout.community_leave_posts, null);
@@ -183,7 +177,7 @@ public class MyCommunityFragment extends Fragment{
                     }
                 });
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -193,11 +187,9 @@ public class MyCommunityFragment extends Fragment{
 
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(holder.image);
-            return  convertView;
+            return convertView;
         }
     }
-
-
 
 
 }

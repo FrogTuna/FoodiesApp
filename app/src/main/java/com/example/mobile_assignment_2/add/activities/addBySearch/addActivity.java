@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -12,15 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.mobile_assignment_2.Users;
 import com.example.mobile_assignment_2.add.activities.addFriendList;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.checkerframework.checker.units.qual.A;
 
-public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ListView listView;
     ListViewAdapter adapter;
@@ -77,10 +72,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
+        Toast.makeText(getApplicationContext(), "Please input username or email", Toast.LENGTH_SHORT).show();
     }
-
-
 
 
     @Override
@@ -90,8 +83,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(runOnce) {
-                    runOnce  = false;
+                if (runOnce) {
+                    runOnce = false;
                     String userID = currentUser.getUid();
                     Intent intent = new Intent(getApplicationContext(), addFriendList.class);
 
@@ -99,8 +92,9 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             String key = userSnapshot.getKey();
                             String email = String.valueOf(userSnapshot.child("email").getValue());
+                            String userName = String.valueOf(userSnapshot.child("username").getValue());
 
-                            if (email.equals(query)) {
+                            if (email.equals(query) || userName.equals(query)) {
                                 userInfosArrayList = new ArrayList<>();
                                 HashMap<String, String> userInfoHashMap = new HashMap<>();
                                 Log.d("selected User by email:", key + " "
@@ -113,51 +107,14 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser", userID);
-                                intent.putExtra("flag","add");
+                                intent.putExtra("flag", "add");
                                 startActivity(intent);
 
                                 Log.d("debug: ", "*************** start intent");
-
                             }
                         }
                     }
                 }
-//
-//                for (DataSnapshot user: dataSnapshot.getChildren()) {
-//                    // TODO: handle the post
-////                    Log.w("user:", String.valueOf(user.child("email").getValue()));
-//                    if(query.equals(String.valueOf(user.child("email").getValue()))){
-////                        updateDBFriends(mDatabase,user,currentUser);
-//                        flag = true;
-//
-//                        String objectUser = user.getKey();
-//                        String curUser = currentUser.getUid();
-//
-//                        //                        friendName.setText((String)user.child("name").getValue());
-////                        friendEmail.setText((String)user.child("email").getValue());
-////                        friendDescription.setText((String)user.child("remark").getValue());
-////                        String image = (String)user.child("imageUrl").getValue();
-////                        Picasso.with(getApplicationContext()).load(image).fit().centerCrop().into(friendImageView);
-//
-//
-//
-//                        Log.d("new intent:", user.getKey() + "  " + currentUser.getUid());
-//                        Intent intent = new Intent(getApplicationContext(), addFriendList.class);
-//                        intent.putExtra("objectUser",objectUser);
-//                        intent.putExtra("currentUser",curUser);
-//                        intent.putExtra("name",String.valueOf(user.child("name").getValue()));
-//                        intent.putExtra("email",String.valueOf(user.child("email").getValue()));
-//                        intent.putExtra("remark","Description: " + String.valueOf(user.child("remark").getValue()));
-//                        intent.putExtra("imageUrl",String.valueOf(user.child("imageUrl").getValue()));
-//
-//                        startActivity(intent);
-//
-//                    }
-//                }
-//
-//                if(!flag){
-//                    Toast.makeText(getApplicationContext(),"User does not exist!",Toast.LENGTH_SHORT).show();
-//                }
 
             }
 
@@ -187,9 +144,9 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                 this.finish();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

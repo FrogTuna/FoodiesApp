@@ -1,13 +1,9 @@
 package com.example.mobile_assignment_2.message;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,14 +23,10 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
 
 
     //fields
@@ -46,12 +38,8 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     FirebaseAuth firebaseAuth;
 
 
-
     //constructor
-    public MessageAdapter2(Context context, ArrayList<ChatMessage> conversationRight){
-
-
-
+    public MessageAdapter2(Context context, ArrayList<ChatMessage> conversationRight) {
         this.context = context;
         this.allConversation = conversationRight;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -59,62 +47,53 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-
-
     //verify which viewholder should be returned
     @Override
     public int getItemViewType(int position) {
         if (allConversation.get(position).getRole().equals(FriendListAdapter.userID)) {
             return LAYOUT_LEFT;
-        } else if(allConversation.get(position).getRole().equals(fuser.getUid())) {
+        } else if (allConversation.get(position).getRole().equals(fuser.getUid())) {
             return LAYOUT_RIGHT;
         }
-
         return 0;
     }
 
 
 
+    //This is where you inflate the layout (Giving a loop to our view)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        //This is where you inflate the layout (Giving a loop to our view)
 
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
 
-
-        if(viewType == 0){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_left,parent,false);
+        if (viewType == 0) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_left, parent, false);
             viewHolder = new ViewHolderLeft(view);
-        }
-        else if (viewType == 1){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_right,parent,false);
-            viewHolder= new ViewHolderRight(view);
+        } else if (viewType == 1) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_window_right, parent, false);
+            viewHolder = new ViewHolderRight(view);
         }
 
         return viewHolder;
 
     }
 
-
-
+    //assigning values to the views we created in the recycler_view_row layout file
+    //based on the position of the recycler views
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
 
-        //assigning values to the views we created in the recycler_view_row layout file
-//      //based on the position of the recycler views
-
-        if(allConversation.get(position).getRole().equals(FriendListAdapter.userID)){
+        if (allConversation.get(position).getRole().equals(FriendListAdapter.userID)) {
             ViewHolderLeft holderLeft = (ViewHolderLeft) holder;
             holderLeft.receiverInfo.setText(allConversation.get(position).getSenderText());
             holderLeft.receiverTime.setText(allConversation.get(position).getSenderTime());
             Picasso.with(context).load(allConversation.get(position).getSenderImage()).into(holderLeft.receiverImage);
 
 
-        }
-        else if (allConversation.get(position).getRole().equals(fuser.getUid())){
+        } else if (allConversation.get(position).getRole().equals(fuser.getUid())) {
             ViewHolderRight holderRight = (ViewHolderRight) holder;
             holderRight.senderInfo.setText(allConversation.get(position).getSenderText());
             holderRight.senderTime.setText(allConversation.get(position).getSenderTime());
@@ -125,15 +104,11 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-
-
     //the recycler view just wants to know the number of items you want displayed
     @Override
     public int getItemCount() {
         return allConversation.size();
     }
-
-
 
 
     //****************  VIEW HOLDER 1 ******************//
@@ -178,28 +153,4 @@ public class MessageAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
-
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView=imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
-        }
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
-            try {
-                InputStream in=new java.net.URL(imageURL).openStream();
-                bimage= BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
-            }
-            return bimage;
-        }
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 }

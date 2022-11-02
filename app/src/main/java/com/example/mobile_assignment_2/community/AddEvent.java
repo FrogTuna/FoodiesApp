@@ -13,10 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.mobile_assignment_2.Comment;
 import com.example.mobile_assignment_2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -35,8 +32,8 @@ public class AddEvent extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private TextInputEditText eNameView, eLocView, ePeopleNum;
-    private Button dateBtn, timeBtn, saveBtn, postBtn;
-    private String format="";
+    private Button dateBtn, timeBtn, postBtn;
+    private String format = "";
     FirebaseAuth EventAuth;
     FirebaseUser curUser;
     DatabaseReference eventRef;
@@ -81,8 +78,8 @@ public class AddEvent extends AppCompatActivity {
         ePeopleNum = findViewById(R.id.event_people_num);
 
 
-        postBtn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 eventName = eNameView.getText().toString();
                 eventDate = String.valueOf(dateBtn.getText());
                 eventTime = String.valueOf(timeBtn.getText());
@@ -90,9 +87,6 @@ public class AddEvent extends AppCompatActivity {
                 eventPeoNum = Integer.parseInt(ePeopleNum.getText().toString());
                 String eid = eventRef.getKey();
                 HashMap<String, String> peoList = new HashMap<>();
-
-//                String td = eventDate.concat(eventTime);
-//                Log.e("readEvent", td);
 
                 usersRef.child(curUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
@@ -105,35 +99,30 @@ public class AddEvent extends AppCompatActivity {
                             String userName = task.getResult().getValue(String.class);
                             String uid = curUser.getUid();
                             eventRef.child(eid).child("peopleList").getKey();
-//                            peoList.push();
-                            String status =  "join";
+                            String status = "join";
                             Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
-//                            AddEvent.this.finish();
+
+                            DatabaseReference eventAddRef = FirebaseDatabase.getInstance().getReference("Event");
+                            DatabaseReference userAddRef = FirebaseDatabase.getInstance().getReference("Users");
+
+                            DatabaseReference addEventRef = eventAddRef.child(eid).child("peopleList").push();
+                            addEventRef.setValue(curUser.getUid());
+                            DatabaseReference userEventRef = userAddRef.child(curUser.getUid()).child("eventJoinList").push();
+                            userEventRef.setValue(eid);
                         }
                     }
                 });
-
-                 startActivity(new Intent(AddEvent.this, CommunityDetail.class));
+                Intent i = new Intent(AddEvent.this, CommunityDetail.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra("cid", cid);
+                i.putExtra("communityName", comName);
+                startActivity(i);
+                finish();
             }
         });
 
     }
-
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.event_save:
-//                // do your code
-//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
-//                break;
-//            case R.id.event_post:
-//                // do your code
-//                startActivity(new Intent(AddEvent.this, CommunityDetail.class));
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
@@ -146,7 +135,7 @@ public class AddEvent extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
-        month = month+1;
+        month = month + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
     }
@@ -155,7 +144,7 @@ public class AddEvent extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month+1;
+                month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateBtn.setText(date);
             }
@@ -167,8 +156,9 @@ public class AddEvent extends AppCompatActivity {
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
-        datePickerDialog = new DatePickerDialog(this,style, dateSetListener,year, month, day);
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
+
     private void initTimePicker() {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -181,7 +171,7 @@ public class AddEvent extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int min = cal.get(Calendar.MINUTE);
 
-        timePickerDialog = new TimePickerDialog(this, timeSetListener , hour, min, false);
+        timePickerDialog = new TimePickerDialog(this, timeSetListener, hour, min, false);
     }
 
     private String makeTimeString(int hour, int minute) {
@@ -205,48 +195,38 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private String getMonthFormat(int month) {
-        if(month == 1) {
-            return "JAN";
+        switch (month) {
+            case 2:
+                return "FEB";
+            case 3:
+                return "MAR";
+            case 4:
+                return "APR";
+            case 5:
+                return "MAY";
+            case 6:
+                return "JUN";
+            case 7:
+                return "JUL";
+            case 8:
+                return "AUG";
+            case 9:
+                return "SEP";
+            case 10:
+                return "OCT";
+            case 11:
+                return "NOV";
+            case 12:
+                return "DEC";
+            default:
+                return "JAN";
         }
-        if(month == 2) {
-            return "FEB";
-        }
-        if(month == 3) {
-            return "MAR";
-        }
-        if(month == 4) {
-            return "APR";
-        }
-        if(month == 5) {
-            return "MAY";
-        }
-        if(month == 6) {
-            return "JUN";
-        }
-        if(month == 7) {
-            return "JUL";
-        }
-        if(month == 8) {
-            return "AUG";
-        }
-        if(month == 9) {
-            return "SEP";
-        }
-        if(month == 10) {
-            return "OCT";
-        }
-        if(month == 11) {
-            return "NOV";
-        }
-        if(month == 12) {
-            return "DEC";
-        }
-        return "JAN";
     }
 
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
+
     public void openTimePicker(View view) {
         timePickerDialog.show();
     }

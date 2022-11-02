@@ -31,6 +31,7 @@ public class FriendFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ArrayList friendArrayList, userArrayList;
+
     public FriendFragment(ArrayList _friendArrayList, ArrayList _userArrayList) {
         // Required empty public constructor
         friendArrayList = _friendArrayList;
@@ -71,7 +72,7 @@ public class FriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view  = inflater.inflate(R.layout.fragment_friend, container, false);
+        View view = inflater.inflate(R.layout.fragment_friend, container, false);
         // Implement following
 //        System.out.println("[+] Friend check: " + friendArrayList);
         FriendListData[] friendListData = new FriendListData[friendArrayList.size()];
@@ -79,8 +80,8 @@ public class FriendFragment extends Fragment {
 
         for (int i = 0; i < friendArrayList.size(); i++) {
             for (int j = 0; j < userArrayList.size(); j++) {
-                if(((HashMap<String, String>)friendArrayList.get(i)).get("ID").equals(((HashMap<String, String>)userArrayList.get(j)).get("ID"))) {
-                    friendListData[i] = new FriendListData(((HashMap<String, String>)friendArrayList.get(i)).get("ID"), ((HashMap<String, String>)userArrayList.get(j)).get("username"), ((HashMap<String, String>)userArrayList.get(j)).get("remark"), ((HashMap<String, String>)userArrayList.get(j)).get("imageUrl"));
+                if (((HashMap<String, String>) friendArrayList.get(i)).get("ID").equals(((HashMap<String, String>) userArrayList.get(j)).get("ID"))) {
+                    friendListData[i] = new FriendListData(((HashMap<String, String>) friendArrayList.get(i)).get("ID"), ((HashMap<String, String>) userArrayList.get(j)).get("username"), ((HashMap<String, String>) userArrayList.get(j)).get("remark"), ((HashMap<String, String>) userArrayList.get(j)).get("imageUrl"));
                 }
             }
 //            friendListData[i] = new FriendListData((String)friendArrayList.get(i), "I am user 1", android.R.drawable.ic_dialog_email);

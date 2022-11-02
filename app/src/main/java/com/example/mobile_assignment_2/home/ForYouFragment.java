@@ -1,7 +1,5 @@
 package com.example.mobile_assignment_2.home;
 
-import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -71,6 +69,7 @@ public class ForYouFragment extends Fragment {
     FirebaseUser currentUser;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     int lastViewPosition = 0;
+
     public ForYouFragment() {
         // Required empty public constructor
     }
@@ -109,7 +108,6 @@ public class ForYouFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_for_you, container, false);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-
 
 
         // Get a reference to users
@@ -214,11 +212,12 @@ public class ForYouFragment extends Fragment {
             Button collectBtn;
             Button commentBtn;
             ImageView profileView;
+
             public ViewHolder(View view) {
                 super(view);
-                titleView =  (TextView) view.findViewById(R.id.post_title);
-                authorView = (TextView)  view.findViewById(R.id.author_name);
-                descpView =  (TextView) view.findViewById(R.id.post_description);
+                titleView = (TextView) view.findViewById(R.id.post_title);
+                authorView = (TextView) view.findViewById(R.id.author_name);
+                descpView = (TextView) view.findViewById(R.id.post_description);
                 imagesRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
                 likeBtn = (Button) view.findViewById(R.id.like);
                 collectBtn = (Button) view.findViewById(R.id.collect);
@@ -260,7 +259,7 @@ public class ForYouFragment extends Fragment {
             ArrayList<String> imageUrls = posts.get(position).getImageUrls();
             ImagesAdapter imagesAdapter = new ImagesAdapter(imageUrls, getContext(), R.layout.for_you_posts_image_view);
             viewHolder.imagesRecyclerView.setHasFixedSize(true);
-            RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+            RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             viewHolder.imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
             viewHolder.imagesRecyclerView.setAdapter(imagesAdapter);
             viewHolder.commentBtn.setText(String.valueOf(num_comments[0]));
@@ -284,8 +283,7 @@ public class ForYouFragment extends Fragment {
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
                         Log.e("firebase", "Error in fetching data", task.getException());
-                    }
-                    else {
+                    } else {
                         String profileImageUrl = task.getResult().getValue(String.class);
                         // Download image from URL and set to imageView
                         Picasso.with(getContext()).load(profileImageUrl).fit().centerCrop().into(viewHolder.profileView);
@@ -298,23 +296,23 @@ public class ForYouFragment extends Fragment {
                     lastViewPosition = position;
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                     if (!likes.contains(pid)) {
-                        firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] +1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 // push to user's likes
                                 DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes").push();
                                 userLikesRef.setValue(pid);
-                                Toast.makeText(getContext(), "You liked this post",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "You liked this post", Toast.LENGTH_LONG).show();
 
                             }
                         });
                     } else {
-                        firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] -1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
                                 Query query = likeRef.orderByValue().equalTo(pid);
-                                query.addValueEventListener(new ValueEventListener() {
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -327,7 +325,7 @@ public class ForYouFragment extends Fragment {
 
                                     }
                                 });
-                                Toast.makeText(getContext(), "You cancelled like",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "You cancelled like", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -342,23 +340,23 @@ public class ForYouFragment extends Fragment {
                     lastViewPosition = position;
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                     if (!collects.contains(pid)) {
-                        firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] +1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 // push to user's collects
                                 DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects").push();
                                 userLikesRef.setValue(pid);
-                                Toast.makeText(getContext(), "You collected this post",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "You collected this post", Toast.LENGTH_LONG).show();
 
                             }
                         });
                     } else {
-                        firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] -1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
                                 Query query = collectRef.orderByValue().equalTo(pid);
-                                query.addValueEventListener(new ValueEventListener() {
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -371,7 +369,7 @@ public class ForYouFragment extends Fragment {
 
                                     }
                                 });
-                                Toast.makeText(getContext(), "You cancelled collect",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "You cancelled collect", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -381,12 +379,12 @@ public class ForYouFragment extends Fragment {
             viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    View popupCommentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_popup_window,null);
+                    View popupCommentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_popup_window, null);
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                     int height = displayMetrics.heightPixels;
                     int width = displayMetrics.widthPixels;
-                    PopupWindow popupWindow = new PopupWindow(popupCommentView,width, height*1/2, true);
+                    PopupWindow popupWindow = new PopupWindow(popupCommentView, width, height * 1 / 2, true);
                     popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                     LinearLayout commentsLinearLayout = popupCommentView.findViewById(R.id.commentsLinearLayout);
                     Button sendBtn = popupCommentView.findViewById(R.id.sendCommentButton);
@@ -401,7 +399,7 @@ public class ForYouFragment extends Fragment {
                                 commentsList.add(comment);
 
                             }
-                            for (Comment c : commentsList){
+                            for (Comment c : commentsList) {
                                 View view = LayoutInflater.from(getContext()).inflate(R.layout.comment, null);
                                 TextView authorView = view.findViewById(R.id.author_name);
                                 TextView commentView = view.findViewById(R.id.comment_text);
@@ -432,8 +430,7 @@ public class ForYouFragment extends Fragment {
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         if (!task.isSuccessful()) {
                                             Log.e("firebase", "Error in fetching data", task.getException());
-                                        }
-                                        else {
+                                        } else {
                                             String authorName = task.getResult().getValue(String.class);
                                             firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                                 @Override
@@ -444,10 +441,10 @@ public class ForYouFragment extends Fragment {
                                                     commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void unused) {
-                                                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void unused) {
-                                                                    Toast.makeText(getContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(getContext(), "Comment Added successfully", Toast.LENGTH_LONG).show();
                                                                     commentTextField.setText("");
 
                                                                 }
@@ -459,7 +456,6 @@ public class ForYouFragment extends Fragment {
                                             });
 
 
-
                                         }
                                     }
                                 });
@@ -467,8 +463,6 @@ public class ForYouFragment extends Fragment {
                             }
                         }
                     });
-
-
 
 
                 }
@@ -480,6 +474,7 @@ public class ForYouFragment extends Fragment {
         public int getItemCount() {
             return posts.size();
         }
+
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
