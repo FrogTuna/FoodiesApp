@@ -42,9 +42,9 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Screen of 'For you' tab on Home screen, displaying the posts of user and user's friends.
+ * The user can like, cancel like, collect, cancel collect and comment on posts.
  */
 public class ForYouFragment extends Fragment {
 

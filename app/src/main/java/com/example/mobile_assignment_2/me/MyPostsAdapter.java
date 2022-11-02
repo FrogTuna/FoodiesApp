@@ -1,6 +1,8 @@
 package com.example.mobile_assignment_2.me;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.home.PostItemClickListener;
+import com.example.mobile_assignment_2.home.PostDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -23,16 +25,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Bind posts data to post view in recyclerView
  */
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private ArrayList<Post> posts = new ArrayList<Post>();
-    private PostItemClickListener postItemClickListener;
     Context context;
-
+    Activity activity;
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleView;
         TextView authorView;
@@ -54,9 +54,16 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
-            if (postItemClickListener != null) {
-                postItemClickListener.onClick(view, getAbsoluteAdapterPosition());
-            }
+            Post post = posts.get(getAbsoluteAdapterPosition());
+            Intent i = new Intent(view.getContext(), PostDetails.class);
+            i.putExtra("title", post.getTitle());
+            i.putExtra("description", post.getDescription());
+            i.putExtra("author", post.getAuthor());
+            i.putExtra("pid", post.getPid());
+            i.putExtra("uid", post.getUid());
+            i.putStringArrayListExtra("imageURLs", post.getImageUrls());
+
+            view.getContext().startActivity(i);
         }
     }
 
@@ -66,9 +73,6 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
 
     }
 
-    public void setClickListener(PostItemClickListener postItemClickListener) {
-        this.postItemClickListener = postItemClickListener;
-    }
 
     // Create new view
     @Override

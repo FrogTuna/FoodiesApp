@@ -35,9 +35,9 @@ import java.util.Collections;
 
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Screen of 'Explore' tab on Home screen, displaying the posts of strangers of user
+ * in two-column view. The user can click on any post to go to the Post Details screen.
  */
 public class ExploreFragment extends Fragment {
     private ArrayList<Post> posts = new ArrayList<>();
@@ -131,21 +131,6 @@ public class ExploreFragment extends Fragment {
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                         recyclerView.setLayoutManager(gridLayoutManager);
                         explorePostsAdapter = new ExplorePostsAdapter(strangerPosts);
-                        explorePostsAdapter.setClickListener(new PostItemClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
-                                Post post = strangerPosts.get(position);
-                                Intent i = new Intent(getActivity(), PostDetails.class);
-                                i.putExtra("title", post.getTitle());
-                                i.putExtra("description", post.getDescription());
-                                i.putExtra("author", post.getAuthor());
-                                i.putExtra("pid", post.getPid());
-                                i.putExtra("uid", post.getUid());
-                                i.putStringArrayListExtra("imageURLs", post.getImageUrls());
-
-                                startActivity(i);
-                            }
-                        });
                         recyclerView.setAdapter(explorePostsAdapter);
 
                     }
@@ -171,7 +156,7 @@ public class ExploreFragment extends Fragment {
     public class ExplorePostsAdapter extends RecyclerView.Adapter<ExplorePostsAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
-        private PostItemClickListener postItemClickListener;
+
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
@@ -194,9 +179,16 @@ public class ExploreFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                if (postItemClickListener != null) {
-                    postItemClickListener.onClick(view, getAbsoluteAdapterPosition());
-                }
+                Post post = strangerPosts.get(getAbsoluteAdapterPosition());
+                Intent i = new Intent(getActivity(), PostDetails.class);
+                i.putExtra("title", post.getTitle());
+                i.putExtra("description", post.getDescription());
+                i.putExtra("author", post.getAuthor());
+                i.putExtra("pid", post.getPid());
+                i.putExtra("uid", post.getUid());
+                i.putStringArrayListExtra("imageURLs", post.getImageUrls());
+
+                startActivity(i);
             }
         }
 
@@ -205,9 +197,6 @@ public class ExploreFragment extends Fragment {
 
         }
 
-        public void setClickListener(PostItemClickListener postItemClickListener) {
-            this.postItemClickListener = postItemClickListener;
-        }
 
         // Create new view
         @Override

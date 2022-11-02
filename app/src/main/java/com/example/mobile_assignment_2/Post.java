@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Post class defining attributes of a post
  */
 public class Post {
     private String title, description, author, uid, pid;

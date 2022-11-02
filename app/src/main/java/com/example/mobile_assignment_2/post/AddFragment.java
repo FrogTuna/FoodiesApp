@@ -52,9 +52,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Create Post screen to allow user to create and upload a post with multiple images,
+ * title and description. The user can pick an image from gallery and take a photo.
  */
 public class AddFragment extends Fragment implements View.OnClickListener {
 

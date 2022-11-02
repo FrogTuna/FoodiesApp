@@ -15,9 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: RecyclerView Adapter to bind image urls of post to imageView in recyclerView
  */
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
 

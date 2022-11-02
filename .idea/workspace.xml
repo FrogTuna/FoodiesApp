@@ -15,93 +15,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b7e760f-087d-48c6-a08c-5ffce4aef351" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyEventsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/event.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_event_available_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/me_eventlists.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/SocialFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/SocialFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/CustomItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/CustomItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/ListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/ListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/addActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/addActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/friendItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addBySearch/friendItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addFriendListData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addShake/shakeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addShake/shakeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/activities/addShake/shakeAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/addFriendsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/add/addFriendsAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/authentication/login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatListData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/ChatPagerAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/FriendListData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/RequestListData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/firebaseDataStore/FriendshipInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/firebaseDataStore/FriendshipInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/firebaseDataStore/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/chat/firebaseDataStore/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/AddCommunity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/AddCommunity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/AddEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/AddEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/BottomSheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/BottomSheet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/CommunityDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/CommunityDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/CommunityFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/CommunityFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/Communitypost.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/Communitypost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/DiscoverCommunityFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/DiscoverCommunityFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/MyCommunityFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/community/MyCommunityFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ExploreFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ExploreFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ForYouFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ForYouFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/HomeFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ImagesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/ImagesAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/PostDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/PostDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/home/PostItemClickListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/CollectPostsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/CollectPostsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MeFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/me/MyPostsAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/ChatMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/ChatWindowActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/ChatWindowActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/MessageAdapter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/message/MessageAdapter2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/post/AddFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mobile_assignment_2/post/AddFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/com_category_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/com_category_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_com_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_com_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_event.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_event.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/addbysearch_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/addbysearch_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/community_joinin_posts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/community_joinin_posts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/community_leave_posts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/community_leave_posts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/community_popup_window.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/community_popup_window.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_chat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_chat.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_community.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_community.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_community.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_community.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_friend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_friend.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_me.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_me.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_request.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_request.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/leo/.android/avd/Pixel_5_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\zouwe\.android\avd\Pixel_5_API_33_13.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -175,6 +113,7 @@
       <option name="PM_INSTALL_OPTIONS" value="" />
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
@@ -214,6 +153,7 @@
         <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
         <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
         <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+        <option name="PROFILING_MODE" value="NOT_SET" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -245,6 +185,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
