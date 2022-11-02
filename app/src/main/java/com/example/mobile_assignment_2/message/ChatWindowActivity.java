@@ -68,6 +68,8 @@ public class ChatWindowActivity extends AppCompatActivity {
     DatabaseReference oppositeUserLastMessageRef;
     DatabaseReference userImageRef;
     DatabaseReference oppositeUserImageRef;
+    DatabaseReference userLastMessageHasReadRef;
+    DatabaseReference oppositeUserLastMessageHasReadRef;
     FirebaseAuth myAuth;
     ImageView chatSendButton;
     EditText chatInputBar;
@@ -90,9 +92,12 @@ public class ChatWindowActivity extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
         fuser = myAuth.getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("chats");
+        //useHasRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child()
         oppositeUserRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("chats");
         userLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("lastMessage");
+        userLastMessageHasReadRef = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid()).child("friends").child(FriendListAdapter.userID).child("hasRead");
         oppositeUserLastMessageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("lastMessage");
+        oppositeUserLastMessageHasReadRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("friends").child(fuser.getUid()).child("hasRead");
         allRef = FirebaseDatabase.getInstance().getReference();
         chatMessageRef = FirebaseDatabase.getInstance().getReference("chatMessage");
         oppositeUserImageRef = FirebaseDatabase.getInstance().getReference("Users").child(FriendListAdapter.userID).child("imageUrl");
@@ -139,6 +144,8 @@ public class ChatWindowActivity extends AppCompatActivity {
                     DatabaseReference oppositeFuserChatRef = oppositeUserRef.push();
                     DatabaseReference userLastMessageRef2 = userLastMessageRef.push();
                     DatabaseReference oppositeUserLastMessageRef2 = oppositeUserLastMessageRef.push();
+                    userLastMessageHasReadRef.setValue("true");
+                    oppositeUserLastMessageHasReadRef.setValue("false");
                     fuserFriendChatRef.setValue(chatID);
                     oppositeFuserChatRef.setValue(chatID);
                     userLastMessageRef2.setValue(chatInputBar.getText().toString());
@@ -151,9 +158,7 @@ public class ChatWindowActivity extends AppCompatActivity {
             }
         });
 
-
         backSocialFragmentIntent(backIcon);
-
 
     }
 
@@ -164,7 +169,7 @@ public class ChatWindowActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot imageSnapshot) {
                 imageUrl = "";
-                //Log.d("i'm here", imageSnapshot.getValue().toString());
+
                 imageUrl = imageSnapshot.getValue().toString();
 
                 //oppositeUser listener
@@ -173,9 +178,9 @@ public class ChatWindowActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         oppositeUserChatIDList.clear();
 
+                        //Log.d("chatIDList1", snapshot.getValue().toString());
                         for(DataSnapshot snapshot1: snapshot.getChildren()){
                             oppositeUserChatIDList.add(snapshot1.getValue().toString());
-                            //Log.d("chatIDList1", snapshot1.getValue().toString());
                         }
 
                         chatMessageRef.addValueEventListener(new ValueEventListener() {
@@ -189,11 +194,11 @@ public class ChatWindowActivity extends AppCompatActivity {
                                         if(snapshot3.getKey().matches(oppositeUserChatIDList.get(i))){
 
                                             if(snapshot3.child("role").getValue().toString().equals(fuser.getUid())){
-                                                Log.d("i'm here1", snapshot3.child("senderImage").toString());
+                                                //Log.d("i'm here1", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(fuser.getPhotoUrl().toString());
                                             }
                                             else if(snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)){
-                                                Log.d("i'm here2", snapshot3.child("senderImage").toString());
+                                                //Log.d("i'm here2", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(imageUrl);
                                             }
                                             //Log.d("chatIDList3", snapshot3.getKey());

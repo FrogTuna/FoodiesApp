@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -74,6 +75,7 @@ public class SocialFragment extends Fragment {
     private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
     public static  HashMap<String, String> outsideFriendInfo;
+    ImageView newMessageCircle;
 
 
     public SocialFragment() {
@@ -171,6 +173,7 @@ public class SocialFragment extends Fragment {
 
         customSpinner = view.findViewById(R.id.customIconSpinner);
         customList=getCustomList();
+        newMessageCircle = view.findViewById(R.id.newMessageCircle);
         addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(),customList);
         if(customSpinner!=null) {
             customSpinner.setAdapter(adapter);
@@ -409,17 +412,27 @@ public class SocialFragment extends Fragment {
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
                         HashMap<String, Object> chatsInfo = new HashMap<>();
+                        String hasRead = "";
                         String lastMsg = "";
                         chatsInfo.put("ID", friendsSnapshot.getKey());
                         for(DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
+                            Log.d("chatSnapshot",chatsSnapshot.getKey());
+
                             if(chatsSnapshot.getKey().equals("lastMessage")) {
                                 for(DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
                                     lastMsg = (String) msgSnapshot.getValue();
+
                                 }
                             }
+                            else if(chatsSnapshot.getKey().equals("hasRead")){
+                                hasRead = (String) chatsSnapshot.getValue();
+                                Log.d("hasRead",hasRead);
+                            }
+
 
                         }
                         chatsInfo.put("lastMsg", lastMsg);
+                        chatsInfo.put("hasRead", hasRead);
                         chatArrayList.add(chatsInfo);
 
                     }

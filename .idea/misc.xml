@@ -3,18 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
-        <entry key="app/src/main/res/layout/activity_chat_window.xml" value="0.33229166666666665" />
-        <entry key="app/src/main/res/layout/activity_event.xml" value="0.33229166666666665" />
-=======
         <entry key="..\:/mobileA2/app/src/main/res/layout/activity_com_detail.xml" value="0.20989583333333334" />
         <entry key="..\:/mobileA2/app/src/main/res/layout/activity_event.xml" value="0.20989583333333334" />
         <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_community.xml" value="0.17300724637681159" />
         <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_community_home.xml" value="0.17300724637681159" />
         <entry key="..\:/mobileA2/app/src/main/res/layout/fragment_my_community.xml" value="0.17300724637681159" />
->>>>>>> 7e002f980fcc57483645ccee611d84d9633aad28
+        <entry key="app/src/main/res/drawable/new_message_circle.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_chat_window.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/activity_event.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_start_chat.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/chat_list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/com_select_menu.xml" value="0.12604166666666666" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.12604166666666666" />
       </map>
     </option>
   </component>

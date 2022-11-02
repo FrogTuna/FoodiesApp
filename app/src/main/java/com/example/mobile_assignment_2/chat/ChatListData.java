@@ -5,13 +5,15 @@ public class ChatListData {
     private String friendID;
     private String lastMsg;
     private String imgURL;
+    private String hasRead;
 
 
-    public ChatListData(String _friendID, String _username, String _lastMsg, String _imgURL) {
+    public ChatListData(String _friendID, String _username, String _lastMsg, String _imgURL, String _hasRead) {
         this.friendID = _friendID;
         this.username = _username;
         this.lastMsg = _lastMsg;
         this.imgURL = _imgURL;
+        this.hasRead = _hasRead;
     }
     // Following is Get/Set function
     public String getFriendID() {
@@ -43,5 +45,7 @@ public class ChatListData {
     }
 
 
+    public String getHasRead() {return this.hasRead; }
+    public void setHasRead(String  _hasRead) {this.hasRead = _hasRead; }
 
 }
