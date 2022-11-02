@@ -122,9 +122,11 @@ public class AddEvent extends AppCompatActivity {
                     }
                 });
                 Intent i = new Intent(AddEvent.this, CommunityDetail.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra("cid", cid);
                 i.putExtra("communityName", comName);
                 startActivity(i);
+                finish();
             }
         });
 

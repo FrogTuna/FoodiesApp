@@ -9,9 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.community.AddEvent;
-import com.example.mobile_assignment_2.community.CommunityDetail;
 import com.example.mobile_assignment_2.community.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +27,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class EventsActivity extends AppCompatActivity  {
+public class MyEventsActivity extends AppCompatActivity  {
 
     private TextView comNameView;
     FirebaseAuth mAuth;
@@ -135,9 +130,9 @@ public class EventsActivity extends AppCompatActivity  {
         public MyEventAdapter(ArrayList<Event> events) {this.events = events;}
         @NonNull
         @Override
-        public EventsActivity.MyEventAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        public MyEventsActivity.MyEventAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_event, viewGroup, false);
-            return new EventsActivity.MyEventAdapter.ViewHolder(view);
+            return new MyEventsActivity.MyEventAdapter.ViewHolder(view);
         }
 
         @Override

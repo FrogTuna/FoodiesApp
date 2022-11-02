@@ -70,7 +70,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".me.EventsActivity"
+            android:name=".me.MyEventsActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.Register"
