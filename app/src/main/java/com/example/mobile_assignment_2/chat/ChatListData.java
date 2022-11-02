@@ -13,10 +13,12 @@ public class ChatListData {
         this.lastMsg = _lastMsg;
         this.imgURL = _imgURL;
     }
+
     // Following is Get/Set function
     public String getFriendID() {
         return this.friendID;
     }
+
     public void setFriendID(String _friendID) {
         this.friendID = friendID;
     }
@@ -24,6 +26,7 @@ public class ChatListData {
     public String getUsername() {
         return this.username;
     }
+
     public void setUsername(String _username) {
         this.username = _username;
     }
@@ -31,6 +34,7 @@ public class ChatListData {
     public String getLastMsg() {
         return this.lastMsg;
     }
+
     public void setLastMsg(String _lastMsg) {
         this.lastMsg = _lastMsg;
     }
@@ -38,10 +42,10 @@ public class ChatListData {
     public String getImgURL() {
         return this.imgURL;
     }
+
     public void setAvatar(String _imgURL) {
         this.imgURL = _imgURL;
     }
-
 
 
 }

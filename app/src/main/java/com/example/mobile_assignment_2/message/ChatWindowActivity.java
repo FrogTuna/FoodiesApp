@@ -80,13 +80,12 @@ public class ChatWindowActivity extends AppCompatActivity {
         backIcon = findViewById(R.id.chatWindowBackIcon);
         oppositeHeadingInChat = findViewById(R.id.oppositeHeadingInChat);
         oppositeHeadingInChat.setText(FriendListAdapter.username);
-        userRecyclerView =  findViewById(R.id.chatWindowRecycleView);
+        userRecyclerView = findViewById(R.id.chatWindowRecycleView);
         oppositeUserRecyclerView = findViewById(R.id.chatWindowRecycleView);
         chatSendButton = findViewById(R.id.chatSendButton);
         chatInputBar = findViewById(R.id.chatInputBar);
         userAvatar = findViewById(R.id.chatWindowRightUserImage);
         oppositeUserAvatar = findViewById(R.id.chatWindowLeftUserImage);
-
 
 
         //methods
@@ -98,16 +97,16 @@ public class ChatWindowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(chatInputBar.length()==0){
+                if (chatInputBar.length() == 0) {
 
-                    Snackbar.make(chatSendButton,"input text could not be empty", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(chatSendButton, "input text could not be empty", Snackbar.LENGTH_SHORT).show();
 
-                }else{
+                } else {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
                     DatabaseReference chatMessageRef = allRef.child("chatMessage").push();
                     String chatID = chatMessageRef.getKey();
-                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(),formatter.format(date), fuser.getPhotoUrl().toString(), chatID, fuser.getUid());
+                    ChatMessage message = new ChatMessage(chatInputBar.getText().toString(), formatter.format(date), fuser.getPhotoUrl().toString(), chatID, fuser.getUid());
                     chatMessageRef.setValue(message);
                     DatabaseReference fuserFriendChatRef = userRef.push();
                     DatabaseReference oppositeFuserChatRef = oppositeUserRef.push();
@@ -119,7 +118,7 @@ public class ChatWindowActivity extends AppCompatActivity {
                     oppositeUserLastMessageRef2.setValue(chatInputBar.getText().toString());
                     chatInputBar.clearFocus();
                     chatInputBar.setText("");
-                    Snackbar.make(chatSendButton,"text has been sent it", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(chatSendButton, "text has been sent it", Snackbar.LENGTH_SHORT).show();
 
                 }
             }
@@ -128,7 +127,7 @@ public class ChatWindowActivity extends AppCompatActivity {
 
     }
 
-    private void loadDatabase(){
+    private void loadDatabase() {
 
 
         oppositeUserImageRef.addValueEventListener(new ValueEventListener() {
@@ -143,7 +142,7 @@ public class ChatWindowActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         oppositeUserChatIDList.clear();
 
-                        for(DataSnapshot snapshot1: snapshot.getChildren()){
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             oppositeUserChatIDList.add(snapshot1.getValue().toString());
                         }
 
@@ -152,16 +151,15 @@ public class ChatWindowActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot2) {
                                 oppositeUserconversation.clear();
-                                for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
 
-                                    for(int i = 0; i < oppositeUserChatIDList.size(); i++){
-                                        if(snapshot3.getKey().matches(oppositeUserChatIDList.get(i))){
+                                    for (int i = 0; i < oppositeUserChatIDList.size(); i++) {
+                                        if (snapshot3.getKey().matches(oppositeUserChatIDList.get(i))) {
 
-                                            if(snapshot3.child("role").getValue().toString().equals(fuser.getUid())){
+                                            if (snapshot3.child("role").getValue().toString().equals(fuser.getUid())) {
                                                 Log.d("i'm here1", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(fuser.getPhotoUrl().toString());
-                                            }
-                                            else if(snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)){
+                                            } else if (snapshot3.child("role").getValue().toString().equals(FriendListAdapter.userID)) {
                                                 Log.d("i'm here2", snapshot3.child("senderImage").toString());
                                                 snapshot3.child("senderImage").getRef().setValue(imageUrl);
                                             }
@@ -180,12 +178,13 @@ public class ChatWindowActivity extends AppCompatActivity {
                                     MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, oppositeUserconversation);
                                     oppositeUserRecyclerView.setAdapter(messageAdapter2);
                                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                                    if(oppositeUserconversation.size()>6){
+                                    if (oppositeUserconversation.size() > 6) {
                                         linearLayoutManager.setStackFromEnd(true);
                                     }
                                     oppositeUserRecyclerView.setLayoutManager(linearLayoutManager);
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -209,14 +208,13 @@ public class ChatWindowActivity extends AppCompatActivity {
         });
 
 
-
         //my listener
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userChatIDList.clear();
 
-                for(DataSnapshot snapshot1: snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     userChatIDList.add(snapshot1.getValue().toString());
                 }
 
@@ -225,10 +223,10 @@ public class ChatWindowActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot2) {
                         userConversation.clear();
-                        for(DataSnapshot snapshot3: snapshot2.getChildren()){
+                        for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
 
-                            for(int i = 0; i < userChatIDList.size(); i++){
-                                if(snapshot3.getKey().matches(userChatIDList.get(i))){
+                            for (int i = 0; i < userChatIDList.size(); i++) {
+                                if (snapshot3.getKey().matches(userChatIDList.get(i))) {
                                     String chatMessageRole = snapshot3.child("role").getValue().toString();
                                     String chatMessageText = snapshot3.child("senderText").getValue().toString();
                                     String chatMessageTime = snapshot3.child("senderTime").getValue().toString();
@@ -243,12 +241,13 @@ public class ChatWindowActivity extends AppCompatActivity {
                             MessageAdapter2 messageAdapter2 = new MessageAdapter2(ChatWindowActivity.this, userConversation);
                             userRecyclerView.setAdapter(messageAdapter2);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatWindowActivity.this);
-                            if(userConversation.size()>6){
+                            if (userConversation.size() > 6) {
                                 linearLayoutManager.setStackFromEnd(true);
                             }
                             userRecyclerView.setLayoutManager(linearLayoutManager);
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -264,10 +263,7 @@ public class ChatWindowActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    private void backSocialFragmentIntent(AppCompatImageView imageView){
+    private void backSocialFragmentIntent(AppCompatImageView imageView) {
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

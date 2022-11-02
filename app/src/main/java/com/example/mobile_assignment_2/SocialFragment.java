@@ -2,6 +2,7 @@ package com.example.mobile_assignment_2;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,15 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.mobile_assignment_2.add.CustomItem;
 import com.example.mobile_assignment_2.add.activities.addBySearch.addActivity;
 import com.example.mobile_assignment_2.add.activities.addShake.shakeActivity;
 import com.example.mobile_assignment_2.add.addFriendsAdapter;
-
 import com.example.mobile_assignment_2.chat.ChatPagerAdapter;
-import com.example.mobile_assignment_2.chat.firebaseDataStore.FriendshipInfo;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -37,10 +35,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
-
-
+ * <p>
+ * <p>
  * Use the {@link SocialFragment#} factory method to
-
+ * <p>
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
@@ -70,7 +68,7 @@ public class SocialFragment extends Fragment {
     private FirebaseAuth myAuth;
     private String userID = "";  // this var is login user, and should be pass when login to chat page
     private static final String TAG = "Child: ";
-    public static  HashMap<String, String> outsideFriendInfo;
+    public static HashMap<String, String> outsideFriendInfo;
 
 
     public SocialFragment() {
@@ -131,23 +129,23 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view  = inflater.inflate(R.layout.fragment_social, container, false);
+        View view = inflater.inflate(R.layout.fragment_social, container, false);
         customSpinner = view.findViewById(R.id.customIconSpinner);
-        customList=getCustomList();
-        addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(),customList);
-        if(customSpinner!=null) {
+        customList = getCustomList();
+        addFriendsAdapter adapter = new addFriendsAdapter(this.getContext(), customList);
+        if (customSpinner != null) {
             customSpinner.setAdapter(adapter);
-            customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     CustomItem item = (CustomItem) adapterView.getSelectedItem();
                     Log.d(TAG, "selected:" + item.getSpinnerItemName());
 
-                    if(item.getSpinnerItemName().equals("add")){
+                    if (item.getSpinnerItemName().equals("add")) {
                         Intent intent = new Intent(getActivity(), addActivity.class);
                         startActivity(intent);
-                    }else if(item.getSpinnerItemName().equals("Shake")){
+                    } else if (item.getSpinnerItemName().equals("Shake")) {
                         Intent intent = new Intent(getActivity(), shakeActivity.class);
                         startActivity(intent);
                     }
@@ -194,7 +192,7 @@ public class SocialFragment extends Fragment {
         return view;
     }
 
-//    @Override
+    //    @Override
     public void onBackPressed() {
         if (viewPager2.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
@@ -205,7 +203,8 @@ public class SocialFragment extends Fragment {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
         }
     }
-    private void initialFireBase(){
+
+    private void initialFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         userRef = firebaseDatabase.getReference("Users");
         userRef.addChildEventListener(new ChildEventListener() {
@@ -219,18 +218,18 @@ public class SocialFragment extends Fragment {
                 usersInfo.put("imageUrl", (String) dataSnapshot.child("imageUrl").getValue());
                 usersInfo.put("username", (String) dataSnapshot.child("username").getValue());
                 userArrayList.add(usersInfo);
-                if(dataSnapshot.getKey().equals(userID)) {
+                if (dataSnapshot.getKey().equals(userID)) {
 
-                    for(DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()) {
+                    for (DataSnapshot friendsSnapshot : dataSnapshot.child("friends").getChildren()) {
                         HashMap<String, String> friendsInfo = new HashMap<String, String>();
                         friendsInfo.put("ID", friendsSnapshot.getKey());
                         friendshipArrayList.add(friendsInfo);
                         HashMap<String, Object> chatsInfo = new HashMap<>();
                         String lastMsg = "";
                         chatsInfo.put("ID", friendsSnapshot.getKey());
-                        for(DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
-                            if(chatsSnapshot.getKey().equals("lastMessage")) {
-                                for(DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
+                        for (DataSnapshot chatsSnapshot : friendsSnapshot.getChildren()) {
+                            if (chatsSnapshot.getKey().equals("lastMessage")) {
+                                for (DataSnapshot msgSnapshot : chatsSnapshot.getChildren()) {
                                     lastMsg = (String) msgSnapshot.getValue();
                                 }
                             }
@@ -240,10 +239,10 @@ public class SocialFragment extends Fragment {
 
                     }
 
-                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()){
+                    for (DataSnapshot request : dataSnapshot.child("requests").getChildren()) {
                         HashMap<String, String> requestInfo = new HashMap<>();
-                        requestInfo.put("requestUserID",String.valueOf(request.child("userID").getValue()));
-                        requestInfo.put("name",String.valueOf(request.child("name").getValue()));
+                        requestInfo.put("requestUserID", String.valueOf(request.child("userID").getValue()));
+                        requestInfo.put("name", String.valueOf(request.child("name").getValue()));
                         requestInfo.put("comment", String.valueOf(request.child("comment").getValue()));
                         requestInfo.put("avatar", String.valueOf(request.child("imageUrl").getValue()));
                         reqArrayList.add(requestInfo);

@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,7 +38,6 @@ import java.util.HashMap;
 public class CommunityDetail extends AppCompatActivity {
 
     private TextView comNameView;
-//    private ArrayList<Event> eventList;
     String comName, cid;
     FirebaseAuth EventAuth;
     FirebaseUser curUser;
@@ -68,7 +68,7 @@ public class CommunityDetail extends AppCompatActivity {
         comName = intent.getStringExtra("communityName");
         cid = intent.getStringExtra("cid");
 
-        ImageButton btn = (ImageButton)findViewById(R.id.add_event);
+        ImageButton btn = (ImageButton) findViewById(R.id.add_event);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +102,7 @@ public class CommunityDetail extends AppCompatActivity {
 
 
                 eventRecyclerView.setHasFixedSize(true);
-                RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+                RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 eventRecyclerView.setLayoutManager(linearLayoutManager);
                 EventAdapter eventAdapter = new EventAdapter(eventLists);
                 eventRecyclerView.setAdapter(eventAdapter);
@@ -117,6 +117,7 @@ public class CommunityDetail extends AppCompatActivity {
 
     public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
         private ArrayList<Event> events = new ArrayList<>();
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView nameView;
             TextView dateView;
@@ -126,6 +127,7 @@ public class CommunityDetail extends AppCompatActivity {
             TextView peoNumView;
             ImageView profileView;
             Button joinBtn;
+
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 nameView = (TextView) itemView.findViewById(R.id.event_name);
@@ -133,12 +135,16 @@ public class CommunityDetail extends AppCompatActivity {
                 timeView = (TextView) itemView.findViewById(R.id.time_item);
                 placeView = (TextView) itemView.findViewById(R.id.place_item);
                 authorView = (TextView) itemView.findViewById(R.id.event_organizer);
-                peoNumView = (TextView)  itemView.findViewById(R.id.event_people_number);
+                peoNumView = (TextView) itemView.findViewById(R.id.event_people_number);
                 profileView = (ImageView) itemView.findViewById(R.id.profile_image);
                 joinBtn = (Button) itemView.findViewById(R.id.join_event_btn);
             }
         }
-        public EventAdapter(ArrayList<Event> events) {this.events = events; }
+
+        public EventAdapter(ArrayList<Event> events) {
+            this.events = events;
+        }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -165,7 +171,7 @@ public class CommunityDetail extends AppCompatActivity {
             viewHolder.authorView.setText(events.get(position).getUserName());
             int curPeoNum = peopleList.size();
             int maxPeoNum = events.get(position).getPeopleNum();
-            int waitPeoNum = maxPeoNum-curPeoNum;
+            int waitPeoNum = maxPeoNum - curPeoNum;
             viewHolder.peoNumView.setText(String.valueOf(waitPeoNum));
 
             String uid = events.get(position).getUid();
@@ -197,7 +203,7 @@ public class CommunityDetail extends AppCompatActivity {
                         query.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     dataSnapshot.getRef().removeValue();
                                 }
                             }
@@ -212,10 +218,11 @@ public class CommunityDetail extends AppCompatActivity {
                         query1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     dataSnapshot.getRef().removeValue();
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -231,10 +238,12 @@ public class CommunityDetail extends AppCompatActivity {
                 }
             });
         }
+
         @Override
         public int getItemCount() {
             return events.size();
         }
+
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);

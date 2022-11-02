@@ -16,11 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mobile_assignment_2.Post;
 import com.example.mobile_assignment_2.R;
-import com.example.mobile_assignment_2.home.ExploreFragment;
-import com.example.mobile_assignment_2.home.PostDetails;
-import com.example.mobile_assignment_2.home.PostItemClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -110,7 +106,7 @@ public class DiscoverCommunityFragment extends Fragment {
                             posts.add(post);
                         }
 
-                        recyclerView =  view.findViewById(R.id.recyclerView);
+                        recyclerView = view.findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);
                         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                         recyclerView.setLayoutManager(gridLayoutManager);
@@ -158,7 +154,7 @@ public class DiscoverCommunityFragment extends Fragment {
         private ArrayList<Communitypost> posts = new ArrayList<Communitypost>();
         private commPostItemClickListener communityPostItemClickListener;
 
-        public class ViewHolder extends RecyclerView.ViewHolder{
+        public class ViewHolder extends RecyclerView.ViewHolder {
             TextView titleView;
             ImageView imgView;
             ImageButton ib;
@@ -175,9 +171,9 @@ public class DiscoverCommunityFragment extends Fragment {
                         String postIngUrl = post.getImageUrls();
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("postName", postName );
-                        bundle.putString("postDesc", postDesc );
-                        bundle.putString("postIngUrl", postIngUrl );
+                        bundle.putString("postName", postName);
+                        bundle.putString("postDesc", postDesc);
+                        bundle.putString("postIngUrl", postIngUrl);
                         BottomSheet bottomSheet = new BottomSheet();
                         bottomSheet.setArguments(bundle);
                         bottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
@@ -185,13 +181,13 @@ public class DiscoverCommunityFragment extends Fragment {
 
                     }
                 });
-                titleView =   view.findViewById(R.id.communityName);
-                imgView =  view.findViewById(R.id.communityImg);
+                titleView = view.findViewById(R.id.communityName);
+                imgView = view.findViewById(R.id.communityImg);
                 ib = view.findViewById(R.id.join_community_button);
                 ib.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("join","yes");
+                        Log.d("join", "yes");
                         Communitypost post = posts.get(getAdapterPosition());
                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -213,9 +209,11 @@ public class DiscoverCommunityFragment extends Fragment {
             this.posts = posts;
 
         }
+
         public void setClickListener(commPostItemClickListener communityPostItemClickListener) {
             this.communityPostItemClickListener = communityPostItemClickListener;
         }
+
         // Create new views (invoked by the layout manager)
         @Override
         public CustomAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -244,6 +242,7 @@ public class DiscoverCommunityFragment extends Fragment {
         public int getItemCount() {
             return posts.size();
         }
+
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);

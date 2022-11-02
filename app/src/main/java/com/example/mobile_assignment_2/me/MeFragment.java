@@ -47,8 +47,6 @@ import java.io.IOException;
  */
 
 
-
-
 public class MeFragment extends Fragment {
 
 
@@ -110,7 +108,6 @@ public class MeFragment extends Fragment {
         storageReference = storage.getReference();
 
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -122,7 +119,6 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
 
         view = inflater.inflate(R.layout.fragment_me, container, false);
@@ -185,9 +181,6 @@ public class MeFragment extends Fragment {
     }
 
 
-
-
-
     private void imageChooser() {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -198,12 +191,10 @@ public class MeFragment extends Fragment {
     }
 
 
-
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && data.getData() != null){
+        if (resultCode == Activity.RESULT_OK && data.getData() != null) {
             selectedImage = data.getData();
             Log.d("URI", selectedImage.toString());
             try {
@@ -228,8 +219,7 @@ public class MeFragment extends Fragment {
                                     new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
                                         @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                                        {
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                                             // Image uploaded successfully
                                             // Dismiss dialog
@@ -249,8 +239,7 @@ public class MeFragment extends Fragment {
                                     })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
-                                public void onFailure(@NonNull Exception e)
-                                {
+                                public void onFailure(@NonNull Exception e) {
 
                                     // Error, Image not uploaded
                                     progressDialog.dismiss();
@@ -262,14 +251,13 @@ public class MeFragment extends Fragment {
                                         // Progress Listener for loading
                                         // percentage on the dialog box
                                         @Override
-                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
-                                        {
+                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                            progressDialog.setMessage("Uploaded " + (int)progress + "%");
-                                        }});
-                    }
-            }
-            catch (IOException e) {
+                                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                                        }
+                                    });
+                }
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
@@ -279,8 +267,7 @@ public class MeFragment extends Fragment {
     }
 
 
-
-    public void fromMePageToMyPostsPageIntent(View view){
+    public void fromMePageToMyPostsPageIntent(View view) {
         Intent intent = new Intent(getActivity(), MyPostsActivity.class);
         startActivity(intent);
     }
@@ -292,7 +279,6 @@ public class MeFragment extends Fragment {
 
 
     }
-
 
 
 }

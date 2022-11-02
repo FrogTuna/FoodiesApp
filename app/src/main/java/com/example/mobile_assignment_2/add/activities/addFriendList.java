@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class addFriendList extends AppCompatActivity {
 
-    private String currentUID,flag;
+    private String currentUID, flag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,18 +33,18 @@ public class addFriendList extends AppCompatActivity {
         Intent myIntent = getIntent(); // gets the previously created intent
 
         /* Params from "shakeActivity" */
-        ArrayList<HashMap<String, String>> userInfosArrayList = (ArrayList<HashMap<String, String>>)myIntent.getSerializableExtra("userInfosArrayList");
+        ArrayList<HashMap<String, String>> userInfosArrayList = (ArrayList<HashMap<String, String>>) myIntent.getSerializableExtra("userInfosArrayList");
         currentUID = myIntent.getExtras().getString("currentUser");
         flag = myIntent.getExtras().getString("flag");
 
         addFriendListData[] addfriendlistdata = new addFriendListData[userInfosArrayList.size()];
 
-        for(int i = 0; i < userInfosArrayList.size(); i++) {
+        for (int i = 0; i < userInfosArrayList.size(); i++) {
             addfriendlistdata[i] = new addFriendListData(userInfosArrayList.get(i).get("ID"), userInfosArrayList.get(i).get("username"), userInfosArrayList.get(i).get("imageUrl"));
         }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.friendRecyclerView);
-        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata, currentUID,flag);
+        addFriendListAdapter addFriendListAdapter = new addFriendListAdapter(addfriendlistdata, currentUID, flag);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

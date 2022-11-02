@@ -87,8 +87,7 @@ public class PostDetails extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error in fetching data", task.getException());
-                }
-                else {
+                } else {
                     String profileImageUrl = task.getResult().getValue(String.class);
                     // Download image from URL and set to imageView
                     Picasso.with(getApplicationContext()).load(profileImageUrl).fit().centerCrop().into(profileView);
@@ -118,7 +117,7 @@ public class PostDetails extends AppCompatActivity {
                             commentsList.add(comment);
 
                         }
-                        for (Comment c : commentsList){
+                        for (Comment c : commentsList) {
                             View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.comment, null);
                             TextView authorView = view.findViewById(R.id.author_name);
                             TextView commentView = view.findViewById(R.id.comment_text);
@@ -204,7 +203,7 @@ public class PostDetails extends AppCompatActivity {
         commentsLinearLayout = findViewById(R.id.commentsLinearLayout);
         imagesRecyclerView = findViewById(R.id.recyclerView);
         imagesRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager imagesLinearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         imagesRecyclerView.setLayoutManager(imagesLinearLayoutManager);
         ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
         imagesRecyclerView.setAdapter(imagesAdapter);
@@ -216,7 +215,7 @@ public class PostDetails extends AppCompatActivity {
 
                 if (!likes.contains(pid)) {
 
-                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             // push to user's likes
@@ -226,7 +225,7 @@ public class PostDetails extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void unused) {
 
-                                    Toast.makeText(getApplicationContext(), "You liked this post",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "You liked this post", Toast.LENGTH_LONG).show();
                                 }
                             });
 
@@ -235,7 +234,7 @@ public class PostDetails extends AppCompatActivity {
                     });
                 } else {
                     Log.d("likes", "false");
-                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0]-1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
@@ -244,9 +243,9 @@ public class PostDetails extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                            dataSnapshot.getRef().removeValue();
+                                        dataSnapshot.getRef().removeValue();
                                     }
-                                    Toast.makeText(getApplicationContext(), "You cancelled like",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "You cancelled like", Toast.LENGTH_LONG).show();
                                 }
 
                                 @Override
@@ -254,7 +253,6 @@ public class PostDetails extends AppCompatActivity {
 
                                 }
                             });
-
 
 
                         }
@@ -277,7 +275,7 @@ public class PostDetails extends AppCompatActivity {
                             // push to user's collects
                             DatabaseReference userLikesRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects").push();
                             userLikesRef.setValue(pid);
-                            Toast.makeText(getApplicationContext(), "You collected this post",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "You collected this post", Toast.LENGTH_LONG).show();
 
                         }
                     });
@@ -301,7 +299,7 @@ public class PostDetails extends AppCompatActivity {
 
                                 }
                             });
-                            Toast.makeText(getApplicationContext(), "You cancelled collect",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "You cancelled collect", Toast.LENGTH_LONG).show();
 
                         }
 
@@ -314,7 +312,7 @@ public class PostDetails extends AppCompatActivity {
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                commentsLinearLayout.getParent().requestChildFocus(commentsLinearLayout,commentsLinearLayout);
+                commentsLinearLayout.getParent().requestChildFocus(commentsLinearLayout, commentsLinearLayout);
             }
         });
 
@@ -324,38 +322,38 @@ public class PostDetails extends AppCompatActivity {
                 String commentText = commentTextField.getText().toString();
                 if (!commentText.isEmpty()) {
                     firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                         @Override
-                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                             if (!task.isSuccessful()) {
-                                 Log.e("firebase", "Error in fetching data", task.getException());
-                             } else {
-                                 String authorName = task.getResult().getValue(String.class);
-                                 firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                     @Override
-                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                         String profileImageUrl = task.getResult().getValue(String.class);
-                                         Comment comment = new Comment(authorName, commentText, profileImageUrl);
-                                         DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
-                                         commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                             @Override
-                                             public void onSuccess(Void unused) {
-                                                 firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0]+1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                     @Override
-                                                     public void onSuccess(Void unused) {
-                                                         Toast.makeText(getApplicationContext(), "Comment Added successfully",Toast.LENGTH_LONG).show();
-                                                         commentTextField.setText("");
-                                                     }
-                                                 });
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error in fetching data", task.getException());
+                            } else {
+                                String authorName = task.getResult().getValue(String.class);
+                                firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        String profileImageUrl = task.getResult().getValue(String.class);
+                                        Comment comment = new Comment(authorName, commentText, profileImageUrl);
+                                        DatabaseReference commentRef = firebaseDatabase.getReference().child("Posts").child(pid).child("comments").push();
+                                        commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                firebaseDatabase.getReference().child("Posts").child(pid).child("numComments").setValue(num_comments[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Toast.makeText(getApplicationContext(), "Comment Added successfully", Toast.LENGTH_LONG).show();
+                                                        commentTextField.setText("");
+                                                    }
+                                                });
 
-                                             }
-                                         });
-                                     }
-                                 });
+                                            }
+                                        });
+                                    }
+                                });
 
 
-                             }
-                         }
-                     });
+                            }
+                        }
+                    });
 
 
                 }
@@ -364,6 +362,7 @@ public class PostDetails extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -179,12 +179,13 @@ public class ExploreFragment extends Fragment {
             ImageView imageView;
             TextView num_like_View;
             ImageView profileView;
+
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
                 view.setOnClickListener(this);
-                titleView =  (TextView) view.findViewById(R.id.post_title);
-                authorView = (TextView)  view.findViewById(R.id.author_name);
+                titleView = (TextView) view.findViewById(R.id.post_title);
+                authorView = (TextView) view.findViewById(R.id.author_name);
                 imageView = (ImageView) view.findViewById(R.id.post_image);
                 num_like_View = (TextView) view.findViewById(R.id.like_text);
                 profileView = (ImageView) view.findViewById(R.id.profile_image);
@@ -193,7 +194,7 @@ public class ExploreFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                if(postItemClickListener != null) {
+                if (postItemClickListener != null) {
                     postItemClickListener.onClick(view, getAbsoluteAdapterPosition());
                 }
             }
@@ -203,9 +204,11 @@ public class ExploreFragment extends Fragment {
             this.posts = posts;
 
         }
+
         public void setClickListener(PostItemClickListener postItemClickListener) {
             this.postItemClickListener = postItemClickListener;
         }
+
         // Create new view
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -225,15 +228,14 @@ public class ExploreFragment extends Fragment {
             String imageUrl = posts.get(position).getImageUrls().get(0);
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
-            viewHolder.num_like_View.setText(posts.get(position).getLikes()+" Likes");
+            viewHolder.num_like_View.setText(posts.get(position).getLikes() + " Likes");
             String uid = posts.get(position).getUid();
             firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
                         Log.e("firebase", "Error in fetching data", task.getException());
-                    }
-                    else {
+                    } else {
                         String profileImageUrl = task.getResult().getValue(String.class);
                         // Download image from URL and set to imageView
                         Picasso.with(getContext()).load(profileImageUrl).fit().centerCrop().into(viewHolder.profileView);
@@ -249,6 +251,7 @@ public class ExploreFragment extends Fragment {
         public int getItemCount() {
             return posts.size();
         }
+
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);

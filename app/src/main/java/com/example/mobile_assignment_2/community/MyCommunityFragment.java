@@ -1,4 +1,5 @@
 package com.example.mobile_assignment_2.community;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyCommunityFragment extends Fragment{
+public class MyCommunityFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -91,7 +92,7 @@ public class MyCommunityFragment extends Fragment{
                             Communitypost post = dataSnapshot.getValue(Communitypost.class);
                             Log.d("idddd", post.getCid());
                             Log.d("commlist", "commlst length " + communityPostsUri.size());
-                            if (communityPostsUri.contains(post.getCid())){
+                            if (communityPostsUri.contains(post.getCid())) {
                                 Log.d("testttttt", String.valueOf(communityPostsUri.contains(post.getCid())));
                                 communityPosts.add(post);
                                 Log.d("commlist", "commlst length" + communityPosts.size());
@@ -102,6 +103,7 @@ public class MyCommunityFragment extends Fragment{
                         listView = view.findViewById(R.id.list);
                         listView.setAdapter(customAdapter);
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -175,7 +177,7 @@ public class MyCommunityFragment extends Fragment{
                     }
                 });
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -185,11 +187,9 @@ public class MyCommunityFragment extends Fragment{
 
             // Download image from URL and set to imageView
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(holder.image);
-            return  convertView;
+            return convertView;
         }
     }
-
-
 
 
 }

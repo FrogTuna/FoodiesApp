@@ -6,7 +6,6 @@ public class addFriendListData {
     private String imgURL;
 
 
-
     public addFriendListData(String _UID, String _username, String _imgURL) {
         this.UID = _UID;
         this.username = _username;
@@ -17,12 +16,15 @@ public class addFriendListData {
     public String getUsername() {
         return this.username;
     }
+
     public void setUsername(String _username) {
         this.username = _username;
     }
+
     public String getImgURL() {
         return this.imgURL;
     }
+
     public void setImgURL(String _imgURL) {
         this.imgURL = _imgURL;
     }
@@ -30,12 +32,10 @@ public class addFriendListData {
     public String getUID() {
         return this.UID;
     }
+
     public void setUID(String _UID) {
         this.UID = _UID;
     }
-
-
-
 
 
 }

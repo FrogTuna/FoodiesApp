@@ -36,10 +36,10 @@ import java.io.InputStream;
 public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdapter.ViewHolder> {
     public addFriendListData[] friendListData;
     public static String username;
-//    public static String userID;
+    //    public static String userID;
     public static String imageUrl;
     private DatabaseReference mDatabase;
-    private String currentUID,flag;
+    private String currentUID, flag;
     private boolean runOnce;
     private boolean hasFriends;
 
@@ -47,18 +47,19 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
     public addFriendListAdapter(addFriendListData[] _friendListData, String currentUID, String flag) {
         this.friendListData = _friendListData;
         this.currentUID = currentUID;
-        this.flag =flag;
+        this.flag = flag;
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
-    public addFriendListData[] getAddFriendListData(){
+
+    public addFriendListData[] getAddFriendListData() {
         return friendListData;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View friendListItem= layoutInflater.inflate(R.layout.add_friendslist_item, parent, false);
+        View friendListItem = layoutInflater.inflate(R.layout.add_friendslist_item, parent, false);
         addFriendListAdapter.ViewHolder viewHolder = new addFriendListAdapter.ViewHolder(friendListItem);
         return viewHolder;
     }
@@ -74,12 +75,12 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
             public void onClick(View view) {
                 // Redirect to user page
                 Query databaseReference = mDatabase.child("Users");
-                runOnce  =true;
+                runOnce = true;
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if(runOnce) {
+                        if (runOnce) {
                             runOnce = false;
 
                             FirebaseAuth myAuth = FirebaseAuth.getInstance();
@@ -136,32 +137,37 @@ public class addFriendListAdapter extends RecyclerView.Adapter<addFriendListAdap
         public TextView textViewUsername, textViewRemark;
         public Button addFriendBtn;
         public RelativeLayout relativeLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.addFriendBtn = (Button) itemView.findViewById(R.id.btnFriendDelete);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
+
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
+
         public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView=imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+            this.imageView = imageView;
+            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
         }
+
         protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
+            String imageURL = urls[0];
+            Bitmap bimage = null;
             try {
-                InputStream in=new java.net.URL(imageURL).openStream();
-                bimage= BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error Message", e.getMessage());
                 e.printStackTrace();
             }
             return bimage;
         }
+
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }

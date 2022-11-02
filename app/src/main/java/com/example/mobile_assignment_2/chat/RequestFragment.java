@@ -31,6 +31,7 @@ public class RequestFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ArrayList reqArrayList;
+
     public RequestFragment(ArrayList _reqArrayList) {
         // Required empty public constructor
         reqArrayList = _reqArrayList;
@@ -66,15 +67,15 @@ public class RequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_request, container, false);
+        View view = inflater.inflate(R.layout.fragment_request, container, false);
         // Implement following
         RequestListData[] requestListData = new RequestListData[reqArrayList.size()];
         for (int i = 0; i < reqArrayList.size(); i++) {
             requestListData[i] = new RequestListData(
-                    ((HashMap<String, String>)reqArrayList.get(i)).get("requestUserID"),
-                    ((HashMap<String, String>)reqArrayList.get(i)).get("name"),
-                    ((HashMap<String, String>)reqArrayList.get(i)).get("comment"),
-                    ((HashMap<String, String>)reqArrayList.get(i)).get("avatar")
+                    ((HashMap<String, String>) reqArrayList.get(i)).get("requestUserID"),
+                    ((HashMap<String, String>) reqArrayList.get(i)).get("name"),
+                    ((HashMap<String, String>) reqArrayList.get(i)).get("comment"),
+                    ((HashMap<String, String>) reqArrayList.get(i)).get("avatar")
                     //android.R.drawable.ic_dialog_email
             );
         }

@@ -76,8 +76,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-
-        View view  = inflater.inflate(R.layout.fragment_chat, container, false);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
         // Implement following
 
 
@@ -87,15 +86,15 @@ public class ChatFragment extends Fragment {
         System.out.println("[User] " + userArrayList);
 
         for (int i = 0; i < chatArrayList.size(); i++) {
-            for(int j = 0; j < userArrayList.size(); j++) {
-                if(((HashMap<String, String>)chatArrayList.get(i)).get("ID").equals(((HashMap<String, String>)userArrayList.get(j)).get("ID"))) {
+            for (int j = 0; j < userArrayList.size(); j++) {
+                if (((HashMap<String, String>) chatArrayList.get(i)).get("ID").equals(((HashMap<String, String>) userArrayList.get(j)).get("ID"))) {
                     System.out.println("[Check] ");
 
                     chatListData[i] = new ChatListData(
-                        ((HashMap<String, String>)chatArrayList.get(i)).get("ID"),
-                        ((HashMap<String, String>)userArrayList.get(j)).get("username"),
-                        ((HashMap<String, String>)chatArrayList.get(i)).get("lastMsg"),
-                        ((HashMap<String, String>)userArrayList.get(j)).get("imageUrl")
+                            ((HashMap<String, String>) chatArrayList.get(i)).get("ID"),
+                            ((HashMap<String, String>) userArrayList.get(j)).get("username"),
+                            ((HashMap<String, String>) chatArrayList.get(i)).get("lastMsg"),
+                            ((HashMap<String, String>) userArrayList.get(j)).get("imageUrl")
                     );
                 }
             }

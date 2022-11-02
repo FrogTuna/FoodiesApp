@@ -3,10 +3,10 @@ package com.example.mobile_assignment_2;
 import java.util.ArrayList;
 
 public class Users {
-    private String email,imageUrl, name, password, remark, userID, username;
+    private String email, imageUrl, name, password, remark, userID, username;
     private ArrayList<String> friends;
 
-    public Users(String email,String imageUrl,String name,String password,String remark,String userID,String username, ArrayList<String> friends){
+    public Users(String email, String imageUrl, String name, String password, String remark, String userID, String username, ArrayList<String> friends) {
         this.email = email;
         this.imageUrl = imageUrl;
         this.name = name;

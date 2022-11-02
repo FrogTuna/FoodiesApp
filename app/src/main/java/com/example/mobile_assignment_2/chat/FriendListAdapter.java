@@ -47,14 +47,15 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public FriendListAdapter(FriendListData[] _friendListData) {
         this.friendListData = _friendListData;
     }
-    public FriendListData[] getFriendListData(){
+
+    public FriendListData[] getFriendListData() {
         return friendListData;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View friendListItem= layoutInflater.inflate(R.layout.friend_list_item, parent, false);
+        View friendListItem = layoutInflater.inflate(R.layout.friend_list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(friendListItem);
         return viewHolder;
     }
@@ -73,12 +74,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 userID = "";
                 imageUrl = "";
                 // Redirect to user page
-                Toast.makeText(view.getContext(),"click on item: "+friendListItem.getUsername(),Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "click on item: " + friendListItem.getUsername(), Toast.LENGTH_LONG).show();
                 username = friendListItem.getUsername();
                 userID = friendListData[position].getUID();
                 imageUrl = friendListData[position].getImgURL();
                 Context context = view.getContext();
-                Intent intent = new Intent(context,ChatWindowActivity.class);
+                Intent intent = new Intent(context, ChatWindowActivity.class);
                 context.startActivity(intent);
             }
         });
@@ -93,9 +94,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
 
-                Map<String,Object> update1 = new HashMap<>();
+                Map<String, Object> update1 = new HashMap<>();
                 update1.put(friendListItem.getUID(), FieldValue.delete());
-                Map<String,Object> update2 = new HashMap<>();
+                Map<String, Object> update2 = new HashMap<>();
                 update2.put(firebaseUser.getUid(), FieldValue.delete());
 
                 runOnce1 = true;
@@ -108,8 +109,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if(runOnce1) {
-                            runOnce1=false;
+                        if (runOnce1) {
+                            runOnce1 = false;
                             for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                                 appleSnapshot.getRef().removeValue();
                                 Log.e("TAG", "***************** deleted successful!");
@@ -135,7 +136,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                             }
                         }
 
-                        if(!runOnce1 && !runOnce2){
+                        if (!runOnce1 && !runOnce2) {
                             Context context = view.getContext();
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
@@ -163,32 +164,37 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         public TextView textViewUsername, textViewRemark;
         public RelativeLayout relativeLayout;
         public Button delete;
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.delete = itemView.findViewById(R.id.btnFriendDelete);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
+
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
+
         public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView=imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+            this.imageView = imageView;
+            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
         }
+
         protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
+            String imageURL = urls[0];
+            Bitmap bimage = null;
             try {
-                InputStream in=new java.net.URL(imageURL).openStream();
-                bimage= BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error Message", e.getMessage());
                 e.printStackTrace();
             }
             return bimage;
         }
+
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }

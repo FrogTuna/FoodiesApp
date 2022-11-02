@@ -62,7 +62,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener(){
+        back.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -71,10 +71,10 @@ public class Register extends AppCompatActivity {
         });
 
 
-
     }
+
     //link to login page
-    public void registerIntent(){
+    public void registerIntent() {
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
     }
@@ -89,35 +89,33 @@ public class Register extends AppCompatActivity {
         String passwordString = password.getText().toString();
 
 
-        if(TextUtils.isEmpty(usernameString)){
+        if (TextUtils.isEmpty(usernameString)) {
 
             username.setError("username cannot be empty");
             username.requestFocus();
 
-        }
-        else if(TextUtils.isEmpty(emailString)){
+        } else if (TextUtils.isEmpty(emailString)) {
 
             email.setError("Email cannot be empty");
             email.requestFocus();
 
-        }
-        else if(TextUtils.isEmpty(passwordString)){
+        } else if (TextUtils.isEmpty(passwordString)) {
 
             password.setError("Password cannot be empty");
             password.requestFocus();
 
-        }else{
+        } else {
 
-            myAuth.createUserWithEmailAndPassword(emailString,passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            myAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         fuser = myAuth.getCurrentUser();
                         fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Snackbar.make(registerBtn,"Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(registerBtn, "Verification Email has been sent", Snackbar.LENGTH_SHORT).show();
                                 UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(usernameString).setPhotoUri(Uri.parse("https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg")).build();
                                 fuser.updateProfile(userProfileChangeRequest);
                                 User user = new User(fuser.getUid(), usernameString, emailString, passwordString, imageUrl = "https://as2.ftcdn.net/v2/jpg/02/91/45/39/1000_F_291453953_sR3vaTlxA022LtxovSOnnO4sW5VX5mto.jpg");
@@ -125,14 +123,14 @@ public class Register extends AppCompatActivity {
                                 registerIntent();
                                 finish();
                             }
-                        }). addOnFailureListener(new OnFailureListener() {
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 System.out.println("OnFailure: Email not sent" + e.getMessage());
                             }
                         });
-                    }else{
-                        Snackbar.make(registerBtn,"failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(registerBtn, "failed to create an account: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });

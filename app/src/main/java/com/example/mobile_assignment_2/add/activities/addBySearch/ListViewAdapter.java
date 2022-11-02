@@ -92,6 +92,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
             results.values = friendItemsList;
             return results;
         }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             arraylist.clear();

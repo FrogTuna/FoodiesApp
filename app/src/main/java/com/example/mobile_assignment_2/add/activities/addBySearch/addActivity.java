@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobile_assignment_2.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class addActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ListView listView;
     ListViewAdapter adapter;
@@ -71,10 +72,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Toast.makeText(getApplicationContext(), "Please input username or email",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Please input username or email", Toast.LENGTH_SHORT).show();
     }
-
-
 
 
     @Override
@@ -84,8 +83,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(runOnce) {
-                    runOnce  = false;
+                if (runOnce) {
+                    runOnce = false;
                     String userID = currentUser.getUid();
                     Intent intent = new Intent(getApplicationContext(), addFriendList.class);
 
@@ -108,7 +107,7 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                                 System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser", userID);
-                                intent.putExtra("flag","add");
+                                intent.putExtra("flag", "add");
                                 startActivity(intent);
 
                                 Log.d("debug: ", "*************** start intent");
@@ -148,7 +147,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

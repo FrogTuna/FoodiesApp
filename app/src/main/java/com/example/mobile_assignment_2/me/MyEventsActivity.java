@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class MyEventsActivity extends AppCompatActivity  {
+public class MyEventsActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -87,7 +87,7 @@ public class MyEventsActivity extends AppCompatActivity  {
                 }
                 Collections.reverse(eventLists);
                 eventRecyclerView.setHasFixedSize(true);
-                RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+                RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 eventRecyclerView.setLayoutManager(linearLayoutManager);
                 MyEventAdapter eventAdapter = new MyEventAdapter(eventLists);
                 eventRecyclerView.setAdapter(eventAdapter);
@@ -100,10 +100,10 @@ public class MyEventsActivity extends AppCompatActivity  {
     }
 
 
-
     public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHolder> {
 
         private ArrayList<Event> events = new ArrayList<>();
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView nameView;
             TextView dateView;
@@ -113,6 +113,7 @@ public class MyEventsActivity extends AppCompatActivity  {
             TextView peoNumView;
             ImageView profileView;
             Button joinBtn;
+
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 nameView = (TextView) itemView.findViewById(R.id.event_name);
@@ -120,12 +121,16 @@ public class MyEventsActivity extends AppCompatActivity  {
                 timeView = (TextView) itemView.findViewById(R.id.time_item);
                 placeView = (TextView) itemView.findViewById(R.id.place_item);
                 authorView = (TextView) itemView.findViewById(R.id.event_organizer);
-                peoNumView = (TextView)  itemView.findViewById(R.id.event_people_number);
+                peoNumView = (TextView) itemView.findViewById(R.id.event_people_number);
                 profileView = (ImageView) itemView.findViewById(R.id.profile_image);
                 joinBtn = (Button) itemView.findViewById(R.id.join_event_btn);
             }
         }
-        public MyEventAdapter(ArrayList<Event> events) {this.events = events;}
+
+        public MyEventAdapter(ArrayList<Event> events) {
+            this.events = events;
+        }
+
         @NonNull
         @Override
         public MyEventsActivity.MyEventAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -151,7 +156,7 @@ public class MyEventsActivity extends AppCompatActivity  {
             viewHolder.authorView.setText(events.get(position).getUserName());
             int curPeoNum = peopleList.size();
             int maxPeoNum = events.get(position).getPeopleNum();
-            int waitPeoNum = maxPeoNum-curPeoNum;
+            int waitPeoNum = maxPeoNum - curPeoNum;
             viewHolder.peoNumView.setText(String.valueOf(waitPeoNum));
 
             String uid = events.get(position).getUid();

@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 
-public class CommunityFragment extends Fragment implements View.OnClickListener{
+public class CommunityFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -52,7 +52,7 @@ public class CommunityFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_community_home,container,false);
+        View view = inflater.inflate(R.layout.fragment_community_home, container, false);
         tabLayout = view.findViewById(R.id.main_tab_layout);
         addView = view.findViewById(R.id.add_community);
         addView.setOnClickListener(this);
@@ -60,7 +60,7 @@ public class CommunityFragment extends Fragment implements View.OnClickListener{
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) ->  {
+                (tab, position) -> {
                     if (position == 0) {
                         tab.setText("Discover");
                     } else {
@@ -71,16 +71,14 @@ public class CommunityFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    public void onClick(View v)
-    {
-        switch(v.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.add_community:
                 Intent i = new Intent(getActivity(), AddCommunity.class);
                 startActivity(i);
                 break;
         }
     }
-
 
 
     public class ViewPagerAdapter extends FragmentStateAdapter {

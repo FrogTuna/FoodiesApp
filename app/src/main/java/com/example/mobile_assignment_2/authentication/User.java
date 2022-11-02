@@ -4,7 +4,7 @@ public class User {
 
     public String userID, username, email, password, imageUrl;
 
-    public User(String userID, String username, String email, String password, String imageUrl){
+    public User(String userID, String username, String email, String password, String imageUrl) {
 
         this.userID = userID;
         this.username = username;
@@ -15,19 +15,19 @@ public class User {
     }
 
 
-    public String getUserID(){
-        return  userID;
+    public String getUserID() {
+        return userID;
     }
 
-    public String getName(){
+    public String getName() {
         return username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getImageUrl(){
+    public String getImageUrl() {
         return imageUrl;
     }
 

@@ -83,7 +83,7 @@ public class CollectPostsActivity extends AppCompatActivity {
                         myPostsAdapter.setClickListener(new PostItemClickListener() {
                             @Override
                             public void onClick(View view, int position) {
-                                Post post =collectPosts.get(position);
+                                Post post = collectPosts.get(position);
                                 Intent i = new Intent(CollectPostsActivity.this, PostDetails.class);
                                 i.putExtra("title", post.getTitle());
                                 i.putExtra("description", post.getDescription());
@@ -114,10 +114,6 @@ public class CollectPostsActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
 
 
     @Override

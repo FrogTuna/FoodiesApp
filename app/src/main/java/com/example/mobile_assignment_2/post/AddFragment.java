@@ -134,14 +134,13 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 String title = titleView.getText().toString();
                 String descrip = descripView.getText().toString();
                 ArrayList<String> downloadimageUrls = new ArrayList<>();
-                if (pickedImageUris.size()==0) {
+                if (pickedImageUris.size() == 0) {
                     Toast.makeText(getContext(), "Please add an image", Toast.LENGTH_SHORT).show();
                 } else if (title.isEmpty()) {
                     Toast.makeText(getContext(), "Please enter a title", Toast.LENGTH_SHORT).show();
-                } else if (descrip.isEmpty() ) {
+                } else if (descrip.isEmpty()) {
                     Toast.makeText(getContext(), "Please enter a description", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     // Showing progress dialog when uploading post
                     ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setTitle("Uploading post...");
@@ -149,7 +148,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
                     // upload all picked images and download their Url, then upload post with post infor and these image Urls
-                    for (Uri imageUri: pickedImageUris) {
+                    for (Uri imageUri : pickedImageUris) {
                         StorageReference postImagesRef = storageRef.child("postImages/" + imageUri.getLastPathSegment());
                         // upload picked images
                         UploadTask uploadTask = postImagesRef.putFile(imageUri);
@@ -184,8 +183,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                                         if (!task.isSuccessful()) {
                                                             Log.e("firebase", "Error in fetching data", task.getException());
-                                                        }
-                                                        else {
+                                                        } else {
                                                             String author = task.getResult().getValue(String.class);
 
                                                             DatabaseReference databaseReference = firebaseDatabase.getReference("Posts").push();
@@ -196,7 +194,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
                                                                     progressDialog.dismiss();
-                                                                    Toast.makeText(getContext(), "Post Added successfully",Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(getContext(), "Post Added successfully", Toast.LENGTH_LONG).show();
                                                                     // clear post
                                                                     titleView.setText("");
                                                                     descripView.setText("");
@@ -221,8 +219,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 }
 
 
-
-                }});
+            }
+        });
         return view;
     }
 
@@ -245,7 +243,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void openCamera(){
+    private void openCamera() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraActivityResultLauncher.launch(intent);
     }
@@ -258,15 +256,14 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         // Handle the returned Uri
                         Bitmap photoBitmap = null;
                         try {
-                            photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+                            photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
 
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                         ImageView imageView = new ImageView(getContext());
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        if (imageView.getParent() != null) {
+                            ((ViewGroup) imageView.getParent()).removeView(imageView);
                         }
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                                 500,
@@ -284,7 +281,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             });
 
 
-
     ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -292,10 +288,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                         ImageView imageView = new ImageView(getContext());
-                        if(imageView.getParent() != null) {
-                            ((ViewGroup)imageView.getParent()).removeView(imageView);
+                        if (imageView.getParent() != null) {
+                            ((ViewGroup) imageView.getParent()).removeView(imageView);
                         }
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                                 500,

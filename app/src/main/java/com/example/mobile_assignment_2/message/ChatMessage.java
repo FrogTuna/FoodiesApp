@@ -1,14 +1,13 @@
 package com.example.mobile_assignment_2.message;
 
 
-public class ChatMessage{
+public class ChatMessage {
 
     private String senderText;
     private String senderTime;
     private String senderImageString;
     private String role;
     private String chatID;
-
 
 
     public ChatMessage(String senderText, String senderTime, String senderImageString, String chatID, String role) {
@@ -32,11 +31,13 @@ public class ChatMessage{
         return senderImageString;
     }
 
-    public String getChatID(){ return chatID; }
+    public String getChatID() {
+        return chatID;
+    }
 
-    public String getRole(){ return role; }
-
-
+    public String getRole() {
+        return role;
+    }
 
 
 }

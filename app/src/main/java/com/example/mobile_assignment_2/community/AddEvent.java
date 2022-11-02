@@ -33,7 +33,7 @@ public class AddEvent extends AppCompatActivity {
     private TimePickerDialog timePickerDialog;
     private TextInputEditText eNameView, eLocView, ePeopleNum;
     private Button dateBtn, timeBtn, postBtn;
-    private String format="";
+    private String format = "";
     FirebaseAuth EventAuth;
     FirebaseUser curUser;
     DatabaseReference eventRef;
@@ -78,8 +78,8 @@ public class AddEvent extends AppCompatActivity {
         ePeopleNum = findViewById(R.id.event_people_num);
 
 
-        postBtn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 eventName = eNameView.getText().toString();
                 eventDate = String.valueOf(dateBtn.getText());
                 eventTime = String.valueOf(timeBtn.getText());
@@ -99,7 +99,7 @@ public class AddEvent extends AppCompatActivity {
                             String userName = task.getResult().getValue(String.class);
                             String uid = curUser.getUid();
                             eventRef.child(eid).child("peopleList").getKey();
-                            String status =  "join";
+                            String status = "join";
                             Event event = new Event(cid, eid, uid, userName, eventName, eventDate, eventTime, eventLocation, eventPeoNum, peoList, status);
                             eventRef.setValue(event);
 
@@ -135,7 +135,7 @@ public class AddEvent extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
-        month = month+1;
+        month = month + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
     }
@@ -144,7 +144,7 @@ public class AddEvent extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month+1;
+                month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateBtn.setText(date);
             }
@@ -156,8 +156,9 @@ public class AddEvent extends AppCompatActivity {
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
-        datePickerDialog = new DatePickerDialog(this,style, dateSetListener,year, month, day);
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
+
     private void initTimePicker() {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -170,7 +171,7 @@ public class AddEvent extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int min = cal.get(Calendar.MINUTE);
 
-        timePickerDialog = new TimePickerDialog(this, timeSetListener , hour, min, false);
+        timePickerDialog = new TimePickerDialog(this, timeSetListener, hour, min, false);
     }
 
     private String makeTimeString(int hour, int minute) {
@@ -225,6 +226,7 @@ public class AddEvent extends AppCompatActivity {
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
+
     public void openTimePicker(View view) {
         timePickerDialog.show();
     }

@@ -32,7 +32,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public ChatListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View chatListItem= layoutInflater.inflate(R.layout.chat_list_item, parent, false);
+        View chatListItem = layoutInflater.inflate(R.layout.chat_list_item, parent, false);
         ChatListAdapter.ViewHolder viewHolder = new ChatListAdapter.ViewHolder(chatListItem);
         return viewHolder;
     }
@@ -49,11 +49,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 FriendListAdapter.username = "";
                 FriendListAdapter.userID = "";
                 // Redirect to user page
-                Toast.makeText(view.getContext(),"click on item: "+chatListItem.getUsername(),Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "click on item: " + chatListItem.getUsername(), Toast.LENGTH_LONG).show();
 
                 // Redirect to user page
                 FriendListAdapter.username = chatListItem.getUsername();
-                FriendListAdapter.userID  = chatListData[position].getFriendID();
+                FriendListAdapter.userID = chatListData[position].getFriendID();
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ChatWindowActivity.class);
                 context.startActivity(intent);
@@ -72,33 +72,37 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public ImageView imageViewAvatar;
         public TextView textViewUsername, textViewLastMsg;
         public RelativeLayout relativeLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewAvatar = (ImageView) itemView.findViewById(R.id.imageViewAvatar);
             this.textViewUsername = (TextView) itemView.findViewById(R.id.textViewUsername);
             this.textViewLastMsg = (TextView) itemView.findViewById(R.id.textViewLastMsg);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
+
         public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView=imageView;
-            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+            this.imageView = imageView;
+            Toast.makeText(imageView.getContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
         }
+
         protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
+            String imageURL = urls[0];
+            Bitmap bimage = null;
             try {
-                InputStream in=new java.net.URL(imageURL).openStream();
-                bimage= BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error Message", e.getMessage());
                 e.printStackTrace();
             }
             return bimage;
         }
+
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }

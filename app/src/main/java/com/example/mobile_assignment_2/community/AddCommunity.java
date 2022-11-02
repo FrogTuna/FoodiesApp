@@ -1,9 +1,6 @@
 package com.example.mobile_assignment_2.community;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +20,6 @@ import android.widget.Spinner;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -52,7 +48,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     private TextInputEditText comNameView;
     private TextInputEditText comDescriptionView;
     private Spinner comType;
-    String[] comType_list = { "Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
+    String[] comType_list = {"Asian food", "American food", "Italy food", "Greece food", "Mexican food"};
     private Button imageBtn;
     private Button cameraBtn;
     private Button postBtn;
@@ -61,6 +57,7 @@ public class AddCommunity extends AppCompatActivity implements AdapterView.OnIte
     FirebaseAuth communityAuth;
     FirebaseUser fuser;
     Uri pickedImageUri;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_community);

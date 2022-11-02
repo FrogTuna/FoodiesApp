@@ -5,9 +5,9 @@ public class CustomItem {
     private String spinnerItemName;
     private int spinnerItemImage;
 
-    public CustomItem(String spinnerItemName, int spinnerItemImage){
-        this.spinnerItemName=spinnerItemName;
-        this.spinnerItemImage=spinnerItemImage;
+    public CustomItem(String spinnerItemName, int spinnerItemImage) {
+        this.spinnerItemName = spinnerItemName;
+        this.spinnerItemImage = spinnerItemImage;
     }
 
     public void setSpinnerItemImage(int spinnerItemImage) {
