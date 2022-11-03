@@ -1,9 +1,10 @@
 package com.example.mobile_assignment_2.chat;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This class consists of attributes of each user, and also provide the getter and setter
+ * methods
  */
 public class ChatListData {
     private String username;

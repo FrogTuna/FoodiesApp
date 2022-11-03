@@ -23,9 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yicong Li
+ * @description: when user input his verified email and password, it will be allowed to log in.
  */
 public class login extends AppCompatActivity implements View.OnClickListener {
 

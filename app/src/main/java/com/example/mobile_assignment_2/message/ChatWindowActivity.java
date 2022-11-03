@@ -34,9 +34,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yicong Li
+ * @description: allow current user to chat with his friend in chat window
  */
 public class ChatWindowActivity extends AppCompatActivity {
 

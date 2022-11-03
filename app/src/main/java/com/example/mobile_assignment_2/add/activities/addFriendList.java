@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @description: Show the friends list after adding friends activities
  */
 public class addFriendList extends AppCompatActivity {

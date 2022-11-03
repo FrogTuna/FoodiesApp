@@ -35,9 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author:
+ * @author: Yao-Wen Chang
  * @date: 2022/11/2 22:13
- * @description:
+ * @description: This file fetches the required data from firebase, and provides the updated data to
+ * each fragment in the Chat. Also, this file connects the MainActivity and the Chat page, and defines
+ * the buttons to select different add friend functions.
  */
 public class SocialFragment extends Fragment {
 

@@ -1,14 +1,12 @@
 package com.example.mobile_assignment_2.community;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Yujia Zhu & Wentao Xie
+ * @description: the communitypost class includes community name(commName), user ID(uid), community id (cid),
+ * community post image url(imageUrls), community type(comType),
+ * community author name (authorName), community description(comDescription)
  */
 public class Communitypost {
-    // fruitImage to store the resource id if post image
-    // private int commImage;
-    // fruitName to store the string of fruit name
     private String commName, uid, cid;
     private String imageUrls;
     private String comType;
