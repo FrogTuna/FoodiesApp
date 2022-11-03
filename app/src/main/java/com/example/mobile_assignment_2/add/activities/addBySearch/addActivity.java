@@ -52,8 +52,8 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
         myAuth = FirebaseAuth.getInstance();
         currentUser = myAuth.getCurrentUser();
         setTitle("Add Friends - Search");
-        // Generate sample data
 
+        // Generate sample data
         recordList = new String[]{"leo727268082@gmail.com", "kyy2@student.unimelb.edu.au",
                 "727268082@qq.com", "zouweiran9122@gmail.com"};
 
@@ -85,6 +85,7 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
     public boolean onQueryTextSubmit(String query) {
         Log.d("onQueryTextSubmit:", query);
 
+        // Search username or email on database
         mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,7 +110,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
                                 userInfoHashMap.put("username", (String) userSnapshot.child("username").getValue());
                                 userInfoHashMap.put("imageUrl", (String) userSnapshot.child("imageUrl").getValue());
                                 userInfosArrayList.add(userInfoHashMap);
-                                System.out.println("[arr] " + userInfosArrayList);
                                 intent.putExtra("userInfosArrayList", userInfosArrayList);
                                 intent.putExtra("currentUser", userID);
                                 intent.putExtra("flag", "add");
@@ -127,7 +127,6 @@ public class addActivity extends AppCompatActivity implements SearchView.OnQuery
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.w("readList:", "loadPost:onCancelled", databaseError.toException());
-                // ...
             }
         });
 

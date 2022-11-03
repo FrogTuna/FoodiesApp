@@ -39,17 +39,13 @@ public class shakeActivity extends AppCompatActivity {
     private float mAccelCurrent;
     private float mAccelLast;
 
-    /* Update firebase Vars */
+    // Update firebase Vars
     private DatabaseReference mDatabase;
     private String userID;
     private ArrayList userInfosArrayList;
 
-    /* Time counter */
-    private long start;
-
+    // Time counter
     private boolean runOnce;
-
-    private long TIME_ELAPSED = 10 * 1000; // ms
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +58,6 @@ public class shakeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         /* Initialize time Vars */
-        start = System.currentTimeMillis();
-        ;
-
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -75,16 +68,19 @@ public class shakeActivity extends AppCompatActivity {
 
         /* Get DB reference */
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
         @Override
+        /**
+         * @description Compute the acceleration with sensor data
+         * @param [event]
+         * @return void
+         * @author Ke YANG
+         */
         public void onSensorChanged(SensorEvent event) {
 
             /* Count 10s after last shaken */
-
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -98,7 +94,6 @@ public class shakeActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
                 /* Update shake flag on firebase */
-                start = System.currentTimeMillis();
 
                 Log.w("KeYANG", String.valueOf(mAccel));
                 updateShakenInfo(false); // should  change to false
@@ -108,6 +103,12 @@ public class shakeActivity extends AppCompatActivity {
                 runOnce = true;
                 mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
                     @Override
+                    /**
+                     * @description Database operations after shaking
+                     * @param [snapshot]
+                     * @return void
+                     * @author Ke YANG
+                     */
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot user : snapshot.getChildren()) {
                             // TODO: handle the post
@@ -139,17 +140,11 @@ public class shakeActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
-
-
             }
-
-
         }
 
         @Override
@@ -157,11 +152,16 @@ public class shakeActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * @description New a thread to start a timer of 30s
+     * @author Ke YANG
+     */
     public class newThread implements Runnable {
+        final private int timer = 30000;
         @Override
         public void run() {
             try {
-                Thread.sleep(30 * 1000);
+                Thread.sleep(timer);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -184,8 +184,11 @@ public class shakeActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    /**
+     * @description update shake flag from database
+     * @author Yaowen Chang
+     */
     protected void updateShakenInfo(Boolean tenSeconds) {
-
         String key = mDatabase.child("Users").child(userID).child("hasShaken").getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         if (tenSeconds) {
@@ -194,47 +197,7 @@ public class shakeActivity extends AppCompatActivity {
         } else {
             childUpdates.put("/Users/" + userID + "/" + key, true);
             mDatabase.updateChildren(childUpdates);
-
         }
-
-    }
-
-    protected void getShakenUsersID(Intent intent) {
-
-
-        Query databaseReference = mDatabase.child("Users");
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    userInfosArrayList.clear();
-                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                        String key = userSnapshot.getKey();
-
-                        if ((Boolean) userSnapshot.child("hasShaken").getValue() && (!key.equals(userID))) {
-                            HashMap<String, String> userInfoHashMap = new HashMap<>();
-                            Log.d("selected User:", key);
-                            userInfoHashMap.put("ID", key);
-                            userInfoHashMap.put("username", (String) userSnapshot.child("username").getValue());
-                            userInfoHashMap.put("imageUrl", (String) userSnapshot.child("imageUrl").getValue());
-                            userInfosArrayList.add(userInfoHashMap);
-                        }
-                    }
-                    System.out.println("[arr] " + userInfosArrayList);
-                    intent.putExtra("userInfosArrayList", userInfosArrayList);
-                    intent.putExtra("currentUser", userID);
-                    startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
-
     }
 
     @Override
@@ -246,6 +209,4 @@ public class shakeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

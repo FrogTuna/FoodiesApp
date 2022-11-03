@@ -2,7 +2,7 @@ package com.example.mobile_assignment_2.add.activities.addBySearch;
 
 /**
  * @author: Ke YANG
- * @description: Show the recent record of search view
+ * @description: The data frame of recent record on search view
  */
 public class friendItems {
     String friendItem;
