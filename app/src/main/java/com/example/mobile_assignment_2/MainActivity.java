@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
- * @author:
- * @description:
+ * @author: Yicong Li
+ * @description: run app
  */
 public class MainActivity extends AppCompatActivity {
 

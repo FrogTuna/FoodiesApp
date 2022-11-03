@@ -18,7 +18,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 /**
  * @author:
- * @date: 2022/11/2 22:13
  * @description:
  */
 public class CommunityFragment extends Fragment implements View.OnClickListener {

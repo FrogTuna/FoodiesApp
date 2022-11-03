@@ -39,9 +39,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     //String defaultUsername = "leo727268082@gmail.com";
     //String defaultUsername = "727268082@qq.com";
     //String defaultUsername = "695578606@qq.com";
-    String defaultUsername = "kyy2@student.unimelb.edu.au";
-    //String defaultUsername = "zouweiran9122@gmail.com";
-    String defaultPassword = "123456789";
+    //String defaultPassword = "123456789";
 
 
     @Override
@@ -119,29 +117,6 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    //login
-    private void loginUser2() {
-        myAuth.signInWithEmailAndPassword(defaultUsername, defaultPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()) {
-                    FirebaseUser user = myAuth.getCurrentUser();
-                    if (user.isEmailVerified()) {
-                        Snackbar.make(loginBtn, "User login successfully", Snackbar.LENGTH_SHORT).show();
-                        mainIntent();
-                        finish();
-                    } else {
-                        Snackbar.make(loginBtn, "Email address has not been verified", Snackbar.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Snackbar.make(loginBtn, "Login error occurs: " + task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-
 
     //page switcher
     @Override
@@ -149,7 +124,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
         switch (view.getId()) {
             case R.id.loginButton:
-                loginUser2();
+                loginUser();
                 break;
             case R.id.registerInLogin:
                 loginIntent();

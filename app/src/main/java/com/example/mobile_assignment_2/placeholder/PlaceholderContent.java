@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
  */
 public class PlaceholderContent {
 
