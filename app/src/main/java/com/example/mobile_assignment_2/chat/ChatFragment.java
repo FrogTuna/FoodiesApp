@@ -26,7 +26,6 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * @author: Yao-Wen Chang
- * @date: 2022/11/2 22:13
  * @description: This file provides the interface for users to check the existing chat history and act
  * as a container for the each chat record
  */

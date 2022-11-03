@@ -51,7 +51,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
             profileView = (ImageView) view.findViewById(R.id.profile_image);
         }
 
-
+        // Handle click event on view in recyclerView, redirecting to post details screen
         @Override
         public void onClick(View view) {
             Post post = posts.get(getAbsoluteAdapterPosition());
@@ -95,6 +95,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
         Picasso.with(context).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
         viewHolder.num_like_View.setText(posts.get(position).getLikes() + " Likes");
         String uid = posts.get(position).getUid();
+        // Get author's profile photo url
         firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

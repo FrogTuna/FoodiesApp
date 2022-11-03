@@ -99,8 +99,8 @@ public class ExploreFragment extends Fragment {
 
         // Get a reference to users
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+        // Get uids of friends of current user's and listen for changes
         usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 friends.clear();
@@ -108,6 +108,7 @@ public class ExploreFragment extends Fragment {
                     String friendId = dataSnapshot.getKey();
                     friends.add(friendId);
                 }
+                // Get posts and listen for changes
                 DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
                 postsRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -118,8 +119,8 @@ public class ExploreFragment extends Fragment {
                             Post post = dataSnapshot.getValue(Post.class);
                             posts.add(post);
                         }
-                        // posts for stranger
 
+                        // Filter posts for strangers of current user
                         for (Post p : posts) {
                             if (!friends.contains(p.getUid()) && !p.getUid().equals(currentUser.getUid())) {
                                 strangerPosts.add(p);
@@ -152,11 +153,10 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
-
+    // RecyclerView Adapter to bind posts data to views in recyclerView
     public class ExplorePostsAdapter extends RecyclerView.Adapter<ExplorePostsAdapter.ViewHolder> {
 
         private ArrayList<Post> posts = new ArrayList<Post>();
-
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView titleView;
@@ -176,7 +176,7 @@ public class ExploreFragment extends Fragment {
                 profileView = (ImageView) view.findViewById(R.id.profile_image);
             }
 
-
+            // Handle click event on view in recyclerView, redirecting to post details screen
             @Override
             public void onClick(View view) {
                 Post post = strangerPosts.get(getAbsoluteAdapterPosition());
@@ -219,6 +219,7 @@ public class ExploreFragment extends Fragment {
             Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(viewHolder.imageView);
             viewHolder.num_like_View.setText(posts.get(position).getLikes() + " Likes");
             String uid = posts.get(position).getUid();
+            // Get author's profile photo url
             firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {

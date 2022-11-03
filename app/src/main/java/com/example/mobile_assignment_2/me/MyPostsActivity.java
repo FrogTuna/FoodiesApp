@@ -47,12 +47,14 @@ public class MyPostsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+        // Get posts and listen for changes
         postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myPosts.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Post post = dataSnapshot.getValue(Post.class);
+                    // Filter posts belonging to current user
                     if (post.getUid().equals(currentUser.getUid())) {
                         myPosts.add(post);
                     }

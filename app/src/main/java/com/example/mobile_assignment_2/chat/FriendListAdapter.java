@@ -37,7 +37,6 @@ import java.util.Map;
 
 /**
  * @author: Yao-Wen Chang
- * @date: 2022/11/2 22:13
  * @description: The adapter connect FriendListData and the FriendFragment. This defines the function
  * of each view of the interface.
  */

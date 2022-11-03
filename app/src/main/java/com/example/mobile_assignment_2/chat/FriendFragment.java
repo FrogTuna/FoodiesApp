@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 /**
  * @author: Yao-Wen Chang
- * @date: 2022/11/2 22:13
  * @description: This file consists of friend page inside the pager, and contains multiple friends'
  * information
  */

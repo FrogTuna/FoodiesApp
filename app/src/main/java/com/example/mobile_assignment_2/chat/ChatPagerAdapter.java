@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  * @author: Yao-Wen Chang
- * @date: 2022/11/2 22:13
  * @description: This file connect SocialFragment and each pager items.
  */
 public class ChatPagerAdapter extends FragmentStateAdapter {

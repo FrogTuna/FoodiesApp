@@ -1,9 +1,8 @@
 package com.example.mobile_assignment_2;
 
 /**
- * @author:
- * @date: 2022/11/2 22:13
- * @description:
+ * @author: Weiran Zou
+ * @description: Comment class defines attributes of comment
  */
 public class Comment {
     String author, commentMessage, authorProfileUrl;

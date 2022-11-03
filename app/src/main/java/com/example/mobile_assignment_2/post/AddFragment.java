@@ -227,9 +227,11 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            // handle click event on image button
             case R.id.imageButton:
                 galleryActivityResultLauncher.launch("image/*");
                 break;
+            // handle click event on camera button
             case R.id.cameraButton:
                 if (checkSelfPermission(getContext(), Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -271,9 +273,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         );
                         imageView.setLayoutParams(params);
                         imageView.setImageBitmap(photoBitmap);
-
                         linearLayout.addView(imageView);
-
                         pickedImageUris.add(uri);
                     }
 

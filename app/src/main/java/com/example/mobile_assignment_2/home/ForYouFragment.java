@@ -112,8 +112,8 @@ public class ForYouFragment extends Fragment {
 
         // Get a reference to users
         DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+        // Get current user's friends' uids and listen for changes
         usersRef.child(currentUser.getUid()).child("friends").addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 friends.clear();
@@ -121,6 +121,7 @@ public class ForYouFragment extends Fragment {
                     String friendId = dataSnapshot.getKey();
                     friends.add(friendId);
                 }
+                // Get post ids of posts liked by current user and listen for changes
                 usersRef.child(currentUser.getUid()).child("likes").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,6 +130,7 @@ public class ForYouFragment extends Fragment {
                             String likedPid = (String) dataSnapshot.getValue();
                             likes.add(likedPid);
                         }
+                        // Get post ids of posts collected by current user and listen for changes
                         usersRef.child(currentUser.getUid()).child("collects").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -137,6 +139,7 @@ public class ForYouFragment extends Fragment {
                                     String collectPid = (String) dataSnapshot.getValue();
                                     collects.add(collectPid);
                                 }
+                                // Get posts and listen for changes
                                 DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
                                 postsRef.addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -147,7 +150,7 @@ public class ForYouFragment extends Fragment {
                                             Post post = dataSnapshot.getValue(Post.class);
                                             posts.add(post);
                                         }
-
+                                        // Filter posts for user and user's friends
                                         for (Post p : posts) {
                                             if (friends.contains(p.getUid()) || p.getUid().equals(currentUser.getUid())) {
                                                 forYouPosts.add(p);
@@ -199,8 +202,8 @@ public class ForYouFragment extends Fragment {
 
     }
 
+    // RecyclerView Adapter to bind posts data to views in recyclerView
     public class ForYouPostsAdapter extends RecyclerView.Adapter<ForYouPostsAdapter.ViewHolder> {
-
         private ArrayList<Post> posts = new ArrayList<Post>();
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -278,6 +281,7 @@ public class ForYouFragment extends Fragment {
             }
 
             String uid = posts.get(position).getUid();
+            // Get author's profile photo url
             firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -290,12 +294,15 @@ public class ForYouFragment extends Fragment {
                     }
                 }
             });
+            // Handle click event on like button
             viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     lastViewPosition = position;
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    // If user hasn't liked this post
                     if (!likes.contains(pid)) {
+                        // increment num of likes for this post by 1
                         firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -306,10 +313,13 @@ public class ForYouFragment extends Fragment {
 
                             }
                         });
+                        // If the user has liked this post
                     } else {
+                        // decrement num of likes for this post by 1
                         firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                // Remove this post from posts that user likes
                                 DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
                                 Query query = likeRef.orderByValue().equalTo(pid);
                                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -333,13 +343,15 @@ public class ForYouFragment extends Fragment {
 
                 }
             });
-
+            // Handle click event on collect button
             viewHolder.collectBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     lastViewPosition = position;
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    // If user hasn't collected this post
                     if (!collects.contains(pid)) {
+                        // increment num of collects for this post by 1
                         firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -350,10 +362,12 @@ public class ForYouFragment extends Fragment {
 
                             }
                         });
+                        // decrement num of collects for this post by 1
                     } else {
                         firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                // Remove this post from posts that user collects
                                 DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
                                 Query query = collectRef.orderByValue().equalTo(pid);
                                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -376,9 +390,11 @@ public class ForYouFragment extends Fragment {
 
                 }
             });
+            // Handle click event on comment button
             viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // Show the popup window to allow user send comments and view comments on this post
                     View popupCommentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_popup_window, null);
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -389,6 +405,7 @@ public class ForYouFragment extends Fragment {
                     LinearLayout commentsLinearLayout = popupCommentView.findViewById(R.id.commentsLinearLayout);
                     Button sendBtn = popupCommentView.findViewById(R.id.sendCommentButton);
                     TextView commentTextField = popupCommentView.findViewById(R.id.textFieldComment);
+                    // Get and display comments of this post and listen for changes
                     firebaseDatabase.getReference().child("Posts").child(pid).child("comments").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -419,17 +436,19 @@ public class ForYouFragment extends Fragment {
 
                         }
                     });
-
+                    // Handle click event on send button
                     sendBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String commentText = commentTextField.getText().toString();
                             if (!commentText.isEmpty()) {
+                                // Get current user's name
                                 firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         if (!task.isSuccessful()) {
                                             Log.e("firebase", "Error in fetching data", task.getException());
+                                            // push comments to this post
                                         } else {
                                             String authorName = task.getResult().getValue(String.class);
                                             firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {

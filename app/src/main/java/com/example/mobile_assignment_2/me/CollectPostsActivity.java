@@ -51,6 +51,7 @@ public class CollectPostsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         DatabaseReference postsRef = firebaseDatabase.getReference("Posts");
+        // Get posts and listen for changes
         postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -61,6 +62,7 @@ public class CollectPostsActivity extends AppCompatActivity {
                     posts.add(post);
                 }
                 DatabaseReference usersRef = firebaseDatabase.getReference("Users");
+                // Get post ids of posts collected by user and listen for changes
                 usersRef.child(currentUser.getUid()).child("collects").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,8 +73,8 @@ public class CollectPostsActivity extends AppCompatActivity {
                             collectPids.add(collectPid);
                         }
                         Log.d("Collects", String.valueOf(collectPids.size()));
+                        // Filter posts that collected by user
                         for (Post p : posts) {
-
                             if (collectPids.contains(p.getPid())) {
                                 collectPosts.add(p);
                             }

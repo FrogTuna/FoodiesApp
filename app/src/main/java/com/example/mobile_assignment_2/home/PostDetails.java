@@ -85,7 +85,7 @@ public class PostDetails extends AppCompatActivity {
         sendBtn = findViewById(R.id.sendCommentButton);
         commentTextField = findViewById(R.id.textFieldComment);
         profileView = findViewById(R.id.profile_image);
-
+        // Get profile photo url of author of post
         firebaseDatabase.getReference().child("Users").child(uid).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -98,10 +98,11 @@ public class PostDetails extends AppCompatActivity {
                 }
             }
         });
-
+        // Get the current post and listen for changes
         firebaseDatabase.getReference().child("Posts").child(pid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Get and display num of likes, collects and comments and comments
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     if (dataSnapshot.getKey().equals("likes")) {
@@ -142,7 +143,7 @@ public class PostDetails extends AppCompatActivity {
                 commentBtn.setText(String.valueOf(num_comments[0]));
 
                 DatabaseReference usersRef = firebaseDatabase.getReference("Users");
-
+                // Get post ids of posts liked by current user and listen for changes
                 usersRef.child(currentUser.getUid()).child("likes").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -159,7 +160,7 @@ public class PostDetails extends AppCompatActivity {
                         } else {
                             likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.like, 0, 0, 0);
                         }
-
+                        // Get post ids of posts collected by current user and listen for changes
                         usersRef.child(currentUser.getUid()).child("collects").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -212,13 +213,13 @@ public class PostDetails extends AppCompatActivity {
         ImagesAdapter imagesAdapter = new ImagesAdapter(imageURLs, this, R.layout.post_details_image_view);
         imagesRecyclerView.setAdapter(imagesAdapter);
 
-
+        // Handle click event on like button
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // If this post hasn't been liked by user
                 if (!likes.contains(pid)) {
-
+                    // increment num of likes for this post by 1
                     firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
@@ -236,11 +237,13 @@ public class PostDetails extends AppCompatActivity {
 
                         }
                     });
+                    // If this post has been liked by user
                 } else {
-                    Log.d("likes", "false");
+                    // decrement num of likes for this post by 1
                     firebaseDatabase.getReference("Posts").child(pid).child("likes").setValue(num_likes[0] - 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
+                            // Remove this post from posts that user likes
                             DatabaseReference likeRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("likes");
                             Query query = likeRef.orderByValue().equalTo(pid);
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -271,7 +274,9 @@ public class PostDetails extends AppCompatActivity {
             public void onClick(View view) {
 
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                // If this post hasn't been collected by user
                 if (!collects.contains(pid)) {
+                    // increment num of collects for this post by 1
                     num_collects[0] += 1;
                     firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0]).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -283,11 +288,14 @@ public class PostDetails extends AppCompatActivity {
 
                         }
                     });
+                    // If this post has been collected by user
                 } else {
+                    // decrement num of collects for this post by 1
                     num_collects[0] -= 1;
                     firebaseDatabase.getReference("Posts").child(pid).child("collects").setValue(num_collects[0]).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
+                            // Remove this post from posts that user collects
                             DatabaseReference collectRef = firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("collects");
                             Query query = collectRef.orderByValue().equalTo(pid);
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -312,24 +320,26 @@ public class PostDetails extends AppCompatActivity {
 
             }
         });
-
+        // Handle click event on comment button
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 commentsLinearLayout.getParent().requestChildFocus(commentsLinearLayout, commentsLinearLayout);
             }
         });
-
+        // Handle click event on send button
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String commentText = commentTextField.getText().toString();
                 if (!commentText.isEmpty()) {
+                    // Get current user's name
                     firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (!task.isSuccessful()) {
                                 Log.e("firebase", "Error in fetching data", task.getException());
+                                // push comments to this post
                             } else {
                                 String authorName = task.getResult().getValue(String.class);
                                 firebaseDatabase.getReference("Users").child(currentUser.getUid()).child("imageUrl").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {

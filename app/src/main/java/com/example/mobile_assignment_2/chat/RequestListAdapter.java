@@ -24,7 +24,6 @@ import com.squareup.picasso.Picasso;
 
 /**
  * @author: Yao-Wen Chang
- * @date: 2022/11/2 22:13
  * @description: This adapter connects RequestListData and RequestFragment, which also defines the actions
  * of each view.
  */

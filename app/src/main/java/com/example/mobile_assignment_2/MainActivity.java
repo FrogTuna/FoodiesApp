@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 /**
  * @author:
- * @date: 2022/11/2 22:13
  * @description:
  */
 public class MainActivity extends AppCompatActivity {
